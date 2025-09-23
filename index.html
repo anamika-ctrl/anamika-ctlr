@@ -45,7 +45,7 @@
         }
         .switch-track {
             width: 25px;
-            height: 50px;
+            height: 90px;
             background-color: #ccc;
             border-radius: 12.5px;
             position: relative;
@@ -66,7 +66,7 @@
             background-color: #ff4500;
         }
         .switch-track.active .switch-thumb {
-            transform: translateY(-25px);
+            transform: translateY(-65px);
         }
         .switch-label {
             position: absolute;
@@ -111,7 +111,7 @@
                 <span class="block text-red-500 serif-font">EXPRIENCE</span>
                 <span class="block relative">
                     DES
-                    <div id="theme-switch" class="relative inline-block align-middle ml-1 mr-4">
+                    <div id="theme-switch" class="relative inline-block align-middle ml-0 mr-5 top-[-4px]">
                         <div class="switch-track">
                             <div class="switch-thumb"></div>
                         </div>
@@ -137,7 +137,7 @@
                          class="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover inline-block align-middle ml-1 mr-1">, 
                     blending my background in animation 
                     <span class="block mt-1 md:mt-2 leading-loose">
-                        with UI/UX design. I design digital products <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg" 
+                        with UI/UX design. I design digital products <img id="digital-products-icon" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg" 
                      alt="Digital products icon" 
                      class="inline-block w-8 h-8 md:w-14 md:h-14 rotate-[30deg]">, 
                         brands <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/1b6b1e6f7025a046694fc5007c292fbd89ab7cce/brand.jpeg" 
@@ -151,7 +151,7 @@
 
                 <p class="mt-6 md:mt-8 text-base md:text-xl leading-relaxed tracking-wider">with my skills in:</p>
             </div>
-              <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">            
+              <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">            
             <div class="mt-10 ">
                 </div>
         </div>
@@ -162,9 +162,29 @@
         const switchThumb = switchElement.querySelector('.switch-thumb');
         const switchTrack = switchElement.querySelector('.switch-track');
 
+        // Get the icons to change
+        const digitalProductsIcon = document.getElementById('digital-products-icon');
+        const honeycombImage = document.getElementById('honeycomb-image');
+        
+        // Image URLs
+        const digitalArtLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
+        const digitalArtDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
+        const honeycombLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg';
+        const honeycombDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/honeycomb-darkmode.svg';
+
+
         switchElement.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             switchTrack.classList.toggle('active');
+            
+            // Change the image source based on the current mode
+            if (body.classList.contains('dark-mode')) {
+                digitalProductsIcon.src = digitalArtDark;
+                honeycombImage.src = honeycombDark;
+            } else {
+                digitalProductsIcon.src = digitalArtLight;
+                honeycombImage.src = honeycombLight;
+            }
         });
     </script>
 </body>
