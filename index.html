@@ -82,9 +82,25 @@
             color: #f7f3ed;
             text-shadow: 1px 1px 2px #000;
         }
+        .email-link {
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        .email-link:hover {
+            opacity: 0.8;
+        }
+        #copy-message {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
     </style>
 </head>
 <body class="p-4 md:p-16">
+
+
+    <!-- Landing Page Section -->
+
 
     <header class="flex justify-between items-center mb-8 md:mb-16">
         <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
@@ -94,7 +110,7 @@
                     <li><a href="#" class="hover:text-gray-600">WORK</a></li>
                     <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
                     <li><a href="resume.html" class="hover:text-gray-600">RESUME</a></li>
-                    <li><a href="#" class="hover:text-gray-600">CONTACT</a></li>
+                    <li><a href="#contact" class="hover:text-gray-600">CONTACT</a></li>
                 </ul>
             </nav>
         </div>
@@ -151,40 +167,83 @@
 
                 <p class="mt-6 md:mt-8 text-base md:text-xl leading-relaxed tracking-wider">with my skills in:</p>
             </div>
-              <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">            
+              <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">
             <div class="mt-10 ">
-                </div>
+            </div>
         </div>
-    </main>
-    <script>
-        const switchElement = document.getElementById('theme-switch');
-        const body = document.body;
-        const switchThumb = switchElement.querySelector('.switch-thumb');
-        const switchTrack = switchElement.querySelector('.switch-track');
-
-        // Get the icons to change
-        const digitalProductsIcon = document.getElementById('digital-products-icon');
-        const honeycombImage = document.getElementById('honeycomb-image');
         
-        // Image URLs
-        const digitalArtLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
-        const digitalArtDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
-        const honeycombLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg';
-        const honeycombDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/honeycomb-darkmode.svg';
+
+        <!-- Last Page Section -->
 
 
-        switchElement.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            switchTrack.classList.toggle('active');
+        <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-24">
+            <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
+            <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
             
-            // Change the image source based on the current mode
-            if (body.classList.contains('dark-mode')) {
-                digitalProductsIcon.src = digitalArtDark;
-                honeycombImage.src = honeycombDark;
-            } else {
-                digitalProductsIcon.src = digitalArtLight;
-                honeycombImage.src = honeycombLight;
-            }
+            <p class="text-sm md:text-base mb-2">Contact me :</p>
+            <div class="flex items-center">
+              <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 rounded-full hover:bg-gray-200 transition-colors text-red-500 dark:text-red-400">
+                  Anamika.gogoi126@gmail.com
+              </a>
+              <div id="copy-message" class="text-base text-green-500 ml-2"></div>
+            </div>
+            
+            <div class="flex space-x-4 mt-6">
+                <a href="#" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
+                <a href="#" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16">
+        <p class="text-xs md:text-sm text-gray-700">Design & Developed</p>
+        <p class="text-xs md:text-sm text-gray-700">by Anamika Gogoi</p>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const themeSwitch = document.getElementById('theme-switch');
+            const switchThumb = themeSwitch.querySelector('.switch-thumb');
+            const digitalProductsIcon = document.getElementById('digital-products-icon');
+            const honeycombImage = document.getElementById('honeycomb-image');
+            const emailLink = document.getElementById('email-link');
+            const copyMessage = document.getElementById('copy-message');
+
+            const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
+            const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
+            const honeycombLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg';
+            const honeycombDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/honeycomb-darkmode.svg';
+
+
+            themeSwitch.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                switchThumb.parentElement.classList.toggle('active');
+                
+                if (body.classList.contains('dark-mode')) {
+                    digitalProductsIcon.src = darkModeDigitalProductsIcon;
+                    honeycombImage.src = honeycombDark;
+                } else {
+                    digitalProductsIcon.src = lightModeDigitalProductsIcon;
+                    honeycombImage.src = honeycombLight;
+                }
+            });
+
+            emailLink.addEventListener('click', () => {
+                const email = emailLink.textContent.trim();
+                const tempInput = document.createElement('input');
+                tempInput.value = email;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                copyMessage.textContent = 'Copied!';
+                copyMessage.style.opacity = 1;
+                setTimeout(() => {
+                    copyMessage.style.opacity = 0;
+                }, 1500);
+            });
         });
     </script>
 </body>
