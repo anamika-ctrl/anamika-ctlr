@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Droid+Serif&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -34,6 +36,12 @@
         .hero-text {
             line-height: 0.9;
             transition: color 0.3s ease;
+        }
+        .hero-heading {
+            font-family: 'Oswald', sans-serif;
+        }
+        .serif-font {
+            font-family: 'Droid Serif', serif;
         }
         .switch-track {
             width: 25px;
@@ -79,16 +87,18 @@
 <body class="p-8 md:p-16">
 
     <header class="flex justify-between items-center mb-16">
-        <h1 class="text-xl md:text-2xl font-bold">Alt+Anamika</h1>
-        <nav>
-            <ul class="flex space-x-6 md:space-x-10 text-sm md:text-base font-medium">
-                <li><a href="#" class="hover:text-gray-600">WORK</a></li>
-                <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
-                <li><a href="resume.html" class="hover:text-gray-600">RESUME</a></li>
-                <li><a href="#" class="hover:text-gray-600">CONTACT</a></li>
-            </ul>
-        </nav>
-        <div class="hidden md:flex space-x-6 md:space-x-10 text-sm md:text-base font-medium">
+        <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
+        <div class="flex-grow flex justify-center">
+            <nav>
+                <ul class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
+                    <li><a href="#" class="hover:text-gray-600">WORK</a></li>
+                    <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
+                    <li><a href="resume.html" class="hover:text-gray-600">RESUME</a></li>
+                    <li><a href="#" class="hover:text-gray-600">CONTACT</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
             <a href="#" class="hover:text-gray-600">INSTAGRAM</a>
             <a href="#" class="hover:text-gray-600">LINKEDIN</a>
         </div>
@@ -98,7 +108,7 @@
         <div class="mb-16">
             <h2 class="text-7xl md:text-8xl lg:text-9xl font-extrabold hero-text">
                 <span class="block">User</span>
-                <span class="block text-red-500">EXPRIENCE</span>
+                <span class="block text-red-500 serif-font">EXPRIENCE</span>
                 <span class="block relative">
                     DES
                     <div id="theme-switch" class="relative inline-block align-middle ml-1 mr-4">
