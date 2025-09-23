@@ -11,11 +11,68 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f7f3ed; /* Light beige from image */
-            color: #1a1a1a; /* Dark text color */
+            background-color: #f7f3ed;
+            color: #1a1a1a;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #f7f3ed;
+        }
+        body.dark-mode .hero-text {
+            color: #f7f3ed;
+        }
+        body.dark-mode .hero-text .text-red-500 {
+            color: #ff4500;
+        }
+        body.dark-mode .hover\:text-gray-600:hover {
+            color: #ccc;
+        }
+        body.dark-mode .text-gray-700 {
+            color: #ddd;
         }
         .hero-text {
             line-height: 0.9;
+            transition: color 0.3s ease;
+        }
+        .switch-track {
+            width: 25px;
+            height: 50px;
+            background-color: #ccc;
+            border-radius: 12.5px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .switch-thumb {
+            width: 21px;
+            height: 21px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+        .switch-track.active {
+            background-color: #ff4500;
+        }
+        .switch-track.active .switch-thumb {
+            transform: translateY(-25px);
+        }
+        .switch-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #1a1a1a;
+            text-shadow: 1px 1px 2px #fff;
+        }
+        body.dark-mode .switch-label {
+            color: #f7f3ed;
+            text-shadow: 1px 1px 2px #000;
         }
     </style>
 </head>
@@ -43,13 +100,15 @@
                 <span class="block">User</span>
                 <span class="block text-red-500">EXPRIENCE</span>
                 <span class="block relative">
-                    DES<span class="relative inline-block">
-                        I
-                        <svg class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-16 w-16 md:h-20 md:w-20 lg:h-24 lg:w-24" viewBox="0 0 100 100">
-                            <path fill="none" stroke="#ff4500" stroke-width="6" d="M50 0v100" />
-                            <circle cx="50" cy="50" r="15" fill="#1a1a1a" />
-                        </svg>
-                    </span>GNER
+                    DES
+                    <div id="theme-switch" class="relative inline-block align-middle ml-1 mr-4">
+                        <div class="switch-track">
+                            <div class="switch-thumb"></div>
+                        </div>
+                        <div class="absolute inset-x-0 bottom-[-20px] text-xs text-gray-500 dark:text-gray-300 ml-0 underline font-thin">
+                          <span class="ml-0 mr">Press</span>
+                        </div>
+                    </div>GNER
                 </span>
             </h2>
             <p class="mt-8 text-sm md:text-base text-gray-700 font-medium">
@@ -69,6 +128,16 @@
                 </div>
         </div>
     </main>
+    <script>
+        const switchElement = document.getElementById('theme-switch');
+        const body = document.body;
+        const switchThumb = switchElement.querySelector('.switch-thumb');
+        const switchTrack = switchElement.querySelector('.switch-track');
 
+        switchElement.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            switchTrack.classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
