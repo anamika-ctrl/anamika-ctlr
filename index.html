@@ -94,6 +94,20 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
+        /* New styles for expanding cards */
+        .card {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card.expanded {
+            width: 18rem; /* Make the card wider on click */
+        }
     </style>
 </head>
 <body class="p-4 md:p-16">
@@ -107,7 +121,7 @@
         <div class="flex-grow flex justify-center">
             <nav>
                 <ul class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
-                    <li><a href="#" class="hover:text-gray-600">WORK</a></li>
+                    <li><a href="#work" class="hover:text-gray-600">WORK</a></li>
                     <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
                     <li><a href="resume.html" class="hover:text-gray-600">RESUME</a></li>
                     <li><a href="#contact" class="hover:text-gray-600">CONTACT</a></li>
@@ -171,7 +185,20 @@
             <div class="mt-10 ">
             </div>
         </div>
-        
+
+        <!-- My Work Cards Section -->
+        <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
+            <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Case study</h2>
+            <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Personal task</h2>
+            <div class="flex overflow-x-auto space-x-4 py-4 scroll-smooth">
+                <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+                <img src="https://placehold.co/200x400/9CA3AF/1F2937?text=UI+Screen+2" alt="UI Screen 2" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+                <img src="https://placehold.co/200x400/4B5563/F9FAFB?text=UI+Screen+3" alt="UI Screen 3" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+                <img src="https://placehold.co/200x400/6B7280/F9FAFB?text=UI+Screen+4" alt="UI Screen 4" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+                <img src="https://placehold.co/200x400/E5E7EB/4B5563?text=UI+Screen+5" alt="UI Screen 5" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+                <img src="https://placehold.co/200x400/D1D5DB/1F2937?text=UI+Screen+6" alt="UI Screen 6" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+            </div>
+        </section>
 
         <!-- Last Page Section -->
 
@@ -243,6 +270,24 @@
                 setTimeout(() => {
                     copyMessage.style.opacity = 0;
                 }, 1500);
+            });
+
+            // New JavaScript for expanding cards
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    // Check if the clicked card is already expanded
+                    const isExpanded = card.classList.contains('expanded');
+                    
+                    // First, collapse any currently expanded cards
+                    cards.forEach(c => c.classList.remove('expanded'));
+
+                    // If the clicked card wasn't already expanded, expand it
+                    if (!isExpanded) {
+                        card.classList.add('expanded');
+                    }
+                });
             });
         });
     </script>
