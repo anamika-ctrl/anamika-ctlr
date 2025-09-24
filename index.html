@@ -45,7 +45,7 @@
         }
         .switch-track {
             width: 25px;
-            height: 90px;
+            height: 85px;
             background-color: #ccc;
             border-radius: 12.5px;
             position: relative;
@@ -96,18 +96,35 @@
         }
 
         /* New styles for expanding cards */
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        }
+        
         .card {
             transition: all 0.3s ease-in-out;
             cursor: pointer;
+            flex-shrink: 0;
+            overflow: hidden;
+            height: 28rem;
+            width: 4rem;         /* collapsed state */
+            border-radius: 28px;
+            position: relative;
         }
 
-        .card:hover {
-            transform: scale(1.02);
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            object-position: center;
         }
 
-        .card.expanded {
-            width: 18rem; /* Make the card wider on click */
-        }
+        /* Expanded state */
+       .card.expanded {
+  aspect-ratio: attr(data-aspect); /* dynamic if you pass ratio */
+  height: 28rem;                   /* keep height consistent */
+  width: auto;                     /* let width auto-calc */
+}
     </style>
 </head>
 <body class="p-4 md:p-16">
@@ -190,13 +207,36 @@
         <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
             <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Case study</h2>
             <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Personal task</h2>
-            <div class="flex overflow-x-auto space-x-4 py-4 scroll-smooth">
-                <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study" class="card w-32 h-[28rem] object-cover rounded-xl">
-                <img src="https://placehold.co/200x400/9CA3AF/1F2937?text=UI+Screen+2" alt="UI Screen 2" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
-                <img src="https://placehold.co/200x400/4B5563/F9FAFB?text=UI+Screen+3" alt="UI Screen 3" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
-                <img src="https://placehold.co/200x400/6B7280/F9FAFB?text=UI+Screen+4" alt="UI Screen 4" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
-                <img src="https://placehold.co/200x400/E5E7EB/4B5563?text=UI+Screen+5" alt="UI Screen 5" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
-                <img src="https://placehold.co/200x400/D1D5DB/1F2937?text=UI+Screen+6" alt="UI Screen 6" class="card w-32 h-[28rem] object-cover rounded-xl flex-shrink-0">
+            <div class="flex space-x-4 py-4 scroll-smooth">
+                <!-- Card 1 -->
+                <div class="card rounded-[50px] flex-shrink-0">
+                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study">
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="card rounded-3xl flex-shrink-0">
+                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="UI Screen 2">
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="card rounded-3xl flex-shrink-0">
+                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="UI Screen 3">
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="card rounded-3xl flex-shrink-0">
+                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="UI Screen 4">
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="card rounded-3xl flex-shrink-0">
+                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="UI Screen 5">
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="card rounded-3xl flex-shrink-0">
+                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="UI Screen 6">
+                </div>
             </div>
         </section>
 
