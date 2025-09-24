@@ -132,7 +132,8 @@
     0%   { transform: translateX(0); }    
   40%  { transform: translateX(-8px); }  
   70%  { transform: translateX(4px); }   
-  100% { transform: translateX(0); } 
+  90% { transform: translateX(-1px); }
+  100% { transform: translateX(0px); }  
 }
         .card:not(.expanded):hover {
     transform: scale(1.05);
@@ -147,10 +148,19 @@
     <!-- Landing Page Section -->
 
 
-    <header class="flex justify-between items-center mb-8 md:mb-16">
+    <header class="flex justify-between items-center mb-8 md:mb-16 relative">
         <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
-        <div class="flex-grow flex justify-center">
-            <nav>
+        
+        <!-- Hamburger menu for mobile screens -->
+        <button id="menu-button" class="md:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+
+        <!-- The navigation menu, hidden on mobile by default -->
+        <div id="nav-menu" class="hidden md:flex flex-grow justify-end md:space-x-4">
+            <nav class="flex-grow flex justify-center">
                 <ul class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
                     <li><a href="#work" class="hover:text-gray-600">WORK</a></li>
                     <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
@@ -158,10 +168,10 @@
                     <li><a href="#contact" class="hover:text-gray-600">CONTACT</a></li>
                 </ul>
             </nav>
-        </div>
-        <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
-            <a href="#" class="hover:text-gray-600">INSTAGRAM</a>
-            <a href="#" class="hover:text-gray-600">LINKEDIN</a>
+            <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
+                <a href="#" class="hover:text-gray-600">INSTAGRAM</a>
+                <a href="#" class="hover:text-gray-600">LINKEDIN</a>
+            </div>
         </div>
     </header>
 
@@ -290,6 +300,8 @@
             const honeycombImage = document.getElementById('honeycomb-image');
             const emailLink = document.getElementById('email-link');
             const copyMessage = document.getElementById('copy-message');
+            const menuButton = document.getElementById('menu-button');
+            const navMenu = document.getElementById('nav-menu');
 
             const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
             const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
@@ -326,6 +338,17 @@
                 }, 1500);
             });
 
+            // New JavaScript for mobile menu toggle
+            menuButton.addEventListener('click', () => {
+                const isHidden = navMenu.classList.contains('hidden');
+                if (isHidden) {
+                    navMenu.classList.remove('hidden');
+                    navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
+                } else {
+                    navMenu.classList.add('hidden');
+                    navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
+                }
+            });
             // New JavaScript for expanding cards
             const cards = document.querySelectorAll('.card');
 
