@@ -1,2 +1,0 @@
-# anamika-ctlr
-portfolio website
