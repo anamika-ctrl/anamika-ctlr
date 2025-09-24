@@ -95,6 +95,28 @@
             transition: opacity 0.3s ease;
         }
 
+        /* Styles for the main page and resume page containers */
+        .main-page, .resume-page {
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Initially hide the resume page by moving it out of view */
+        .resume-page {
+            position: fixed; /* Use fixed to overlay on top */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh; /* Full viewport height */
+            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent background */
+            transform: translateY(-100vh);
+            overflow-y: auto; /* Enable scrolling for the resume page */
+            z-index: 50;
+        }
+
+        .resume-page.active {
+            transform: translateY(0);
+        }
+
         /* New styles for expanding cards */
         .card:hover {
             transform: scale(1.05);
@@ -122,175 +144,187 @@
 
         /* Expanded state */
         .card.expanded {
-    aspect-ratio: var(--ratio);
-    height: 28rem;
-    width: auto;
-    border-radius: 18px;
-    animation: cardBounceHorizontal 0.5s ease-in-out forwards; /* forwards keeps final state */
-}
+            aspect-ratio: var(--ratio);
+            height: 28rem;
+            width: auto;
+            border-radius: 18px;
+            animation: cardBounceHorizontal 0.5s ease-in-out forwards; /* forwards keeps final state */
+        }
         @keyframes cardBounceHorizontal {
-    0%   { transform: translateX(0); }    
-  40%  { transform: translateX(-8px); }  
-  70%  { transform: translateX(4px); }   
-  90% { transform: translateX(-1px); }
-  100% { transform: translateX(0px); }  
-}
+            0%   { transform: translateX(0); }    
+            40%  { transform: translateX(-8px); }  
+            70%  { transform: translateX(4px); }   
+            100% { transform: translateX(0); } 
+        }
         .card:not(.expanded):hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 
-                0 2px 4px -1px rgba(0, 0, 0, 0.3);
-}
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 
+                        0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body class="p-4 md:p-16">
 
+    <!-- Main Page Content -->
+    <div class="main-page">
+        <header class="flex justify-between items-center mb-8 md:mb-16 relative">
+            <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
+            
+            <!-- Hamburger menu for mobile screens -->
+            <button id="menu-button" class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
 
-    <!-- Landing Page Section -->
-
-
-    <header class="flex justify-between items-center mb-8 md:mb-16 relative">
-        <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
-        
-        <!-- Hamburger menu for mobile screens -->
-        <button id="menu-button" class="md:hidden">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-
-        <!-- The navigation menu, hidden on mobile by default -->
-        <div id="nav-menu" class="hidden md:flex flex-grow justify-end md:space-x-4">
-            <nav class="flex-grow flex justify-center">
-                <ul class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
-                    <li><a href="#work" class="hover:text-gray-600">WORK</a></li>
-                    <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
-                    <li><a href="resume.html" class="hover:text-gray-600">RESUME</a></li>
-                    <li><a href="#contact" class="hover:text-gray-600">CONTACT</a></li>
-                </ul>
-            </nav>
-            <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
-                <a href="#" class="hover:text-gray-600">INSTAGRAM</a>
-                <a href="#" class="hover:text-gray-600">LINKEDIN</a>
+            <!-- The navigation menu, hidden on mobile by default -->
+            <div id="nav-menu" class="hidden md:flex flex-grow justify-end md:space-x-4">
+                <nav class="flex-grow flex justify-center">
+                    <ul class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
+                        <li><a href="#work" class="hover:text-gray-600">WORK</a></li>
+                        <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
+                        <li><a href="#" id="resume-link" class="hover:text-gray-600">RESUME</a></li>
+                        <li><a href="#contact" class="hover:text-gray-600">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
+                    <a href="#" class="hover:text-gray-600">INSTAGRAM</a>
+                    <a href="#" class="hover:text-gray-600">LINKEDIN</a>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main class="text-center">
-        <div class="mb-8 md:mb-16">
-            <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
-                <span class="block">User</span>
-                <span class="block text-red-500 serif-font">EXPRIENCE</span>
-                <span class="block relative">
-                    DES
-                    <div id="theme-switch" class="relative inline-block align-middle ml-0 mr-5 top-[-4px]">
-                        <div class="switch-track">
-                            <div class="switch-thumb"></div>
-                        </div>
-                        <div class="absolute inset-x-0 bottom-[-20px] text-xs text-gray-500 dark:text-gray-300 ml-0 underline font-thin">
-                          <span class="ml-0 mr">Press</span>
-                        </div>
-                    </div>GNER
-                </span>
-            </h2>
-            <p class="mt-4 md:mt-8 text-xs md:text-base text-gray-700 font-medium">
-                Open to <span class="relative inline-block">new job offers
-                <span class="h-2 w-2 bg-green-500 rounded-full absolute -right-4 top-1/2 -translate-y-1/2 animate-pulse"></span>
-                </span>
-            </p>
-        </div>
-        
-        <div class="flex flex-col items-center justify-center px-2">
-           <div class="max-w-2xl mx-auto text-left">
-               <p class="text-base md:text-xl leading-relaxed tracking-wider">
-                    Hi, I'm Anamika 
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/main/2025-05-11T07-25-08.066Z.png" 
-                         alt="Anamika's photo" 
-                         class="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover inline-block align-middle ml-1 mr-1">, 
-                    blending my background in animation 
-                    <span class="block mt-1 md:mt-2 leading-loose">
-                        with UI/UX design. I design digital products <img id="digital-products-icon" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg" 
-                     alt="Digital products icon" 
-                     class="inline-block w-8 h-8 md:w-14 md:h-14 rotate-[30deg]">, 
-                        brands <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/1b6b1e6f7025a046694fc5007c292fbd89ab7cce/brand.jpeg" 
-                        alt="Brands icon" class="inline-block w-4 h-4 md:w-6 md:h-6 ml-1 mr-1">, 
+        <main class="text-center">
+            <div class="mb-8 md:mb-16">
+                <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
+                    <span class="block">User</span>
+                    <span class="block text-red-500 serif-font">EXPRIENCE</span>
+                    <span class="block relative">
+                        DES
+                        <div id="theme-switch" class="relative inline-block align-middle ml-0 mr-5 top-[-4px]">
+                            <div class="switch-track">
+                                <div class="switch-thumb"></div>
+                            </div>
+                            <div class="absolute inset-x-0 bottom-[-20px] text-xs text-gray-500 dark:text-gray-300 ml-0 underline font-thin">
+                            <span class="ml-0 mr">Press</span>
+                            </div>
+                        </div>GNER
                     </span>
-
-                    <span class="block mt-2 md:mt-4 leading-loose">
-                        and experiences that are not just usable, but also memorable.
+                </h2>
+                <p class="mt-4 md:mt-8 text-xs md:text-base text-gray-700 font-medium">
+                    Open to <span class="relative inline-block">new job offers
+                    <span class="h-2 w-2 bg-green-500 rounded-full absolute -right-4 top-1/2 -translate-y-1/2 animate-pulse"></span>
                     </span>
                 </p>
+            </div>
+            
+            <div class="flex flex-col items-center justify-center px-2">
+            <div class="max-w-2xl mx-auto text-left">
+                <p class="text-base md:text-xl leading-relaxed tracking-wider">
+                        Hi, I'm Anamika 
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/main/2025-05-11T07-25-08.066Z.png" 
+                            alt="Anamika's photo" 
+                            class="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover inline-block align-middle ml-1 mr-1">, 
+                        blending my background in animation 
+                        <span class="block mt-1 md:mt-2 leading-loose">
+                            with UI/UX design. I design digital products <img id="digital-products-icon" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg" 
+                        alt="Digital products icon" 
+                        class="inline-block w-8 h-8 md:w-14 md:h-14 rotate-[30deg]">, 
+                            brands <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/1b6b1e6f7025a046694fc5007c292fbd89ab7cce/brand.jpeg" 
+                            alt="Brands icon" class="inline-block w-4 h-4 md:w-6 md:h-6 ml-1 mr-1">, 
+                        </span>
 
-                <p class="mt-6 md:mt-8 text-base md:text-xl leading-relaxed tracking-wider">with my skills in:</p>
+                        <span class="block mt-2 md:mt-4 leading-loose">
+                            and experiences that are not just usable, but also memorable.
+                        </span>
+                    </p>
+                </div>
+                <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">
+                <div class="mt-10 ">
+                </div>
             </div>
-              <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">
-            <div class="mt-10 ">
-            </div>
+
+            <!-- My Work Cards Section -->
+            <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
+                <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Case study</h2>
+                <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Personal task</h2>
+                <div class="flex space-x-4 py-4 scroll-smooth">
+                    <!-- Card 1 -->
+                    <div class="card rounded-[50px] flex-shrink-0">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study">
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="card rounded-3xl flex-shrink-0">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="UI Screen 2">
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="card rounded-3xl flex-shrink-0">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="UI Screen 3">
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="card rounded-3xl flex-shrink-0">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="UI Screen 4">
+                    </div>
+                    
+                    <!-- Card 5 -->
+                    <div class="card rounded-3xl flex-shrink-0">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="UI Screen 5">
+                    </div>
+                    
+                    <!-- Card 6 -->
+                    <div class="card rounded-3xl flex-shrink-0">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="UI Screen 6">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Last Page Section -->
+
+
+            <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-24">
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
+                
+                <p class="text-sm md:text-base mb-2">Contact me :</p>
+                <div class="flex items-center">
+                <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 rounded-full hover:bg-gray-200 transition-colors text-red-500 dark:text-red-400">
+                    Anamika.gogoi126@gmail.com
+                </a>
+                <div id="copy-message" class="text-base text-green-500 ml-2"></div>
+                </div>
+                
+                <div class="flex space-x-4 mt-6">
+                    <a href="#" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
+                    <a href="#" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16">
+            <p class="text-xs md:text-sm text-gray-700">Design & Developed</p>
+            <p class="text-xs md:text-sm text-gray-700">by Anamika Gogoi</p>
+        </footer>
+    </div>
+
+
+    <!-- Resume Page Content (initially hidden) -->
+    <div class="resume-page p-4 md:p-16">
+        <header class="flex justify-start mb-8">
+            <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                BACK
+            </button>
+        </header>
+        <div class="w-full h-full flex justify-center items-center">
+             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" alt="Anamika Gogoi's Resume" class="w-full h-auto max-w-full object-contain">
         </div>
+    </div>
 
-        <!-- My Work Cards Section -->
-        <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
-            <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Case study</h2>
-            <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Personal task</h2>
-            <div class="flex space-x-4 py-4 scroll-smooth">
-                <!-- Card 1 -->
-                <div class="card rounded-[50px] flex-shrink-0">
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study">
-                </div>
-                
-                <!-- Card 2 -->
-                <div class="card rounded-3xl flex-shrink-0">
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="UI Screen 2">
-                </div>
-                
-                <!-- Card 3 -->
-                <div class="card rounded-3xl flex-shrink-0">
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="UI Screen 3">
-                </div>
-                
-                <!-- Card 4 -->
-                <div class="card rounded-3xl flex-shrink-0">
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="UI Screen 4">
-                </div>
-                
-                <!-- Card 5 -->
-                <div class="card rounded-3xl flex-shrink-0">
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="UI Screen 5">
-                </div>
-                
-                <!-- Card 6 -->
-                <div class="card rounded-3xl flex-shrink-0">
-                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="UI Screen 6">
-                </div>
-            </div>
-        </section>
-
-        <!-- Last Page Section -->
-
-
-        <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-24">
-            <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
-            <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
-            
-            <p class="text-sm md:text-base mb-2">Contact me :</p>
-            <div class="flex items-center">
-              <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 rounded-full hover:bg-gray-200 transition-colors text-red-500 dark:text-red-400">
-                  Anamika.gogoi126@gmail.com
-              </a>
-              <div id="copy-message" class="text-base text-green-500 ml-2"></div>
-            </div>
-            
-            <div class="flex space-x-4 mt-6">
-                <a href="#" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
-                <a href="#" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16">
-        <p class="text-xs md:text-sm text-gray-700">Design & Developed</p>
-        <p class="text-xs md:text-sm text-gray-700">by Anamika Gogoi</p>
-    </footer>
-    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const body = document.body;
@@ -302,6 +336,10 @@
             const copyMessage = document.getElementById('copy-message');
             const menuButton = document.getElementById('menu-button');
             const navMenu = document.getElementById('nav-menu');
+            const mainPage = document.querySelector('.main-page');
+            const resumePage = document.querySelector('.resume-page');
+            const resumeLink = document.getElementById('resume-link');
+            const backButton = document.getElementById('back-button');
 
             const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
             const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
@@ -309,63 +347,78 @@
             const honeycombDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/honeycomb-darkmode.svg';
 
 
-            themeSwitch.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                switchThumb.parentElement.classList.toggle('active');
-                
-                if (body.classList.contains('dark-mode')) {
-                    digitalProductsIcon.src = darkModeDigitalProductsIcon;
-                    honeycombImage.src = honeycombDark;
-                } else {
-                    digitalProductsIcon.src = lightModeDigitalProductsIcon;
-                    honeycombImage.src = honeycombLight;
-                }
-            });
+            if (themeSwitch) {
+                themeSwitch.addEventListener('click', () => {
+                    body.classList.toggle('dark-mode');
+                    switchThumb.parentElement.classList.toggle('active');
+                    
+                    if (body.classList.contains('dark-mode')) {
+                        if (digitalProductsIcon) digitalProductsIcon.src = darkModeDigitalProductsIcon;
+                        if (honeycombImage) honeycombImage.src = honeycombDark;
+                    } else {
+                        if (digitalProductsIcon) digitalProductsIcon.src = lightModeDigitalProductsIcon;
+                        if (honeycombImage) honeycombImage.src = honeycombLight;
+                    }
+                });
+            }
 
-            emailLink.addEventListener('click', () => {
-                const email = emailLink.textContent.trim();
-                const tempInput = document.createElement('input');
-                tempInput.value = email;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
+            if (emailLink) {
+                emailLink.addEventListener('click', () => {
+                    const email = emailLink.textContent.trim();
+                    const tempInput = document.createElement('input');
+                    tempInput.value = email;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
 
-                copyMessage.textContent = 'Copied!';
-                copyMessage.style.opacity = 1;
-                setTimeout(() => {
-                    copyMessage.style.opacity = 0;
-                }, 1500);
-            });
+                    copyMessage.textContent = 'Copied!';
+                    copyMessage.style.opacity = 1;
+                    setTimeout(() => {
+                        copyMessage.style.opacity = 0;
+                    }, 1500);
+                });
+            }
 
             // New JavaScript for mobile menu toggle
-            menuButton.addEventListener('click', () => {
-                const isHidden = navMenu.classList.contains('hidden');
-                if (isHidden) {
-                    navMenu.classList.remove('hidden');
-                    navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
-                } else {
-                    navMenu.classList.add('hidden');
-                    navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
-                }
-            });
+            if (menuButton && navMenu) {
+                menuButton.addEventListener('click', () => {
+                    const isHidden = navMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        navMenu.classList.remove('hidden');
+                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
+                    } else {
+                        navMenu.classList.add('hidden');
+                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
+                    }
+                });
+            }
+
             // New JavaScript for expanding cards
             const cards = document.querySelectorAll('.card');
-
             cards.forEach(card => {
                 card.addEventListener('click', () => {
-                    // Check if the clicked card is already expanded
                     const isExpanded = card.classList.contains('expanded');
-                    
-                    // First, collapse any currently expanded cards
                     cards.forEach(c => c.classList.remove('expanded'));
-
-                    // If the clicked card wasn't already expanded, expand it
                     if (!isExpanded) {
                         card.classList.add('expanded');
                     }
                 });
             });
+
+            // New JavaScript for sliding resume page
+            if (resumeLink && resumePage) {
+                resumeLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    resumePage.classList.add('active');
+                });
+            }
+
+            if (backButton && resumePage) {
+                backButton.addEventListener('click', () => {
+                    resumePage.classList.remove('active');
+                });
+            }
         });
     </script>
 </body>
