@@ -120,7 +120,8 @@
         /* New styles for expanding cards */
         .card:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1-2px rgba(0, 0, 0, 0.3);
+            filter: none; /* Remove blur on hover */
         }
         
         .card {
@@ -133,6 +134,7 @@
             width: 4rem;         /* collapsed state */
             border-radius: 28px;
             position: relative;
+            filter: blur(2px); /* Add blur by default */
         }
 
         .card img {
@@ -149,6 +151,7 @@
             width: auto;
             border-radius: 18px;
             animation: cardBounceHorizontal 0.5s ease-in-out forwards; /* forwards keeps final state */
+            filter: none; /* Remove blur when expanded */
         }
         @keyframes cardBounceHorizontal {
             0%   { transform: translateX(0); }    
@@ -160,6 +163,11 @@
             transform: scale(1.05);
             box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 
                         0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        }
+
+        #download-feedback {
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
     </style>
 </head>
@@ -240,14 +248,14 @@
                     </p>
                 </div>
                 <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">
-                <div class="mt-10 ">
-                </div>
             </div>
 
-            <!-- My Work Cards Section -->
             <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
-                <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Case study</h2>
-                <h2 class="text-3xl md:text-5xl font-light tracking-tight text-left mb-12">Personal task</h2>
+                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-1">Case study</h2>
+                <ul class="list-disc list-inside mb-8">
+                    <li><a href="https://github.com/anamika-ctrl/anamika-ctlr/blob/main/doc./Go_Farming__Case_Study.pdf" target="_blank" class="text-xl text-red-500 hover:underline">Go-Farming</a></li>
+                </ul>
+                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-8">Personal tasks</h2>
                 <div class="flex space-x-4 py-4 scroll-smooth">
                     <!-- Card 1 -->
                     <div class="card rounded-[50px] flex-shrink-0">
@@ -311,22 +319,28 @@
 
 
     <!-- Resume Page Content (initially hidden) -->
-    <div class="resume-page p-4 md:p-16">
-        <header class="flex justify-between items-center mb-8">
+    <div class="resume-page p-4 md:p-16 flex flex-col items-center">
+        <header class="w-full flex justify-between items-center mb-8">
             <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 BACK
             </button>
-            <a href="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" 
-               download="Anamika_Gogoi_Resume.png" 
-               class="px-4 py-2 rounded-full border border-gray-400 text-sm hover:bg-gray-200 transition-colors">
-                DOWNLOAD
-            </a>
+            <div class="flex items-center">
+                <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 text-sm hover:bg-gray-200 transition-colors">
+                    DOWNLOAD
+                </a>
+                <div id="download-feedback" class="flex items-center ml-2 opacity-0 transition-opacity duration-300">
+                    <span id="download-message" class="text-sm text-green-600"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="download-icon" class="h-4 w-4 ml-1 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
         </header>
-        <div class="w-full h-full flex justify-center items-center">
-             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" alt="Anamika Gogoi's Resume" class="w-full h-auto max-w-full object-contain">
+        <div class="w-full h-full flex justify-center items-center py-10">
+             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" alt="Anamika Gogoi's Resume" class="w-full h-auto max-w-2xl max-h-[85vh] object-contain">
         </div>
     </div>
 
@@ -345,6 +359,11 @@
             const resumePage = document.querySelector('.resume-page');
             const resumeLink = document.getElementById('resume-link');
             const backButton = document.getElementById('back-button');
+            const downloadButton = document.getElementById('download-button');
+            const downloadFeedback = document.getElementById('download-feedback');
+            const downloadMessage = document.getElementById('download-message');
+            const downloadIcon = document.getElementById('download-icon');
+
 
             const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
             const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
@@ -422,6 +441,45 @@
             if (backButton && resumePage) {
                 backButton.addEventListener('click', () => {
                     resumePage.classList.remove('active');
+                });
+            }
+
+            // Fix for download button
+            if (downloadButton) {
+                downloadButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png';
+                    const filename = 'Anamika_Gogoi_Resume.png';
+
+                    // Show the downloading message
+                    downloadFeedback.style.opacity = 1;
+                    downloadMessage.textContent = 'Downloading...';
+                    downloadIcon.style.display = 'none'; // Hide icon during download
+
+                    fetch(url)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const link = document.createElement('a');
+                            link.href = URL.createObjectURL(blob);
+                            link.download = filename;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+
+                            downloadMessage.textContent = 'Downloaded!';
+                            downloadIcon.style.display = 'block'; // Show icon on success
+                        })
+                        .catch(error => {
+                            console.error('Error downloading the file:', error);
+                            downloadMessage.textContent = 'Error!';
+                            downloadIcon.style.display = 'none'; // Hide icon on error
+                        })
+                        .finally(() => {
+                            // Hide the message after a delay
+                            setTimeout(() => {
+                                downloadFeedback.style.opacity = 0;
+                            }, 2000);
+                        });
                 });
             }
         });
