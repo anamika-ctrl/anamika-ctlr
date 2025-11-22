@@ -122,51 +122,45 @@
             transform: translateY(0);
         }
 
-        /* New styles for expanding cards */
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1-2px rgba(0, 0, 0, 0.3);
-            filter: none; /* Remove blur on hover */
-        }
-        
-        .card {
-            /* Slower transition for a smoother feel */
-            transition: all 1.0s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: pointer;
-            flex-shrink: 0;
-            overflow: hidden;
-            height: 28rem;
-            width: 4rem;         /* collapsed state */
-            border-radius: 28px;
+        /* Bento Grid Item Styles */
+        .bento-item {
             position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            /* background-color: #e5e7eb; Removed placeholder color */
         }
-
-        .card img {
+        body.dark-mode .bento-item {
+            /* background-color: #2a2a2a; Removed placeholder color */
+        }
+        .bento-item:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+        .bento-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; 
-            object-position: center;
+            height: 100%; /* Restored height to fill the grid cell */
+            object-fit: cover;
+            object-position: top; /* Changed to top to show UI headers */
+            transition: transform 0.5s ease;
+            display: block; 
+        }
+        .bento-item:hover img {
+            transform: scale(1.05);
         }
 
-        /* Expanded state */
-        .card.expanded {
-            aspect-ratio: var(--ratio);
-            height: 28rem;
-            width: auto;
-            border-radius: 18px;
-            animation: cardBounceHorizontal 0.5s ease-in-out forwards; /* forwards keeps final state */
-            filter: none; /* Remove blur when expanded */
+        /* Custom Clip Path for Case Study Images to match reference style */
+        .clip-image-slant {
+            /* Mobile: Slight slant at the bottom */
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
         }
-        @keyframes cardBounceHorizontal {
-            0%    { transform: translateX(0); }    
-            40%   { transform: translateX(-8px); }  
-            70%   { transform: translateX(4px); }    
-            100% { transform: translateX(0); } 
-        }
-        .card:not(.expanded):hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px -1px rgba(0, 0, 0, 0.3), 
-                        0 2px 4px -1px rgba(0, 0, 0, 0.3);
+        @media (min-width: 640px) {
+            .clip-image-slant {
+                /* Desktop: Slant on the right side */
+                clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+            }
         }
 
         #download-feedback {
@@ -255,40 +249,95 @@
             </div>
 
             <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
-                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-1">Case study</h2>
-                <ul class="list-disc list-inside mb-8">
-                    <li><a href="https://anamika-ctrl.github.io/Go-Farming" target="_blank" class="text-xl text-red-500 hover:underline">Go-Farming</a></li>
-                </ul>
+                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8">Case study</h2>
+                
+                <!-- Case Study Cards Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+                    
+                    <!-- Case Study 1: Go-Farming -->
+                    <a href="https://anamika-ctrl.github.io/Go-Farming" target="_blank" class="group relative flex flex-col sm:flex-row bg-white dark:bg-zinc-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        <!-- Image Section with Slanted Clip Path -->
+                        <div class="w-full sm:w-2/5 h-48 sm:h-auto relative overflow-hidden clip-image-slant z-10">
+                            <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" 
+                                 alt="Go-Farming Project" 
+                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <!-- Content Section -->
+                        <!-- Added -ml-4 or similar negative margin if we wanted overlap, but standard padding works well with the slant -->
+                        <div class="w-full sm:w-3/5 p-6 md:p-8 flex flex-col justify-between relative z-0 bg-white dark:bg-zinc-800">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold mb-2 text-red-500">Go-Farming</h3>
+                                <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    A digital platform empowering farmers with real-time data, market connections, and sustainable farming practices.
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Case Study</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Case Study 2: Placeholder (Lorem Ipsum) -->
+                    <div class="group relative flex flex-col sm:flex-row bg-white dark:bg-zinc-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-default">
+                        <!-- Image Section with Slanted Clip Path -->
+                        <div class="w-full sm:w-2/5 h-48 sm:h-auto relative overflow-hidden bg-gray-200 dark:bg-zinc-700 clip-image-slant z-10">
+                            <!-- Placeholder Image -->
+                            <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" 
+                                 alt="Upcoming Project" 
+                                 class="absolute inset-0 w-full h-full object-cover opacity-80 grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105">
+                        </div>
+                        <!-- Content Section -->
+                        <div class="w-full sm:w-3/5 p-6 md:p-8 flex flex-col justify-between relative z-0 bg-white dark:bg-zinc-800">
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Coming Soon</h3>
+                                <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-between mt-2">
+                                <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">In Progress</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
                 <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-8">Personal tasks</h2>
-                <div class="flex space-x-4 py-4 scroll-smooth overflow-x-auto pb-8">
-                    <!-- Card 1 -->
-                    <div class="card rounded-[50px] flex-shrink-0">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study">
+                
+                <!-- Bento Grid Layout -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px] md:auto-rows-[240px] pb-8">
+                    
+                    <!-- Item 1: Tall Left (Food App) - Spans 2 rows vertically -->
+                    <div class="bento-item md:row-span-2 rounded-[30px]">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="Food App UI">
                     </div>
                     
-                    <!-- Card 2 -->
-                    <div class="card rounded-3xl flex-shrink-0">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="UI Screen 2">
+                    <!-- Item 2: Top Middle (Food Delivery) -->
+                    <div class="bento-item rounded-3xl">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="Food Delivery UI">
                     </div>
                     
-                    <!-- Card 3 -->
-                    <div class="card rounded-3xl flex-shrink-0">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="UI Screen 3">
+                    <!-- Item 3: Top Right (Login) -->
+                    <div class="bento-item rounded-3xl">
+                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="Login UI">
                     </div>
                     
-                    <!-- Card 4 -->
-                    <div class="card rounded-3xl flex-shrink-0">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="UI Screen 4">
+                    <!-- Item 4: Wide Middle (Map) - Spans 2 columns -->
+                    <div class="bento-item md:col-span-2 rounded-3xl">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="Map UI">
                     </div>
                     
-                    <!-- Card 5 -->
-                    <div class="card rounded-3xl flex-shrink-0">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="UI Screen 5">
+                    <!-- Item 5: Wide Bottom (Retro Landing) - Spans 2 columns -->
+                    <div class="bento-item md:col-span-2 rounded-3xl">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="Retro Landing Page">
                     </div>
                     
-                    <!-- Card 6 -->
-                    <div class="card rounded-3xl flex-shrink-0">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="UI Screen 6">
+                    <!-- Item 6: Bottom Right (Screenshot) -->
+                    <div class="bento-item rounded-3xl">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="App Screenshot">
                     </div>
                 </div>
             </section>
@@ -346,6 +395,16 @@
         <div class="w-full h-full flex justify-center items-center py-10">
              <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" alt="Anamika Gogoi's Resume" class="w-full h-auto max-w-2xl max-h-[85vh] object-contain">
         </div>
+    </div>
+
+    <!-- Image Modal (Lightbox) -->
+    <div id="image-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300 p-4 md:p-8">
+        <button id="modal-close" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img id="modal-image" src="" alt="Full View" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl transform scale-95 transition-transform duration-300 mx-auto my-auto">
     </div>
 
     <script>
@@ -425,18 +484,6 @@
                 });
             }
 
-            // New JavaScript for expanding cards
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const isExpanded = card.classList.contains('expanded');
-                    cards.forEach(c => c.classList.remove('expanded'));
-                    if (!isExpanded) {
-                        card.classList.add('expanded');
-                    }
-                });
-            });
-
             // New JavaScript for sliding resume page
             if (resumeLink && resumePage) {
                 resumeLink.addEventListener('click', (e) => {
@@ -487,6 +534,69 @@
                                 downloadFeedback.style.opacity = 0;
                             }, 2000);
                         });
+                });
+            }
+
+            // --- Image Modal Logic ---
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            const modalClose = document.getElementById('modal-close');
+            const bentoItems = document.querySelectorAll('.bento-item'); // Select the containers
+
+            if (modal && modalImg && bentoItems.length > 0) {
+                
+                // Open Modal
+                bentoItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        // Don't trigger if clicking a link inside (if any exist later)
+                        if (e.target.tagName === 'A') return;
+                        
+                        const img = item.querySelector('img');
+                        if (img) {
+                            modalImg.src = img.src;
+                            modal.classList.remove('hidden');
+                            // Small delay to allow display:flex to apply before opacity transition
+                            requestAnimationFrame(() => {
+                                modal.classList.remove('opacity-0');
+                                modalImg.classList.remove('scale-95');
+                                modalImg.classList.add('scale-100');
+                            });
+                            // Prevent body scrolling
+                            document.body.style.overflow = 'hidden';
+                        }
+                    });
+                });
+
+                // Close Modal Function
+                const closeModal = () => {
+                    modal.classList.add('opacity-0');
+                    modalImg.classList.remove('scale-100');
+                    modalImg.classList.add('scale-95');
+                    
+                    setTimeout(() => {
+                        modal.classList.add('hidden');
+                        modalImg.src = ''; // Clear src to stop memory leaks/flickers
+                        document.body.style.overflow = ''; // Restore scrolling
+                    }, 300); // Match transition duration
+                };
+
+                // Close on Button Click
+                if (modalClose) {
+                    modalClose.addEventListener('click', closeModal);
+                }
+
+                // Close on Background Click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+
+                // Close on Escape Key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                        closeModal();
+                    }
                 });
             }
         });
