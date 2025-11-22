@@ -66,7 +66,7 @@
             background-color: #ff4500;
         }
         .switch-track.active .switch-thumb {
-            transform: translateY(-65px);
+            transform: translateY(-60px);
         }
         .switch-label {
             position: absolute;
@@ -113,6 +113,11 @@
             z-index: 50;
         }
 
+        /* Dark mode adjustment for resume page background */
+        body.dark-mode .resume-page {
+            background-color: rgba(26, 26, 26, 0.98);
+        }
+
         .resume-page.active {
             transform: translateY(0);
         }
@@ -153,9 +158,9 @@
             filter: none; /* Remove blur when expanded */
         }
         @keyframes cardBounceHorizontal {
-            0%   { transform: translateX(0); }    
-            40%  { transform: translateX(-8px); }  
-            70%  { transform: translateX(4px); }   
+            0%    { transform: translateX(0); }    
+            40%   { transform: translateX(-8px); }  
+            70%   { transform: translateX(4px); }    
             100% { transform: translateX(0); } 
         }
         .card:not(.expanded):hover {
@@ -195,8 +200,8 @@
                     </ul>
                 </nav>
                 <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
-                    <a href="https://www.instagram.com/ryokou_yume" class="hover:text-gray-600">INSTAGRAM</a>
-                    <a href="https://www.linkedin.com/feed" class="hover:text-gray-600">LINKEDIN</a>
+                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="hover:text-gray-600">INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/feed" target="_blank" class="hover:text-gray-600">LINKEDIN</a>
                 </div>
             </div>
         </header>
@@ -205,7 +210,7 @@
             <div class="mb-8 md:mb-16">
                 <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
                     <span class="block">User</span>
-                    <span class="block text-red-500 serif-font">EXPRIENCE</span>
+                    <span class="block text-red-500 serif-font">EXPERIENCE</span>
                     <span class="block relative">
                         DES
                         <div id="theme-switch" class="relative inline-block align-middle ml-0 mr-5 top-[-4px]">
@@ -252,10 +257,10 @@
             <section id="work" class="mt-24 max-w-6xl mx-auto text-left">
                 <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-1">Case study</h2>
                 <ul class="list-disc list-inside mb-8">
-                    <li><a href="https://anamika-ctrl.github.io/Go-Farming" class="text-xl text-red-500 hover:underline">Go-Farming</a></li>
+                    <li><a href="https://anamika-ctrl.github.io/Go-Farming" target="_blank" class="text-xl text-red-500 hover:underline">Go-Farming</a></li>
                 </ul>
                 <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-8">Personal tasks</h2>
-                <div class="flex space-x-4 py-4 scroll-smooth">
+                <div class="flex space-x-4 py-4 scroll-smooth overflow-x-auto pb-8">
                     <!-- Card 1 -->
                     <div class="card rounded-[50px] flex-shrink-0">
                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="UX Case Study">
@@ -304,13 +309,13 @@
                 </div>
                 
                 <div class="flex space-x-4 mt-6">
-                    <a href="https://www.instagram.com/ryokou_yume" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
-                    <a href="https://www.linkedin.com/feed" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
+                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
                 </div>
             </section>
         </main>
         
-        <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16">
+        <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16 pb-8">
             <p class="text-xs md:text-sm text-gray-700">Design & Developed</p>
             <p class="text-xs md:text-sm text-gray-700">by Anamika Gogoi</p>
         </footer>
@@ -347,7 +352,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const body = document.body;
             const themeSwitch = document.getElementById('theme-switch');
-            const switchThumb = themeSwitch.querySelector('.switch-thumb');
+            const switchThumb = themeSwitch ? themeSwitch.querySelector('.switch-thumb') : null;
             const digitalProductsIcon = document.getElementById('digital-products-icon');
             const honeycombImage = document.getElementById('honeycomb-image');
             const emailLink = document.getElementById('email-link');
@@ -373,7 +378,7 @@
             if (themeSwitch) {
                 themeSwitch.addEventListener('click', () => {
                     body.classList.toggle('dark-mode');
-                    switchThumb.parentElement.classList.toggle('active');
+                    if(switchThumb) switchThumb.parentElement.classList.toggle('active');
                     
                     if (body.classList.contains('dark-mode')) {
                         if (digitalProductsIcon) digitalProductsIcon.src = darkModeDigitalProductsIcon;
@@ -392,14 +397,17 @@
                     tempInput.value = email;
                     document.body.appendChild(tempInput);
                     tempInput.select();
-                    document.execCommand('copy');
+                    try {
+                        document.execCommand('copy');
+                        copyMessage.textContent = 'Copied!';
+                        copyMessage.style.opacity = 1;
+                        setTimeout(() => {
+                            copyMessage.style.opacity = 0;
+                        }, 1500);
+                    } catch (err) {
+                        console.error('Failed to copy', err);
+                    }
                     document.body.removeChild(tempInput);
-
-                    copyMessage.textContent = 'Copied!';
-                    copyMessage.style.opacity = 1;
-                    setTimeout(() => {
-                        copyMessage.style.opacity = 0;
-                    }, 1500);
                 });
             }
 
@@ -409,10 +417,10 @@
                     const isHidden = navMenu.classList.contains('hidden');
                     if (isHidden) {
                         navMenu.classList.remove('hidden');
-                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
+                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-white', 'dark:bg-zinc-800', 'shadow-lg', 'z-20');
                     } else {
                         navMenu.classList.add('hidden');
-                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-f7f3ed', 'dark:bg-1a1a1a', 'z-10');
+                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-white', 'dark:bg-zinc-800', 'shadow-lg', 'z-20');
                     }
                 });
             }
@@ -485,4 +493,3 @@
     </script>
 </body>
 </html>
-
