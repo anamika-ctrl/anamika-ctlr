@@ -200,8 +200,9 @@
             </div>
         </header>
 
-        <main class="text-center">
+        <main class="text-center min-h-screen flex flex-col justify-center">
             <div class="mb-8 md:mb-16">
+                <div class="inline-block mx-auto">
                 <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
                     <span class="block">User</span>
                     <span class="block text-red-500 serif-font">EXPERIENCE</span>
@@ -217,14 +218,15 @@
                         </div>GNER
                     </span>
                 </h2>
-                <p class="mt-4 md:mt-8 text-xs md:text-base text-gray-700 font-medium">
+                <p class="mt-1 md:mt-2 text-xs md:text-base text-gray-700 font-medium pr-8 text-right">
                     Open to <span class="relative inline-block">new job offers
                     <span class="h-2 w-2 bg-green-500 rounded-full absolute -right-4 top-1/2 -translate-y-1/2 animate-pulse"></span>
                     </span>
                 </p>
+                </div>
             </div>
             
-            <div class="flex flex-col items-center justify-center px-2">
+            <div class="flex flex-col items-center justify-center px-2 mt-24 md:mt-32">
             <div class="max-w-2xl mx-auto text-left">
                 <p class="text-base md:text-xl leading-relaxed tracking-wider">
                         Hi, I'm Anamika 
@@ -351,15 +353,15 @@
                 
                 <p class="text-sm md:text-base mb-2">Contact me :</p>
                 <div class="flex items-center">
-                <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 rounded-full hover:bg-gray-200 transition-colors text-red-500 dark:text-red-400">
+                <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-200 transition-colors text-red-500 dark:text-red-400">
                     Anamika.gogoi126@gmail.com
                 </a>
                 <div id="copy-message" class="text-base text-green-500 ml-2"></div>
                 </div>
                 
-                <div class="flex space-x-4 mt-6">
-                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
-                    <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
+                <div class="flex space-x-4 mt-6 text-center">
+                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 transition-colors">INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 transition-colors">LINKEDIN</a>
                 </div>
             </section>
         </main>
@@ -381,7 +383,7 @@
                 BACK
             </button>
             <div class="flex items-center">
-                <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 text-sm hover:bg-gray-200 transition-colors">
+                <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 transition-colors">
                     DOWNLOAD
                 </a>
                 <div id="download-feedback" class="flex items-center ml-2 opacity-0 transition-opacity duration-300">
@@ -476,130 +478,4 @@
                     const isHidden = navMenu.classList.contains('hidden');
                     if (isHidden) {
                         navMenu.classList.remove('hidden');
-                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-white', 'dark:bg-zinc-800', 'shadow-lg', 'z-20');
-                    } else {
-                        navMenu.classList.add('hidden');
-                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-white', 'dark:bg-zinc-800', 'shadow-lg', 'z-20');
-                    }
-                });
-            }
-
-            // New JavaScript for sliding resume page
-            if (resumeLink && resumePage) {
-                resumeLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    resumePage.classList.add('active');
-                });
-            }
-
-            if (backButton && resumePage) {
-                backButton.addEventListener('click', () => {
-                    resumePage.classList.remove('active');
-                });
-            }
-
-            // Fix for download button
-            if (downloadButton) {
-                downloadButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const url = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png';
-                    const filename = 'Anamika_Gogoi_Resume.png';
-
-                    // Show the downloading message
-                    downloadFeedback.style.opacity = 1;
-                    downloadMessage.textContent = 'Downloading...';
-                    downloadIcon.style.display = 'none'; // Hide icon during download
-
-                    fetch(url)
-                        .then(response => response.blob())
-                        .then(blob => {
-                            const link = document.createElement('a');
-                            link.href = URL.createObjectURL(blob);
-                            link.download = filename;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
-
-                            downloadMessage.textContent = 'Downloaded!';
-                            downloadIcon.style.display = 'block'; // Show icon on success
-                        })
-                        .catch(error => {
-                            console.error('Error downloading the file:', error);
-                            downloadMessage.textContent = 'Error!';
-                            downloadIcon.style.display = 'none'; // Hide icon on error
-                        })
-                        .finally(() => {
-                            // Hide the message after a delay
-                            setTimeout(() => {
-                                downloadFeedback.style.opacity = 0;
-                            }, 2000);
-                        });
-                });
-            }
-
-            // --- Image Modal Logic ---
-            const modal = document.getElementById('image-modal');
-            const modalImg = document.getElementById('modal-image');
-            const modalClose = document.getElementById('modal-close');
-            const bentoItems = document.querySelectorAll('.bento-item'); // Select the containers
-
-            if (modal && modalImg && bentoItems.length > 0) {
-                
-                // Open Modal
-                bentoItems.forEach(item => {
-                    item.addEventListener('click', (e) => {
-                        // Don't trigger if clicking a link inside (if any exist later)
-                        if (e.target.tagName === 'A') return;
-                        
-                        const img = item.querySelector('img');
-                        if (img) {
-                            modalImg.src = img.src;
-                            modal.classList.remove('hidden');
-                            // Small delay to allow display:flex to apply before opacity transition
-                            requestAnimationFrame(() => {
-                                modal.classList.remove('opacity-0');
-                                modalImg.classList.remove('scale-95');
-                                modalImg.classList.add('scale-100');
-                            });
-                            // Prevent body scrolling
-                            document.body.style.overflow = 'hidden';
-                        }
-                    });
-                });
-
-                // Close Modal Function
-                const closeModal = () => {
-                    modal.classList.add('opacity-0');
-                    modalImg.classList.remove('scale-100');
-                    modalImg.classList.add('scale-95');
-                    
-                    setTimeout(() => {
-                        modal.classList.add('hidden');
-                        modalImg.src = ''; // Clear src to stop memory leaks/flickers
-                        document.body.style.overflow = ''; // Restore scrolling
-                    }, 300); // Match transition duration
-                };
-
-                // Close on Button Click
-                if (modalClose) {
-                    modalClose.addEventListener('click', closeModal);
-                }
-
-                // Close on Background Click
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-
-                // Close on Escape Key
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-                        closeModal();
-                    }
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', '
