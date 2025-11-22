@@ -4,48 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alt+Anamika - UX Designer</title>
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Droid+Serif&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* Custom base colors matching the original design intent */
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f7f3ed;
-            color: #1a1a1a;
+            background-color: #f7f3ed; /* Light mode background */
+            color: #1a1a1a; /* Light mode text */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         body.dark-mode {
-            background-color: #1a1a1a;
-            color: #f7f3ed;
+            background-color: #1a1a1a; /* Dark mode background */
+            color: #f7f3ed; /* Dark mode text */
         }
-        body.dark-mode .hero-text {
-            color: #f7f3ed;
-        }
-        body.dark-mode .hero-text .text-red-500 {
-            color: #ff4500;
-        }
-        body.dark-mode .hover\:text-gray-600:hover {
-            color: #ccc;
-        }
-        body.dark-mode .text-gray-700 {
-            color: #ddd;
-        }
+        /* Specific dark mode color overrides for consistency */
+        body.dark-mode .hero-text { color: #f7f3ed; }
+        body.dark-mode .hero-text .text-red-500 { color: #ff4500; }
+        body.dark-mode .hover\:text-gray-600:hover { color: #ccc; }
+        body.dark-mode .text-gray-700 { color: #ddd; }
+        
         .hero-text {
             line-height: 0.9;
             transition: color 0.3s ease;
         }
-        .hero-heading {
-            font-family: 'Oswald', sans-serif;
-        }
-        .serif-font {
-            font-family: 'Droid Serif', serif;
-        }
-        /* Vertical Switch for Dark Mode */
+        .hero-heading { font-family: 'Oswald', sans-serif; }
+        .serif-font { font-family: 'Droid Serif', serif; }
+
+        /* Dark Mode Switch Styling */
         .switch-track {
             width: 25px;
             height: 85px;
@@ -65,60 +55,62 @@
             left: 2px;
             transition: transform 0.3s ease;
         }
-        .switch-track.active {
-            background-color: #ff4500;
+        .switch-track.active { background-color: #ff4500; }
+        .switch-track.active .switch-thumb { transform: translateY(-60px); }
+        .switch-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #1a1a1a;
+            text-shadow: 1px 1px 2px #fff;
         }
-        .switch-track.active .switch-thumb {
-            transform: translateY(-60px);
+        body.dark-mode .switch-label {
+            color: #f7f3ed;
+            text-shadow: 1px 1px 2px #000;
         }
         .email-link {
             cursor: pointer;
             text-decoration: none;
             color: inherit;
         }
-        .email-link:hover {
-            opacity: 0.8;
-        }
-        #copy-message {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+        .email-link:hover { opacity: 0.8; }
+        #copy-message { opacity: 0; transition: opacity 0.3s ease; }
 
         /* Styles for the main page and resume page containers */
         .main-page, .resume-page {
             transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Initially hide the resume page by moving it out of view (top-to-bottom slide) */
+        /* Initially hide the resume page by moving it out of view */
         .resume-page {
-            position: fixed; 
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh; 
-            background-color: rgba(247, 243, 237, 0.95); /* Light background matched to body */
+            height: 100vh;
+            background-color: rgba(247, 243, 237, 0.98); /* Use f7f3ed with transparency */
             transform: translateY(-100vh);
-            overflow-y: auto; 
+            overflow-y: auto;
             z-index: 50;
         }
 
         /* Dark mode adjustment for resume page background */
         body.dark-mode .resume-page {
-            background-color: rgba(26, 26, 26, 0.98);
+            background-color: rgba(26, 26, 26, 0.98); /* Use 1a1a1a with transparency */
         }
 
-        .resume-page.active {
-            transform: translateY(0);
-        }
+        .resume-page.active { transform: translateY(0); }
 
-        /* Bento Grid Item Styles */
+        /* Bento Grid Item Styles for hover effects and image containment */
         .bento-item {
             position: relative;
             overflow: hidden;
             border-radius: 1.5rem;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             cursor: pointer;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
         .bento-item:hover {
             transform: translateY(-4px) scale(1.01);
@@ -127,74 +119,60 @@
         }
         .bento-item img {
             width: 100%;
-            height: 100%; 
+            height: 100%;
             object-fit: cover;
-            object-position: top; 
+            object-position: top;
             transition: transform 0.5s ease;
             display: block; 
         }
-        .bento-item:hover img {
-            transform: scale(1.05);
-        }
+        .bento-item:hover img { transform: scale(1.05); }
 
-        /* Custom Clip Path for Case Study Images (Slanted effect) */
+        /* Custom Clip Path for Case Study Images (Mobile: bottom slant, Desktop: side slant) */
         .clip-image-slant {
-            /* Mobile: Slight slant at the bottom */
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
         }
         @media (min-width: 640px) {
             .clip-image-slant {
-                /* Desktop: Slant on the right side */
-                clip-path: polygon(0 0, 85% 0, 100% 100%, 0% 100%);
+                clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
             }
         }
 
-        #download-feedback {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        /* Modal Styles */
-        #image-modal {
-            pointer-events: none; /* Initially disabled pointer events */
-        }
-        #image-modal.active {
-            pointer-events: auto;
-        }
+        #download-feedback { opacity: 0; transition: opacity 0.3s ease; }
     </style>
 </head>
 <body class="p-4 md:p-16">
 
-    <!-- Main Page Content -->
+    <!-- Main Page Content Container -->
     <div class="main-page">
-        <header class="flex justify-between items-center mb-8 md:mb-16 relative z-30">
+        <header class="flex justify-between items-center mb-8 md:mb-16 relative">
             <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
             
             <!-- Hamburger menu for mobile screens -->
-            <button id="menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
+            <button id="menu-button" class="md:hidden p-2 z-50">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
 
-            <!-- The navigation menu -->
+            <!-- The navigation menu, handles mobile visibility via JS -->
             <div id="nav-menu" class="hidden md:flex flex-grow justify-end md:space-x-4">
                 <nav class="flex-grow flex justify-center">
-                    <ul class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
-                        <li><a href="#work" class="hover:text-gray-600">WORK</a></li>
-                        <li><a href="#" class="hover:text-gray-600">ABOUT</a></li>
-                        <li><a href="#" id="resume-link" class="hover:text-gray-600">RESUME</a></li>
-                        <li><a href="#contact" class="hover:text-gray-600">CONTACT</a></li>
+                    <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium">
+                        <li><a href="#work" class="hover:text-gray-600 block py-1 md:py-0">WORK</a></li>
+                        <li><a href="#" class="hover:text-gray-600 block py-1 md:py-0">ABOUT</a></li>
+                        <li><a href="#" id="resume-link" class="hover:text-gray-600 block py-1 md:py-0">RESUME</a></li>
+                        <li><a href="#contact" class="hover:text-gray-600 block py-1 md:py-0">CONTACT</a></li>
                     </ul>
                 </nav>
-                <div class="flex space-x-2 md:space-x-4 text-sm md:text-base font-medium">
+                <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium mt-4 md:mt-0 pt-2 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-zinc-700 w-full md:w-auto text-center">
                     <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="hover:text-gray-600">INSTAGRAM</a>
                     <a href="https://www.linkedin.com/feed" target="_blank" class="hover:text-gray-600">LINKEDIN</a>
                 </div>
             </div>
         </header>
 
-        <main class="text-center min-h-screen flex flex-col justify-center pt-[24px]">
+        <main class="text-center min-h-screen flex flex-col justify-center pt-[30px]">
+            <!-- Hero Text Section -->
             <div class="mb-8 md:mb-16">
                 <div class="inline-block mx-auto">
                 <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
@@ -202,10 +180,11 @@
                     <span class="block text-red-500 serif-font">EXPERIENCE</span>
                     <span class="inline-flex items-center gap-0 relative">
                         <span>DES</span>
-                        <div id="theme-switch" class="relative inline-block align-middle ml-0 px-[8px] top-[1px]">
+                        <div id="theme-switch" class="relative inline-block align-middle ml-0 px-[8px] top-[5px]">
                             <div class="switch-track">
                                 <div class="switch-thumb"></div>
                             </div>
+                            <!-- Switch label moved outside of track for clarity, still functional -->
                             <div class="absolute inset-x-0 bottom-[-20px] text-xs text-gray-500 dark:text-gray-300 ml-0 underline font-thin">
                                 <span class="ml-0 mr">Press</span>
                             </div>
@@ -221,20 +200,23 @@
                 </div>
             </div>
             
-            <div class="flex flex-col items-center justify-center px-2 mt-12 md:mt-36">
+            <!-- Intro Paragraph Section -->
+            <div class="flex flex-col items-center justify-center px-2 mt-[54px] md:mt-[155px]">
             <div class="max-w-2xl mx-auto text-left">
                 <p class="text-base md:text-xl leading-relaxed tracking-wider">
                     Hi, I'm Anamika 
                     <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/17459908c7d24b3847d343fcd2aa8f8bd7604c3f/images/ProfilePhoto.png" 
                         alt="Anamika's photo" 
+                        onerror="this.onerror=null; this.src='https://placehold.co/40x40/f7f3ed/1a1a1a?text=A'"
                         class="w-8 h-8 md:w-10 md:h-10 rounded-full object-cover inline-block align-middle ml-1 mr-1">, 
                     blending my background in animation 
                     <span class="block mt-1 md:mt-2 leading-loose">
                         with UI/UX design. I design digital products <img id="digital-products-icon" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg" 
                         alt="Digital products icon" 
+                        onerror="this.onerror=null; this.src='https://placehold.co/56x56/f7f3ed/ff4500?text=UX'"
                         class="inline-block w-8 h-8 md:w-14 md:h-14 rotate-[30deg]">, 
                         brands <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/1b6b1e6f7025a046694fc5007c292fbd89ab7cce/brand.jpeg" 
-                            alt="Brands icon" class="inline-block w-4 h-4 md:w-6 md:h-6 ml-1 mr-1">, 
+                        alt="Brands icon" class="inline-block w-4 h-4 md:w-6 md:h-6 ml-1 mr-1 rounded-full object-cover">, 
                     </span>
 
                     <span class="block mt-2 md:mt-4 leading-loose">
@@ -242,21 +224,24 @@
                     </span>
                 </p>
                 </div>
+                <!-- Honeycomb Image (Decorative Element) -->
                 <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">
             </div>
 
-            <section id="work" class="mt-12 md:mt-36 max-w-6xl mx-auto text-left">
+            <!-- Case Study Section -->
+            <section id="work" class="mt-[54px] md:mt-[155px] max-w-6xl mx-auto w-full text-left">
                 <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8">Case study</h2>
                 
                 <!-- Case Study Cards Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
                     
                     <!-- Case Study 1: Go-Farming -->
-                    <a href="https://anamika-ctrl.github.io/Go-Farming" target="_blank" class="group relative flex flex-col sm:flex-row bg-white dark:bg-zinc-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                    <a href="https://anamika-ctrl.github.io/Go-Farming" target="_blank" class="group relative flex flex-col sm:flex-row bg-white dark:bg-zinc-800 rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                         <!-- Image Section with Slanted Clip Path -->
                         <div class="w-full sm:w-2/5 h-48 sm:h-auto relative overflow-hidden clip-image-slant z-10">
                             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" 
                                 alt="Go-Farming Project" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/ff4500?text=Go-Farming';"
                                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                         </div>
                         <!-- Content Section -->
@@ -276,22 +261,23 @@
                         </div>
                     </a>
 
-                    <!-- Case Study 2: ASTC Redesign (In Progress) -->
-                    <!-- NOTE: Replaced broken image path with a functional placeholder -->
-                    <div class="group relative flex flex-col sm:flex-row bg-white dark:bg-zinc-800 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-default">
+                    <!-- Case Study 2: Coming Soon (ASTC Redesign) -->
+                    <div class="group relative flex flex-col sm:flex-row bg-white dark:bg-zinc-800 rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 cursor-default">
                         <!-- Image Section with Slanted Clip Path -->
                         <div class="w-full sm:w-2/5 h-48 sm:h-auto relative overflow-hidden bg-gray-200 dark:bg-zinc-700 clip-image-slant z-10">
-                            <!-- Fixed Placeholder Image URL -->
-                            <img src="https://placehold.co/800x600/6b7280/ffffff?text=ASTC+Redesign+WIP" 
-                                alt="ASTC Redesign Placeholder"
-                                class="w-full h-full object-cover object-center opacity-80 grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105">
+                            <!-- Placeholder Image (ASTC Logo placeholder) -->
+                            <img src="https://placehold.co/600x400/9ca3af/ffffff?text=ASTC+Redesign" 
+                                alt="ASTC Logo" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/600x400/9ca3af/ffffff?text=ASTC+Redesign';"
+                                class="absolute inset-0 w-full h-full object-contain object-center opacity-80 grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105">
                         </div>
                         <!-- Content Section -->
                         <div class="w-full sm:w-3/5 p-6 md:p-8 flex flex-col justify-between relative z-0 bg-white dark:bg-zinc-800">
                             <div class="mb-4">
-                                <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Coming Soon</h3>
+                                <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-white">Coming Soon (ASTC)</h3>
                                 <p class="text-xs md:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                                    A redesign of the ASTC Government transport website to improve accessibility and modernize ticket booking for Assam’s commuters. Focused on simplifying travel planning with clearer routes and real‑time bus updates.</p>
+                                    A redesign of the ASTC Government transport website to improve accessibility and modernize ticket booking for Assam’s commuters. Focused on simplifying travel planning with clearer routes and real‑time bus updates.
+                                </p>
                             </div>
                             <div class="flex items-center justify-between mt-2">
                                 <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">In Progress</span>
@@ -301,64 +287,64 @@
 
                 </div>
 
+                <!-- Personal Tasks Section (Bento Grid) -->
                 <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-8">Personal tasks</h2>
                 
-                <!-- Bento Grid Layout -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px] md:auto-rows-[240px] pb-8">
                     
                     <!-- Item 1: Tall Left (Food App) - Spans 2 rows vertically -->
-                    <div class="bento-item md:row-span-2 rounded-[30px]" data-image="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png">
+                    <div class="bento-item md:row-span-2 rounded-[30px] shadow-lg">
                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="Food App UI">
                     </div>
                     
                     <!-- Item 2: Top Middle (Food Delivery) -->
-                    <div class="bento-item rounded-3xl" data-image="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png">
+                    <div class="bento-item rounded-3xl shadow-lg">
                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="Food Delivery UI">
                     </div>
                     
                     <!-- Item 3: Top Right (Login) -->
-                    <div class="bento-item rounded-3xl" data-image="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg">
-                       <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="Login UI">
+                    <div class="bento-item rounded-3xl shadow-lg">
+                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="Login UI">
                     </div>
                     
                     <!-- Item 4: Wide Middle (Map) - Spans 2 columns -->
-                    <div class="bento-item md:col-span-2 rounded-3xl" data-image="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG">
+                    <div class="bento-item md:col-span-2 rounded-3xl shadow-lg">
                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="Map UI">
                     </div>
                     
                     <!-- Item 5: Wide Bottom (Retro Landing) - Spans 2 columns -->
-                    <div class="bento-item md:col-span-2 rounded-3xl" data-image="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg">
+                    <div class="bento-item md:col-span-2 rounded-3xl shadow-lg">
                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="Retro Landing Page">
                     </div>
                     
                     <!-- Item 6: Bottom Right (Screenshot) -->
-                    <div class="bento-item rounded-3xl" data-image="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png">
+                    <div class="bento-item rounded-3xl shadow-lg">
                         <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="App Screenshot">
                     </div>
                 </div>
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-12 md:mt-36">
+            <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-[54px] md:mt-[155px]">
                 <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
                 <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
                 
                 <p class="text-sm md:text-base mb-2">Contact me :</p>
                 <div class="flex items-center">
-                <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors text-red-500 dark:text-red-400">
+                <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors text-red-500 dark:text-red-400">
                     Anamika.gogoi126@gmail.com
                 </a>
                 <div id="copy-message" class="text-base text-green-500 ml-2"></div>
                 </div>
                 
                 <div class="flex space-x-4 mt-6 text-center">
-                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors">INSTAGRAM</a>
-                    <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors">LINKEDIN</a>
+                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">LINKEDIN</a>
                 </div>
             </section>
         </main>
         
-        <footer class="mt-auto pt-8 w-full text-left pb-8">
+        <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16 pb-8">
             <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">Design & Developed</p>
             <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">by Anamika Gogoi</p>
         </footer>
@@ -367,36 +353,37 @@
 
     <!-- Resume Page Content (initially hidden) -->
     <div class="resume-page p-4 md:p-16 flex flex-col items-center">
-        <header class="w-full flex justify-between items-center mb-8">
-            <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600 dark:hover:text-gray-400 transition-colors">
+        <header class="w-full max-w-2xl flex justify-between items-center mb-8">
+            <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600 dark:hover:text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 BACK
             </button>
             <div class="flex items-center">
-                <!-- Download link is set to the same image as the preview for easy saving -->
-                <a href="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" 
-                   download="Anamika_Gogoi_Resume.png"
-                   id="download-button" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors">
+                <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
                     DOWNLOAD
                 </a>
-                <div id="download-feedback" class="flex items-center ml-2">
-                    <span id="download-message" class="text-sm text-green-600 dark:text-green-400"></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" id="download-icon" class="h-4 w-4 ml-1 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div id="download-feedback" class="flex items-center ml-2 opacity-0 transition-opacity duration-300">
+                    <span id="download-message" class="text-sm text-green-600"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="download-icon" class="h-4 w-4 ml-1 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
             </div>
         </header>
-        <div class="w-full h-full flex justify-center items-center py-10 flex-grow">
-             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" alt="Anamika Gogoi's Resume" class="w-full h-auto max-w-2xl max-h-[85vh] object-contain rounded-xl shadow-2xl">
+        <div class="w-full h-full flex justify-center items-center py-10">
+             <!-- Resume Image/PDF Placeholder -->
+             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" 
+                alt="Anamika Gogoi's Resume" 
+                onerror="this.onerror=null; this.src='https://placehold.co/800x1100/1a1a1a/f7f3ed?text=Anamika+Gogoi+Resume+Preview'"
+                class="w-full h-auto max-w-2xl max-h-[85vh] object-contain shadow-2xl rounded-xl">
         </div>
     </div>
 
     <!-- Image Modal (Lightbox) -->
     <div id="image-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300 p-4 md:p-8">
-        <button id="modal-close" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2 z-10">
+        <button id="modal-close" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -408,7 +395,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const body = document.body;
             const themeSwitch = document.getElementById('theme-switch');
-            const switchTrack = themeSwitch ? themeSwitch.querySelector('.switch-track') : null;
+            const switchThumb = themeSwitch ? themeSwitch.querySelector('.switch-thumb') : null;
             const digitalProductsIcon = document.getElementById('digital-products-icon');
             const honeycombImage = document.getElementById('honeycomb-image');
             const emailLink = document.getElementById('email-link');
@@ -423,44 +410,33 @@
             const downloadFeedback = document.getElementById('download-feedback');
             const downloadMessage = document.getElementById('download-message');
             const downloadIcon = document.getElementById('download-icon');
-
-            // Image Modal Elements
-            const modal = document.getElementById('image-modal');
+            const bentoItems = document.querySelectorAll('.bento-item');
+            const imageModal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
             const modalClose = document.getElementById('modal-close');
-            const bentoItems = document.querySelectorAll('.bento-item img');
 
             const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
             const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
             const honeycombLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg';
             const honeycombDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/honeycomb-darkmode.svg';
 
-            // --- Dark Mode Toggle ---
-            if (themeSwitch && switchTrack) {
+            // --- 1. Dark Mode Toggle ---
+            if (themeSwitch) {
                 themeSwitch.addEventListener('click', () => {
                     body.classList.toggle('dark-mode');
-                    switchTrack.classList.toggle('active');
+                    if(switchThumb) switchThumb.parentElement.classList.toggle('active');
                     
-                    const isDarkMode = body.classList.contains('dark-mode');
-
-                    // Update dynamic SVGs based on theme
-                    if (isDarkMode) {
+                    if (body.classList.contains('dark-mode')) {
                         if (digitalProductsIcon) digitalProductsIcon.src = darkModeDigitalProductsIcon;
                         if (honeycombImage) honeycombImage.src = honeycombDark;
                     } else {
                         if (digitalProductsIcon) digitalProductsIcon.src = lightModeDigitalProductsIcon;
                         if (honeycombImage) honeycombImage.src = honeycombLight;
                     }
-
-                    // Update mobile menu background for contrast
-                    if (navMenu && !navMenu.classList.contains('hidden')) {
-                         navMenu.classList.toggle('bg-f7f3ed', !isDarkMode);
-                         navMenu.classList.toggle('dark:bg-1a1a1a', isDarkMode);
-                    }
                 });
             }
 
-            // --- Email Copy Functionality ---
+            // --- 2. Email Copy Functionality ---
             if (emailLink) {
                 emailLink.addEventListener('click', () => {
                     const email = emailLink.textContent.trim();
@@ -469,7 +445,6 @@
                     document.body.appendChild(tempInput);
                     tempInput.select();
                     try {
-                        // Use document.execCommand for better compatibility in iframe environments
                         document.execCommand('copy');
                         copyMessage.textContent = 'Copied!';
                         copyMessage.style.opacity = 1;
@@ -483,114 +458,123 @@
                 });
             }
 
-            // --- Mobile Menu Toggle ---
-            function toggleMobileMenu() {
-                const isHidden = navMenu.classList.contains('hidden');
-                navMenu.classList.toggle('hidden', !isHidden);
-                
-                // Toggle mobile menu classes (absolute positioning, background, etc.)
-                navMenu.classList.toggle('absolute', isHidden);
-                navMenu.classList.toggle('top-16', isHidden);
-                navMenu.classList.toggle('left-0', isHidden);
-                navMenu.classList.toggle('right-0', isHidden);
-                navMenu.classList.toggle('flex', isHidden);
-                navMenu.classList.toggle('flex-col', isHidden);
-                navMenu.classList.toggle('items-center', isHidden);
-                navMenu.classList.toggle('space-y-4', isHidden);
-                navMenu.classList.toggle('py-4', isHidden);
-                navMenu.classList.toggle('shadow-lg', isHidden);
-                navMenu.classList.toggle('z-40', isHidden);
-                
-                // Ensure correct background is applied based on theme
-                const isDarkMode = body.classList.contains('dark-mode');
-                navMenu.classList.toggle('bg-[#f7f3ed]', isHidden && !isDarkMode);
-                navMenu.classList.toggle('dark:bg-[#1a1a1a]', isHidden && isDarkMode);
-            }
-
+            // --- 3. Mobile Menu Toggle (Completed Logic) ---
             if (menuButton && navMenu) {
-                menuButton.addEventListener('click', toggleMobileMenu);
+                menuButton.addEventListener('click', () => {
+                    const isHidden = navMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        // Show menu and apply overlay styles
+                        navMenu.classList.remove('hidden');
+                        // Use arbitrary values for the custom background colors
+                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'z-40', 'border-t', 'border-gray-200', 'dark:border-zinc-700');
+                    } else {
+                        // Hide menu and remove overlay styles
+                        navMenu.classList.add('hidden');
+                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'z-40', 'border-t', 'border-gray-200', 'dark:border-zinc-700');
+                    }
+                });
 
-                // Close menu when a link is clicked (on mobile)
+                // Close mobile menu when a link is clicked
                 navMenu.querySelectorAll('a').forEach(link => {
                     link.addEventListener('click', () => {
-                        if (!navMenu.classList.contains('hidden')) {
-                            toggleMobileMenu();
-                        }
+                        if (!menuButton.classList.contains('md:hidden')) return; // Only run on mobile
+                        navMenu.classList.add('hidden');
+                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'z-40', 'border-t', 'border-gray-200', 'dark:border-zinc-700');
                     });
                 });
             }
 
-            // --- Resume View Transitions ---
-            if (resumeLink && backButton && resumePage) {
-                resumeLink.addEventListener('click', (e) => {
-                    e.preventDefault();
+            // --- 4. Resume Page Overlay Logic ---
+            const toggleResume = (show) => {
+                if (show) {
                     resumePage.classList.add('active');
-                    body.style.overflow = 'hidden'; // Prevent main page scrolling
-                });
-
-                backButton.addEventListener('click', () => {
+                    body.style.overflow = 'hidden'; // Prevent background scrolling
+                } else {
                     resumePage.classList.remove('active');
                     body.style.overflow = ''; // Restore scrolling
+                }
+            };
+
+            if (resumeLink) {
+                resumeLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleResume(true);
+                });
+            }
+            if (backButton) {
+                backButton.addEventListener('click', () => {
+                    toggleResume(false);
                 });
             }
 
-            // --- Download Button Feedback ---
+            // --- 5. Resume Download Logic ---
             if (downloadButton) {
-                downloadButton.addEventListener('click', () => {
-                    // This uses the HTML 'download' attribute, but we add visual feedback
-                    downloadMessage.textContent = 'Preparing...';
-                    downloadFeedback.style.opacity = 1;
+                downloadButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Using the image URL as the downloadable file
+                    const resumeUrl = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png';
+                    const link = document.createElement('a');
+                    link.href = resumeUrl;
+                    link.download = 'Anamika_Gogoi_UX_Resume.png'; 
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
 
-                    // Simulate a slight delay for feedback
+                    // Show download feedback
+                    downloadMessage.textContent = 'Downloading...';
+                    downloadFeedback.style.opacity = 1;
+                    downloadIcon.classList.add('hidden');
+                    
+                    // Simulate completion after a brief delay
                     setTimeout(() => {
-                        downloadMessage.textContent = 'Downloaded!';
-                        // The icon is already visible if feedback opacity is 1
+                        downloadMessage.textContent = 'Success!';
+                        downloadIcon.classList.remove('hidden');
                         setTimeout(() => {
                             downloadFeedback.style.opacity = 0;
                         }, 2000);
-                    }, 1000);
+                    }, 500);
                 });
             }
 
-            // --- Image Modal (Lightbox) Logic ---
-            function closeModal() {
-                modal.style.opacity = 0;
-                modalImage.style.transform = 'scale(0.95)';
+            // --- 6. Image Modal (Lightbox) Logic for Bento Grid ---
+            const openModal = (imgSrc) => {
+                modalImage.src = imgSrc;
+                imageModal.classList.remove('hidden');
+                imageModal.style.opacity = 0; 
+                body.style.overflow = 'hidden';
+
                 setTimeout(() => {
-                    modal.classList.add('hidden');
-                    modal.classList.remove('active');
-                    body.style.overflow = ''; // Unlock scrolling
-                }, 300); // Match transition duration
-            }
+                    imageModal.style.opacity = 1;
+                    modalImage.classList.remove('scale-95'); 
+                    modalImage.classList.add('scale-100');
+                }, 10);
+            };
+
+            const closeModal = () => {
+                imageModal.style.opacity = 0;
+                modalImage.classList.remove('scale-100');
+                modalImage.classList.add('scale-95');
+                body.style.overflow = '';
+                setTimeout(() => {
+                    imageModal.classList.add('hidden');
+                }, 300);
+            };
 
             bentoItems.forEach(item => {
-                item.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    modalImage.src = item.src;
-                    modal.classList.remove('hidden');
-                    modal.classList.add('active'); // Enable pointer events
-                    // Wait for the next frame to apply the final opacity/transform
-                    setTimeout(() => {
-                        modal.style.opacity = 1;
-                        modalImage.style.transform = 'scale(1)';
-                        body.style.overflow = 'hidden'; // Lock scrolling
-                    }, 10);
+                item.addEventListener('click', () => {
+                    const imgSrc = item.querySelector('img').src;
+                    openModal(imgSrc);
                 });
             });
 
-            if (modalClose) {
-                modalClose.addEventListener('click', closeModal);
-            }
+            modalClose.addEventListener('click', closeModal);
 
-            // Close modal when clicking the backdrop
-            if (modal) {
-                modal.addEventListener('click', (e) => {
-                    // Check if click was on the modal container itself, not the image
-                    if (e.target === modal || e.target === modalClose) {
-                        closeModal();
-                    }
-                });
-            }
+            // Close modal on outside click
+            imageModal.addEventListener('click', (e) => {
+                if (e.target === imageModal) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>
