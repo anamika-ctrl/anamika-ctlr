@@ -10,6 +10,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Droid+Serif&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        oswald: ['Oswald', 'sans-serif'],
+                        serif: ['Droid Serif', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         /* Custom base colors matching the original design intent */
         body {
@@ -165,6 +179,7 @@
                     </ul>
                 </nav>
                 <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium mt-4 md:mt-0 pt-2 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-zinc-700 w-full md:w-auto text-center">
+                    <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="hover:text-gray-600">BEHANCE</a>
                     <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="hover:text-gray-600">INSTAGRAM</a>
                     <a href="https://www.linkedin.com/feed" target="_blank" class="hover:text-gray-600">LINKEDIN</a>
                 </div>
@@ -337,7 +352,8 @@
                 <div id="copy-message" class="text-base text-green-500 ml-2"></div>
                 </div>
                 
-                <div class="flex space-x-4 mt-6 text-center">
+                <div class="flex flex-wrap justify-center gap-4 mt-6 text-center">
+                    <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">BEHANCE</a>
                     <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">INSTAGRAM</a>
                     <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">LINKEDIN</a>
                 </div>
@@ -507,74 +523,96 @@
                 });
             }
 
-            // --- 5. Resume Download Logic ---
-            if (downloadButton) {
-                downloadButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // Using the image URL as the downloadable file
-                    const resumeUrl = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png';
-                    const link = document.createElement('a');
-                    link.href = resumeUrl;
-                    link.download = 'Anamika_Gogoi_UX_Resume.png'; 
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+            // --- 5. Bento Grid Lightbox (Modal) Logic ---
+            // This logic allows clicking on personal task images to view them in full screen
+            if (bentoItems.length > 0 && imageModal && modalImage) {
+                bentoItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const img = item.querySelector('img');
+                        if (img) {
+                            modalImage.src = img.src;
+                            // Show modal container
+                            imageModal.classList.remove('hidden');
+                            
+                            // Small timeout to allow the browser to register 'display:flex' before changing opacity for transition
+                            setTimeout(() => {
+                                imageModal.classList.remove('opacity-0');
+                                modalImage.classList.remove('scale-95');
+                                modalImage.classList.add('scale-100');
+                            }, 10);
+                            
+                            body.style.overflow = 'hidden'; // Prevent background scrolling
+                        }
+                    });
+                });
 
-                    // Show download feedback
-                    downloadMessage.textContent = 'Downloading...';
-                    downloadFeedback.style.opacity = 1;
-                    downloadIcon.classList.add('hidden');
+                const closeModal = () => {
+                    imageModal.classList.add('opacity-0');
+                    modalImage.classList.remove('scale-100');
+                    modalImage.classList.add('scale-95');
                     
-                    // Simulate completion after a brief delay
+                    // Wait for transition to finish before hiding
                     setTimeout(() => {
-                        downloadMessage.textContent = 'Success!';
-                        downloadIcon.classList.remove('hidden');
-                        setTimeout(() => {
-                            downloadFeedback.style.opacity = 0;
-                        }, 2000);
-                    }, 500);
+                        imageModal.classList.add('hidden');
+                        modalImage.src = ''; // Clear source to prevent flash on next open
+                        body.style.overflow = ''; // Restore scrolling
+                    }, 300);
+                };
+
+                if (modalClose) {
+                    modalClose.addEventListener('click', closeModal);
+                }
+
+                // Close when clicking the backdrop (outside the image)
+                imageModal.addEventListener('click', (e) => {
+                    if (e.target === imageModal) {
+                        closeModal();
+                    }
+                });
+
+                // Close on Escape key press
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+                        closeModal();
+                    }
                 });
             }
 
-            // --- 6. Image Modal (Lightbox) Logic for Bento Grid ---
-            const openModal = (imgSrc) => {
-                modalImage.src = imgSrc;
-                imageModal.classList.remove('hidden');
-                imageModal.style.opacity = 0; 
-                
+            // --- 6. Resume Download Simulation ---
+            if (downloadButton) {
+                downloadButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Show initial downloading state
+                    downloadFeedback.style.opacity = '1';
+                    downloadMessage.textContent = 'Downloading...';
+                    downloadMessage.className = 'text-sm text-gray-600 dark:text-gray-300';
+                    downloadIcon.style.display = 'none';
 
-                setTimeout(() => {
-                    imageModal.style.opacity = 1;
-                    modalImage.classList.remove('scale-95'); 
-                    modalImage.classList.add('scale-100');
-                }, 10);
-            };
+                    // Simulate network delay
+                    setTimeout(() => {
+                        // Update UI to success state
+                        downloadMessage.textContent = 'Download Started!';
+                        downloadMessage.className = 'text-sm text-green-600';
+                        downloadIcon.style.display = 'inline-block';
+                        
+                        // Trigger actual file download
+                        const link = document.createElement('a');
+                        // Using the resume image URL found in HTML
+                        link.href = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png';
+                        link.download = 'Anamika_Gogoi_Resume.png';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
 
-            const closeModal = () => {
-                imageModal.style.opacity = 0;
-                modalImage.classList.remove('scale-100');
-                modalImage.classList.add('scale-95');
-                body.style.overflow = '';
-                setTimeout(() => {
-                    imageModal.classList.add('hidden');
-                }, 300);
-            };
-
-            bentoItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const imgSrc = item.querySelector('img').src;
-                    openModal(imgSrc);
+                        // Hide feedback after a few seconds
+                        setTimeout(() => {
+                            downloadFeedback.style.opacity = '0';
+                        }, 3000);
+                    }, 1500);
                 });
-            });
+            }
 
-            modalClose.addEventListener('click', closeModal);
-
-            // Close modal on outside click
-            imageModal.addEventListener('click', (e) => {
-                if (e.target === imageModal) {
-                    closeModal();
-                }
-            });
         });
     </script>
 </body>
