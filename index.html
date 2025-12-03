@@ -135,23 +135,30 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: top;
+            object-position: top; /* <— Keep TOP part visible */
             transition: transform 0.5s ease;
-            display: block; 
+            display: block;
         }
-        .bento-item:hover img { transform: scale(1.05); }
+        .gallery-wrap{ width:100%; }
+        /* Grid definitions */
+        .gallery-grid { 
+            width:100%; 
+            display:grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 1rem; 
+        }
+        
+        .bento-item:hover img{ transform: scale(1.05); }
 
-        /* Custom Clip Path for Case Study Images (Mobile: bottom slant, Desktop: side slant) */
+        /* Slanted Clip Path Class */
         .clip-image-slant {
-            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
         }
-        @media (min-width: 640px) {
+        @media (max-width: 640px) {
             .clip-image-slant {
-                clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+                clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
             }
         }
-
-        #download-feedback { opacity: 0; transition: opacity 0.3s ease; }
     </style>
 </head>
 <body class="p-4 md:p-16">
@@ -162,7 +169,7 @@
             <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
             
             <!-- Hamburger menu for mobile screens -->
-            <button id="menu-button" class="md:hidden p-2 z-50">
+            <button id="menu-button" class="md:hidden p-2 z-50 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
@@ -199,7 +206,7 @@
                             <div class="switch-track">
                                 <div class="switch-thumb"></div>
                             </div>
-                            <!-- Switch label moved outside of track for clarity, still functional -->
+                            <!-- Switch label -->
                             <div class="absolute inset-x-0 bottom-[-20px] text-xs text-gray-500 dark:text-gray-300 ml-0 underline font-thin">
                                 <span class="ml-0 mr">Press</span>
                             </div>
@@ -238,13 +245,35 @@
                         and experiences that are not just usable, but also memorable.
                     </span>
                 </p>
-                </div>
-                <!-- Honeycomb Image (Decorative Element) -->
-                <img id="honeycomb-image" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg" alt="Honeycomb pattern" class="mt-4 md:mt-8 ml-2 md:ml-4 w-auto h-auto max-w-[200px] md:max-w-full">
-            </div>
 
-            <!-- Case Study Section -->
-            <section id="work" class="mt-[54px] md:mt-[155px] max-w-6xl mx-auto w-full text-left">
+
+            <!-- Skills / Hashtags Section -->
+             <section class="mt-28px md:mt-[28px] max-w-6xl mx-auto w-full text-left">
+                <h2 class="text-xl md:text-3xl font-semibold tracking-tight text-left mb-0">My Service, My Expertise</h2>
+            <div class="max-w-6xl mx-auto mt-4 md:mt-6 text-left">
+                <div class="flex flex-wrap justify-start gap-x-3 md:gap-x-6 gap-y-2 text-sm md:text-lg font-medium text-gray-500 dark:text-gray-400 leading-relaxed">
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#UserInterfaceDesign</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#UserExperienceResearch</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#Figma</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#Framer</span>
+                    <span class="w-full md:w-auto hidden md:block"></span> <!-- Force break on larger screens if needed to match visual, but flex is safer -->
+                    
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#WebDesign</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#MobileAppDesign</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#Prototyping</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#Wireframing</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#CleanDesign</span>
+                    <span class="w-full md:w-auto hidden md:block"></span>
+                    
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#MinimalDesign</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#AestheticDesign</span>
+                    <span class="cursor-pointer hover:text-red-500 dark:hover:text-red-400 hover:scale-105 hover:rotate-[03deg] transition-all duration-300">#LuxuryDesign</span>
+                </div>
+            </div>
+               </section>
+
+<!-- Case Study Section -->
+            <section id="work" class="mt-[54px] md:mt-[100px] max-w-6xl mx-auto w-full text-left">
                 <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8">Case study</h2>
                 
                 <!-- Case Study Cards Grid -->
@@ -303,39 +332,25 @@
                 </div>
 
                 <!-- Personal Tasks Section (Bento Grid) -->
-                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-8">Personal tasks</h2>
+                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-8">Gallery</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 auto-rows-[200px] md:auto-rows-[240px] pb-8">
-                    
-                    <!-- Item 1: Tall Left (Food App) - Spans 2 rows vertically -->
-                    <div class="bento-item md:row-span-2 rounded-[30px] shadow-lg">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="Food App UI">
+                <!-- Gallery Grid: 3 columns of equal square tiles -->
+                <div class="flex justify-center my-2">
+                    <div class="gallery-wrap w-full max-w-xl">
+                        <div class="gallery-grid grid grid-cols-3 gap-4">
+                            <div class="bento-item aspect-[5/5] flex items-start justify-center"><img class="w-[0.1%] h-auto object-contain" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2da1ab785b11d42e686283ba64c69934fb7223a4/foodApp-page1.png" alt="Food App UI"></div>
+                            <div class="bento-item aspect-[5/5]"><img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="Food Delivery UI"></div>
+                            <div class="bento-item aspect-[5/5]"><img class="cover" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="Login UI"></div>
+                            <div class="bento-item aspect-[5/5]"><img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="Map UI"></div>
+                            <div class="bento-item aspect-[5/5] flex items-start justify-top"><img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" class="object-contain object-top" alt="Retro Landing Page"></div>
+                            <div class="bento-item aspect-[5/5]"><img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="App Screenshot"></div>
+                            <!-- YouTube video below this image -->
+                            <div class="col-span-3 w-full mt-1 flex justify-center">
+                            <iframe width="640" height="360" class="rounded-xl" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/216751f52a7ef928acf900b1f99cae226f54ab18/video/jan%202023.mp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <!-- Item 2: Top Middle (Food Delivery) -->
-                    <div class="bento-item rounded-3xl shadow-lg">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="Food Delivery UI">
-                    </div>
-                    
-                    <!-- Item 3: Top Right (Login) -->
-                    <div class="bento-item rounded-3xl shadow-lg">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="Login UI">
-                    </div>
-                    
-                    <!-- Item 4: Wide Middle (Map) - Spans 2 columns -->
-                    <div class="bento-item md:col-span-2 rounded-3xl shadow-lg">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="Map UI">
-                    </div>
-                    
-                    <!-- Item 5: Wide Bottom (Retro Landing) - Spans 2 columns -->
-                    <div class="bento-item md:col-span-2 rounded-3xl shadow-lg">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="Retro Landing Page">
-                    </div>
-                    
-                    <!-- Item 6: Bottom Right (Screenshot) -->
-                    <div class="bento-item rounded-3xl shadow-lg">
-                        <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="App Screenshot">
-                    </div>
+                </div>
                 </div>
             </section>
 
@@ -413,7 +428,6 @@
             const themeSwitch = document.getElementById('theme-switch');
             const switchThumb = themeSwitch ? themeSwitch.querySelector('.switch-thumb') : null;
             const digitalProductsIcon = document.getElementById('digital-products-icon');
-            const honeycombImage = document.getElementById('honeycomb-image');
             const emailLink = document.getElementById('email-link');
             const copyMessage = document.getElementById('copy-message');
             const menuButton = document.getElementById('menu-button');
@@ -433,8 +447,6 @@
 
             const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
             const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
-            const honeycombLight = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/39f31d468dd7a988f3b1465443ca3f0d2f3eabaa/honeycomb.svg';
-            const honeycombDark = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/honeycomb-darkmode.svg';
 
             // --- 1. Dark Mode Toggle ---
             if (themeSwitch) {
@@ -444,10 +456,8 @@
                     
                     if (body.classList.contains('dark-mode')) {
                         if (digitalProductsIcon) digitalProductsIcon.src = darkModeDigitalProductsIcon;
-                        if (honeycombImage) honeycombImage.src = honeycombDark;
                     } else {
                         if (digitalProductsIcon) digitalProductsIcon.src = lightModeDigitalProductsIcon;
-                        if (honeycombImage) honeycombImage.src = honeycombLight;
                     }
                 });
             }
@@ -474,145 +484,110 @@
                 });
             }
 
-            // --- 3. Mobile Menu Toggle (Completed Logic) ---
+            // --- 3. Mobile Menu Toggle ---
             if (menuButton && navMenu) {
                 menuButton.addEventListener('click', () => {
                     const isHidden = navMenu.classList.contains('hidden');
                     if (isHidden) {
-                        // Show menu and apply overlay styles
+                        // Show menu
                         navMenu.classList.remove('hidden');
-                        // Use arbitrary values for the custom background colors
-                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'z-40', 'border-t', 'border-gray-200', 'dark:border-zinc-700');
+                        // Add mobile styling overlay classes
+                        navMenu.classList.add('absolute', 'top-16', 'left-0', 'right-0', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'p-6', 'z-40', 'flex-col', 'border-b', 'border-gray-200', 'dark:border-zinc-800');
+                        navMenu.classList.remove('flex-grow'); // reset growth for overlay style
                     } else {
-                        // Hide menu and remove overlay styles
+                        // Hide menu
                         navMenu.classList.add('hidden');
-                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'z-40', 'border-t', 'border-gray-200', 'dark:border-zinc-700');
+                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'p-6', 'z-40', 'flex-col', 'border-b', 'border-gray-200', 'dark:border-zinc-800');
+                        navMenu.classList.add('flex-grow');
                     }
                 });
-
-                // Close mobile menu when a link is clicked
-                navMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (!menuButton.classList.contains('md:hidden')) return; // Only run on mobile
-                        navMenu.classList.add('hidden');
-                        navMenu.classList.remove('absolute', 'top-16', 'left-0', 'right-0', 'flex', 'flex-col', 'items-center', 'space-y-4', 'py-4', 'bg-[#f7f3ed]', 'dark:bg-[#1a1a1a]', 'shadow-xl', 'z-40', 'border-t', 'border-gray-200', 'dark:border-zinc-700');
-                    });
-                });
             }
 
-            // --- 4. Resume Page Overlay Logic ---
-            const toggleResume = (show) => {
-                if (show) {
-                    resumePage.classList.add('active');
-                    body.style.overflow = 'hidden'; // Prevent background scrolling
-                } else {
-                    resumePage.classList.remove('active');
-                    body.style.overflow = ''; // Restore scrolling
-                }
-            };
-
-            if (resumeLink) {
+            // --- 4. Resume Page Transition ---
+            if (resumeLink && resumePage && backButton) {
                 resumeLink.addEventListener('click', (e) => {
                     e.preventDefault();
-                    toggleResume(true);
+                    resumePage.classList.add('active');
+                    // Lock scrolling on main page
+                    document.body.style.overflow = 'hidden';
                 });
-            }
-            if (backButton) {
+
                 backButton.addEventListener('click', () => {
-                    toggleResume(false);
+                    resumePage.classList.remove('active');
+                    // Restore scrolling
+                    document.body.style.overflow = '';
                 });
             }
 
-            // --- 5. Bento Grid Lightbox (Modal) Logic ---
-            // This logic allows clicking on personal task images to view them in full screen
-            if (bentoItems.length > 0 && imageModal && modalImage) {
+            // --- 5. Download Button Feedback ---
+            if (downloadButton && downloadFeedback && downloadMessage) {
+                downloadButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Simulate a download action
+                    downloadMessage.textContent = "Downloading...";
+                    downloadFeedback.style.opacity = '1';
+                    
+                    setTimeout(() => {
+                        downloadMessage.textContent = "Done!";
+                        setTimeout(() => {
+                            downloadFeedback.style.opacity = '0';
+                        }, 2000);
+                    }, 1500);
+                });
+            }
+
+            // --- 6. Lightbox (Image Modal) ---
+            if (bentoItems.length > 0 && imageModal && modalImage && modalClose) {
+                // Open modal
                 bentoItems.forEach(item => {
-                    item.addEventListener('click', () => {
+                    item.addEventListener('click', (e) => {
+                        // Don't trigger if clicking the youtube video iframe container
+                        if (item.querySelector('iframe')) return;
+
                         const img = item.querySelector('img');
                         if (img) {
                             modalImage.src = img.src;
-                            // Show modal container
                             imageModal.classList.remove('hidden');
-                            
-                            // Small timeout to allow the browser to register 'display:flex' before changing opacity for transition
-                            setTimeout(() => {
+                            // Small delay to allow display:flex to apply before opacity transition
+                            requestAnimationFrame(() => {
                                 imageModal.classList.remove('opacity-0');
                                 modalImage.classList.remove('scale-95');
                                 modalImage.classList.add('scale-100');
-                            }, 10);
-                            
-                            body.style.overflow = 'hidden'; // Prevent background scrolling
+                            });
+                            document.body.style.overflow = 'hidden'; // lock scroll
                         }
                     });
                 });
 
+                // Close Modal Function
                 const closeModal = () => {
                     imageModal.classList.add('opacity-0');
-                    modalImage.classList.remove('scale-100');
                     modalImage.classList.add('scale-95');
-                    
-                    // Wait for transition to finish before hiding
+                    modalImage.classList.remove('scale-100');
                     setTimeout(() => {
                         imageModal.classList.add('hidden');
-                        modalImage.src = ''; // Clear source to prevent flash on next open
-                        body.style.overflow = ''; // Restore scrolling
+                        document.body.style.overflow = ''; // unlock scroll
+                        modalImage.src = ''; // clear src
                     }, 300);
                 };
 
-                if (modalClose) {
-                    modalClose.addEventListener('click', closeModal);
-                }
+                // Close on button click
+                modalClose.addEventListener('click', closeModal);
 
-                // Close when clicking the backdrop (outside the image)
+                // Close on background click
                 imageModal.addEventListener('click', (e) => {
                     if (e.target === imageModal) {
                         closeModal();
                     }
                 });
 
-                // Close on Escape key press
+                // Close on Escape key
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
                         closeModal();
                     }
                 });
             }
-
-            // --- 6. Resume Download Simulation ---
-            if (downloadButton) {
-                downloadButton.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Show initial downloading state
-                    downloadFeedback.style.opacity = '1';
-                    downloadMessage.textContent = 'Downloading...';
-                    downloadMessage.className = 'text-sm text-gray-600 dark:text-gray-300';
-                    downloadIcon.style.display = 'none';
-
-                    // Simulate network delay
-                    setTimeout(() => {
-                        // Update UI to success state
-                        downloadMessage.textContent = 'Download Started!';
-                        downloadMessage.className = 'text-sm text-green-600';
-                        downloadIcon.style.display = 'inline-block';
-                        
-                        // Trigger actual file download
-                        const link = document.createElement('a');
-                        // Using the resume image URL found in HTML
-                        link.href = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png';
-                        link.download = 'Anamika_Gogoi_Resume.png';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        // Hide feedback after a few seconds
-                        setTimeout(() => {
-                            downloadFeedback.style.opacity = '0';
-                        }, 3000);
-                    }, 1500);
-                });
-            }
-
         });
     </script>
 </body>
