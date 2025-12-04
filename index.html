@@ -346,7 +346,7 @@
                             <div class="bento-item aspect-[5/5]"><img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/Screenshot%202025-07-26%20192124.png" alt="App Screenshot"></div>
                             <!-- YouTube video below this image -->
                             <div class="col-span-3 w-full mt-1 flex justify-center">
-                            <iframe width="640" height="360" class="rounded-xl" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/216751f52a7ef928acf900b1f99cae226f54ab18/video/jan%202023.mp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                            <iframe width="640" height="360" class="rounded-xl" src="https://www.youtube.com/embed/0EIUm9HO_Dg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
                             </div>
                         </div>
                     </div>
@@ -588,7 +588,27 @@
                     }
                 });
             }
-        });
-    </script>
+
+            // --- 7. Lazy-load YouTube embed on user interaction ---
+            const ytPlaceholder = document.getElementById('yt-placeholder');
+            if (ytPlaceholder) {
+                ytPlaceholder.addEventListener('click', () => {
+                    const iframe = document.createElement('iframe');
+                    iframe.width = '100%';
+                    iframe.height = '360';
+                    iframe.className = 'rounded-xl';
+                    iframe.src = 'https://www.youtube.com/embed/0EIUm9HO_Dg?autoplay=1&rel=0';
+                    iframe.title = 'YouTube video player';
+                    iframe.frameBorder = '0';
+                    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+                    iframe.allowFullscreen = true;
+                    ytPlaceholder.parentNode.replaceChild(iframe, ytPlaceholder);
+                }, { once: true });
+            }
+
+        }
+    );
+
+</script>
 </body>
 </html>
