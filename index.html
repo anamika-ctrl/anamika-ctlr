@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Anamika</title>
+    <title>Alt+Anamika - UX Designer & Animator</title>
     
+    <!-- Unified Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Combined Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=Tektur:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Oswald:wght@700&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Poppins', 'sans-serif'],
+                        oswald: ['Oswald', 'sans-serif'],
                     }
                 }
             }
@@ -24,208 +27,1246 @@
     </script>
 
     <style>
+        /* Base Colors & Typography */
         :root {
             --bg: #f7f3ed;
             --fg: #1a1a1a;
-            --about-blue: #175bd6;
+            --red: #ff4500;
+            --muted: #6b6b6b;
+
+            /* Spacing tokens */
+            --space-1: 8px;
+            --space-2: 16px;
+            --space-3: 24px;
+            --space-4: 32px;
+            
+            /* Book sizing variables */
+            --spine-w: 40px;
+            --book-w: 280px;
+            --book-h: 400px;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg);
-            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3fc32cde524814a343aed24c3c980598a2745724/images/image%2028.png');
+            color: var(--fg);
+            transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
+            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            color: var(--fg);
-            margin: 0;
-            padding: 0;
         }
 
-        /* ── Integrated About Section CSS ── */
-        .about-section {
+        /* Applying the requested dark mode background globally to body */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f7f3ed;
+            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+        
+        /* Dark Mode Specific Overrides */
+        body.dark-mode .hero-text { color: #f7f3ed; }
+        body.dark-mode .hero-text .text-red-500 { color: #ff4500; }
+        body.dark-mode .hover\:text-gray-600:hover { color: #ccc; }
+        body.dark-mode .text-gray-700 { color: #ddd; }
+
+        .hero-text {
+            line-height: 0.9;
+            transition: color 0.3s ease;
+        }
+        .hero-heading { font-family: 'Oswald', sans-serif; }
+        .serif-font { font-family: 'Poppins', sans-serif; font-style: italic; }
+
+        /* Dark Mode Switch Styling */
+        .switch-track {
+            width: 25px;
+            height: 85px;
+            background-color: #ccc;
+            border-radius: 12.5px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .switch-thumb {
+            width: 21px;
+            height: 21px;
+            background-color: #fff;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+        .switch-track.active { background-color: #ff4500; }
+        .switch-track.active .switch-thumb { transform: translateY(-60px); }
+        .switch-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            color: #1a1a1a;
+            text-shadow: 1px 1px 2px #fff;
+        }
+        body.dark-mode .switch-label {
+            color: #f7f3ed;
+            text-shadow: 1px 1px 2px #000;
+        }
+        
+        .email-link {
+            cursor: pointer;
+            text-decoration: none;
             color: inherit;
-            font-family: "Tektur", "Orbitron", system-ui, sans-serif;
-            -webkit-font-smoothing: antialiased;
+        }
+        .email-link:hover { opacity: 0.8; }
+        #copy-message { opacity: 0; transition: opacity 0.3s ease; }
+
+        /* Pages & Transitions */
+        .main-page, .resume-page {
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .resume-page {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            background-color: rgba(247, 243, 237, 0.98);
+            transform: translateY(-100vh);
+            overflow-y: auto;
+            z-index: 50;
+        }
+        body.dark-mode .resume-page {
+            background-color: rgba(26, 26, 26, 0.98);
+        }
+        .resume-page.active { transform: translateY(0); }
+
+        /* Gallery Grid Styles */
+        .bento-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .bento-item:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            z-index: 10;
+        }
+        .bento-item img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: top;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+        .bento-item:hover img{ transform: scale(1.05); }
+        .gallery-wrap{ width:100%; }
+        .gallery-grid { 
+            width:100%; 
+            display:grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 1rem; 
+        }
+
+        /* ── Bookshelf ── */
+        .bookshelf {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4rem 6rem;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            justify-content: flex-start;
+        }
+
+        /* ── Wrapper: sets perspective ── */
+        .book-wrapper {
+            perspective: 2000px;
+            width: calc(var(--spine-w) + var(--book-w));
+            height: var(--book-h);
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* ── Book: the 3D container ── */
+        .book {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ── SPINE ── */
+        .book-spine {
+            position: absolute;
+            left: 0; top: 0;
+            width: var(--spine-w);
+            height: var(--book-h);
+            background: linear-gradient(90deg, #111 0%, #222 100%);
+            border-radius: 4px 0 0 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            box-shadow: inset -2px 0 5px rgba(0,0,0,0.4);
+        }
+        .spine-title {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(247,243,237,0.5);
+        }
+        .spine-dot {
+            position: absolute;
+            bottom: 1.5rem;
+            width: 5px; height: 5px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+
+        /* ── PAGE BLOCK ── */
+        .book-pages {
+            position: absolute;
+            right: 4px; top: 2px;
+            width: calc(var(--book-w) - 8px);
+            height: calc(var(--book-h) - 4px);
+            background: repeating-linear-gradient(
+                to right,
+                #e0d8cf 0px, #e0d8cf 1px,
+                #ece6de 1px, #ece6de 3px
+            );
+            border-radius: 0 6px 6px 0;
+            z-index: 0;
+        }
+        body.dark-mode .book-pages { opacity: 0.35; }
+
+        /* ── INTERIOR ── */
+        .book-interior {
+            position: absolute;
+            right: 0; top: 0;
+            width: var(--book-w);
+            height: var(--book-h);
+            background: #faf7f3;
+            border-radius: 2px 8px 8px 2px;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem 1.6rem;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.07);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        body.dark-mode .book-interior { background: #252520; border-color: rgba(255,255,255,0.05); }
+
+        .interior-top { display: flex; flex-direction: column; gap: 0.7rem; }
+        .interior-chapter {
+            font-size: 0.58rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--red); font-weight: 600;
+        }
+        .interior-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem; line-height: 1.1;
+            text-transform: uppercase; letter-spacing: 0.03em;
+            color: #1a1a1a;
+        }
+        body.dark-mode .interior-title { color: #f7f3ed; }
+
+        .interior-divider {
+            width: 36px; height: 2px;
+            background: var(--red); margin: 0.2rem 0;
+        }
+        .interior-desc {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.73rem; color: #555;
+            line-height: 1.7; font-style: italic;
+        }
+        body.dark-mode .interior-desc { color: #aaa; }
+
+        .interior-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
+        .interior-tag {
+            font-size: 0.53rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 3px 8px; background: #f0ece6;
+            border-radius: 20px; color: #666;
+        }
+        body.dark-mode .interior-tag { background: #333; color: #aaa; }
+
+        .interior-bottom { display: flex; align-items: center; justify-content: space-between; }
+        .interior-cta {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.65rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--red); text-decoration: none;
+            padding: 0.45rem 1rem;
+            border: 1.5px solid var(--red); border-radius: 30px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .interior-cta:hover { background: var(--red); color: #fff; }
+        .interior-cta svg { width: 11px; height: 11px; transition: transform 0.2s; }
+        .interior-cta:hover svg { transform: translateX(3px); }
+        .interior-page-num {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.62rem; font-style: italic; color: #bbb;
+        }
+        body.dark-mode .interior-page-num { color: #555; }
+
+        /* ── COVER ── */
+        .book-cover {
+            position: absolute;
+            right: 0; top: 0;
+            width: var(--book-w);
+            height: var(--book-h);
+            border-radius: 2px 8px 8px 2px;
+            transform-origin: left center;
+            transform: rotateY(0deg);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.22);
+            overflow: hidden;
+            backface-visibility: hidden;
+            z-index: 2;
+        }
+
+        /* ── DARK COVER (ASTC) ── */
+        .dark-cover { background: #272727; }
+        .dark-cover .cover-inner {
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            justify-content: space-between;
+            padding: 1.75rem;
+            position: relative;
+        }
+        .cover-accent-line {
+            position: absolute;
+            left: 0; top: 0;
+            width: 5px; height: 100%;
+            background: #555;
+        }
+        .cover-eyebrow {
+            font-size: 0.58rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: #777; font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        .cover-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem; line-height: 1.05;
+            color: rgba(247,243,237,0.45);
+            text-transform: uppercase; letter-spacing: 0.03em;
+        }
+        .cover-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.68rem; font-style: italic;
+            color: rgba(247,243,237,0.3);
+            margin-top: 0.4rem; line-height: 1.5;
+        }
+        .coming-soon-badge {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.55rem; font-weight: 700;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            background: rgba(255,255,255,0.07);
+            color: rgba(247,243,237,0.5);
+            border: 1px solid rgba(247,243,237,0.15);
+            border-radius: 20px; padding: 3px 10px;
+        }
+
+        /* ── MOUSE TRACKING JS HOOK ── */
+        .book-wrapper.is-tracking .book { transition: none; }
+        .book-wrapper.is-tracking .book-cover { transition: none; }
+        
+        .open-hint {
+            position: absolute;
+            bottom: -1.6rem; left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.58rem; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--muted);
+            white-space: nowrap;
+        }
+
+        .shelf-line {
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(0,0,0,0.07) 20%, rgba(0,0,0,0.07) 80%, transparent);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+        body.dark-mode .shelf-line {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07) 20%, rgba(255,255,255,0.07) 80%, transparent);
+        }
+        .shelf-line::after {
+            content: '';
+            display: block;
+            height: 6px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
+        }
+
+        /* ── SCOPED ABOUT SECTION STYLES (BACKGROUND REMOVED FOR TRANSPARENCY) ── */
+        .about-section {
+            --about-fg: var(--red);
+            --about-blue: #175bd6;
+            --font-display: "Oswald", sans-serif;
+            --font-body: "Poppins", sans-serif;
+            
+            font-family: var(--font-body);
+            text-align: left;
             position: relative;
             min-height: 100vh;
             overflow: hidden;
             display: grid;
-            grid-template-columns: minmax(200px, 1fr) auto minmax(260px, 1.2fr);
+            grid-template-columns: minmax(180px, 1fr) auto minmax(240px, 1.2fr);
+            grid-template-rows: 1fr;
             align-items: center;
-            gap: clamp(10px, 2vw, 40px);
-            padding: clamp(40px, 6vw, 80px) 7vw 120px;
+            gap: clamp(8px, 2vw, 40px);
+            padding: clamp(40px, 6vw, 80px) 4vw 120px;
+            
+            /* Made background transparent so it shows the global body dark mode background image */
+            background: transparent;
+            color: var(--about-fg);
+            border-radius: 2rem;
+            margin: 4rem 0;
         }
 
-        .panel, .portrait-wrap, .name-block {
-            position: relative; z-index: 1;
+        /* Explicit column placement — portrait is always center */
+        .about-section .design-panel  { grid-column: 1; grid-row: 1; }
+        .about-section .portrait-wrap { grid-column: 2; grid-row: 1; }
+        .about-section .facts-panel   { grid-column: 3; grid-row: 1; }
+
+        /* ── Panels ── */
+        .about-section .panel {
+            position: relative;
+            z-index: 1;
+            transition: transform 180ms ease;
+            will-change: transform;
         }
-        
-        .panel { 
-            transition: transform 180ms ease; 
-            will-change: transform; 
-            z-index: 1; 
-        }
-        
-        .design-panel { 
-            align-self: end; 
-            justify-self: start; 
+
+        .about-section .design-panel {
+            align-self: end;
+            justify-self: end;
             margin-bottom: 12vh;
-            width: max-content; /* Ensures the container fits the content width */
-            min-width: 300px;
-        }
-        
-        .facts-panel { 
-            align-self: start; 
-            justify-self: start; 
-            margin-top: 4vh; 
-            margin-left: -2vw; /* Increased spacing from center image */
-            width: min(100%, 350px); 
+            width: max-content;
+            min-width: 180px;
         }
 
+        .about-section .facts-panel {
+            align-self: start;
+            justify-self: start;
+            margin-top: 4vh;
+            width: min(100%, 350px);
+        }
+
+        /* ── Label badge ── */
         .about-section .label {
-            display: inline-flex; align-items: center; min-height: 44px; padding: 7px 18px; margin: 0 0 13px;
-            background: var(--about-blue); color: #fff; font-family: "Orbitron", system-ui, sans-serif;
-            font-size: clamp(18px, 1.55vw, 24px); font-style: italic; font-weight: 900; line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 7px 18px;
+            margin: 0 0 13px;
+            background: var(--about-blue);
+            color: #fff;
+            font-family: var(--font-display);
+            font-size: clamp(14px, 1.55vw, 24px);
+            font-style: italic;
+            font-weight: 900;
+            line-height: 1;
         }
 
-        .about-section ul { margin: 0; padding-left: 29px; list-style-type: disc; }
-        .about-section li { 
-            padding-left: 9px; 
-            font-size: clamp(18px, 1.85vw, 25px); 
-            line-height: 1.28; 
-            letter-spacing: 0.6px; 
-            font-weight: normal; 
-            white-space: nowrap; /* Forces text to stay on one line */
+        /* ── Lists ── */
+        .about-section ul {
+            margin: 0;
+            padding-left: 29px;
+            list-style-type: disc;
         }
-        .design-panel li { margin: 1px 0; }
-        .facts-panel li { margin: 0 0 28px; white-space: normal; }
 
-        .portrait-wrap { 
-            justify-self: center; 
-            width: clamp(400px, 50vw, 750px);
-            min-width: 0; 
+        .about-section li {
+            padding-left: 9px;
+            font-size: clamp(14px, 1.5vw, 25px);
+            line-height: 1.28;
+            letter-spacing: 0.6px;
+            font-weight: normal;
+            color: var(--about-fg);
+        }
+
+        .about-section li::marker {
+            color: var(--about-fg);
+        }
+
+        .about-section .design-panel li {
+            margin: 1px 0;
+            white-space: nowrap;
+        }
+
+        .about-section .facts-panel li {
+            margin: 0 0 20px;
+        }
+
+        /* ── Portrait ── */
+        .about-section .portrait-wrap {
+            position: relative;
+            justify-self: center;
+            width: clamp(280px, 38vw, 750px);
             z-index: 5;
             pointer-events: none;
-            margin-left: -5vw; 
         }
-        
-        .portrait-img {
-            width: 100%; 
-            height: auto; 
-            display: block; 
+
+        .about-section .portrait-img {
+            width: 100%;
+            height: auto;
+            display: block;
             object-fit: contain;
         }
 
-        .name-block { 
-            position: absolute; 
-            left: 50%; 
-            bottom: 31px; 
-            transform: translateX(-50%); 
-            width: min(92vw, 760px); 
-            text-align: center; 
-            z-index: 10; 
+        /* ── Name block ── */
+        .about-section .name-block {
+            position: absolute;
+            left: 50%;
+            bottom: 31px;
+            transform: translateX(-50%);
+            width: min(92vw, 760px);
+            text-align: center;
+            z-index: 10;
         }
-        
-        .name-block h1 { 
-            margin: 0; 
-            font-family: "Orbitron", system-ui, sans-serif; 
-            font-size: clamp(48px, 6vw, 78px); 
-            font-weight: 900; 
-            line-height: 0.88; 
-            letter-spacing: 0; 
-            color: inherit; 
-        }
-        
-        .name-block p { 
-            margin: 8px 0 0; 
-            font-size: clamp(16px, 1.8vw, 24px); 
-            line-height: 1.1; 
-            letter-spacing: 0.7px; 
-            font-family: "Tektur", sans-serif; 
+
+        .about-section .name-block h1 {
+            margin: 0;
+            font-family: var(--font-display);
+            font-size: clamp(48px, 6vw, 78px);
+            font-weight: 900;
+            line-height: 0.88;
             color: inherit;
         }
 
-        @media (max-width: 980px) {
-            .about-section { grid-template-columns: 1fr; justify-items: center; gap: 30px; padding: 34px 24px 142px; }
-            .portrait-wrap { width: min(100%, 550px); margin-left: 0; margin-right: 0; }
-            .design-panel, .facts-panel { justify-self: center; align-self: auto; width: min(100%, 430px); margin: 0; }
+        .about-section .name-block p {
+            margin: 8px 0 0;
+            font-size: clamp(16px, 1.8vw, 24px);
+            line-height: 1.1;
+            letter-spacing: 0.7px;
+            font-family: var(--font-body);
+            color: inherit;
         }
 
-        @media (max-width: 520px) {
-            .about-section { padding-inline: 18px; }
-            .portrait-wrap { min-width: 0; width: 100%; }
-            .about-section li { font-size: 16px; white-space: normal; }
+        /* ── Responsive — only collapse below 600px ── */
+        @media (max-width: 600px) {
+            .about-section {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                justify-items: center;
+                gap: 24px;
+                padding: 34px 18px 142px;
+            }
+
+            .about-section .design-panel  { grid-column: 1; grid-row: 2; align-self: auto; margin: 0; width: min(100%, 430px); }
+            .about-section .portrait-wrap { grid-column: 1; grid-row: 1; width: min(100%, 480px); }
+            .about-section .facts-panel   { grid-column: 1; grid-row: 3; align-self: auto; margin: 0; width: min(100%, 430px); }
+
+            .about-section li { font-size: 15px; white-space: normal; }
+        }
+
+        @media (max-width: 600px) {
+            :root { --book-w: 230px; --book-h: 340px; --spine-w: 34px; }
+        }
+
+        /* ── Hero CTA Block ── */
+        .hero-cta-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+        .hero-tagline {
+            font-size: 1rem;
+            color: var(--muted);
+            font-weight: 400;
+        }
+        body.dark-mode .hero-tagline { color: #9a9a9a; }
+        .cta-primary {
+            display: inline-block;
+            padding: 14px 36px;
+            background: var(--fg);
+            color: var(--bg);
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 40px;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+        .cta-primary:hover { background: var(--red); color: #fff; transform: translateY(-2px); }
+        body.dark-mode .cta-primary { background: #f7f3ed; color: #1a1a1a; }
+        body.dark-mode .cta-primary:hover { background: var(--red); color: #fff; }
+
+        /* ── Narrative Case Study Cards ── */
+        .case-studies-narrative { display: flex; flex-direction: column; gap: var(--space-4); }
+        .cs-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3);
+            padding: var(--space-4);
+            background: rgba(0,0,0,0.03);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+        .cs-card--single { grid-template-columns: 1fr; }
+        body.dark-mode .cs-card { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); }
+        .cs-card-content { display: flex; flex-direction: column; justify-content: center; gap: var(--space-1); }
+        .cs-card-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            line-height: 1;
+            margin-bottom: 4px;
+        }
+        .cs-step-label {
+            display: block;
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--red);
+            font-weight: 700;
+            margin-bottom: 4px;
+            margin-top: var(--space-2);
+        }
+        .cs-step-label:first-of-type { margin-top: 0; }
+        .cs-card-text { font-size: 0.85rem; line-height: 1.65; color: var(--muted); }
+        body.dark-mode .cs-card-text { color: #9a9a9a; }
+        .cs-card-images { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1); align-content: start; }
+        .cs-card-images img { width: 100%; height: 200px; object-fit: cover; object-position: top; border-radius: 0.75rem; }
+        .cs-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--space-1); }
+        .cs-card-tag {
+            font-size: 0.55rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 3px 8px; background: #f0ece6;
+            border-radius: 20px; color: #666;
+        }
+        body.dark-mode .cs-card-tag { background: #333; color: #aaa; }
+        @media (max-width: 768px) {
+            .cs-card { grid-template-columns: 1fr; }
+            .cs-card-images img { height: 160px; }
         }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-16">
 
-    <main>
-        <!-- ── INTEGRATED ABOUT SECTION ── -->
-        <section id="about" class="about-section text-left" aria-labelledby="about-name">
-            <div class="panel design-panel">
-                <h2 class="label">WHAT I DESIGN</h2>
-                <ul>
-                    <li>Product Design</li>
-                    <li>UI/UX Design</li>
-                    <li>Interaction Design</li>
-                    <li>Design Systems</li>
-                    <li>Motion Graphics</li>
-                </ul>
-            </div>
-
-            <div class="portrait-wrap" aria-label="Portrait artwork">
-                <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/about/ProfileP.png" alt="Anamika cyborg portrait artwork" class="portrait-img">
-            </div>
-
-            <div class="panel facts-panel">
-                <h2 class="label">FUN FACTS</h2>
-                <ul>
-                    <li>Started career in animation before moving into product design</li>
-                    <li>Built a concept product called GoFarming</li>
-                    <li>Love learning new things/hobbies</li>
-                    <li>Enjoy solving real-world problems through design</li>
-                </ul>
-            </div>
-
-            <div class="name-block">
-                <h1 id="about-name">ANAMIKA</h1>
-                <p>Designer &bull; Animator &bull; Problem Solver</p>
-            </div>
-        </section>
-        <!-- ── END INTEGRATED ABOUT SECTION ── -->
-    </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- About Section Interactive Logic ---
-            const motionSections = document.querySelectorAll(".design-panel, .facts-panel");
+    <div class="main-page">
+        <!-- Reworked Header for Responsive Navigation -->
+        <header class="flex justify-between items-center mb-8 md:mb-16 relative z-50">
+            <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
             
-            const moveSection = (section, event) => {
-                motionSections.forEach((otherSection) => {
-                    if (otherSection !== section) {
-                        otherSection.style.transform = "translate(0, 0)";
+            <!-- Animated Mobile Menu Toggle Button -->
+            <button id="menu-button" class="md:hidden p-2 focus:outline-none relative w-8 h-8 flex items-center justify-center">
+                <!-- Hamburger Icon -->
+                <svg id="icon-menu" class="absolute w-6 h-6 transition-transform duration-300 transform text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <!-- X (Close) Icon -->
+                <svg id="icon-close" class="absolute w-6 h-6 transition-transform duration-300 transform scale-0 opacity-0 text-gray-800 dark:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Responsive Navigation Dropdown Container -->
+            <div id="nav-menu" class="hidden md:flex flex-col md:flex-row absolute md:static top-full left-0 right-0 bg-[#f7f3ed] dark:bg-[#121212] md:bg-transparent md:dark:bg-transparent p-6 md:p-0 shadow-2xl md:shadow-none z-50 rounded-2xl md:rounded-none border border-black/5 dark:border-white/5 md:border-none mt-4 md:mt-0 flex-grow justify-end transition-all origin-top">
+                <nav class="flex-grow flex md:justify-center">
+                    <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-6 text-sm md:text-base font-medium items-center w-full md:w-auto">
+                        <li class="w-full md:w-auto text-center"><a href="#work" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">WORK</a></li>
+                        <li class="w-full md:w-auto text-center"><a href="#about" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">ABOUT</a></li>
+                        <li class="w-full md:w-auto text-center"><a href="#" id="resume-link" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">RESUME</a></li>
+                        <li class="w-full md:w-auto text-center"><a href="#contact" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">CONTACT</a></li>
+                    </ul>
+                </nav>
+                <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium mt-6 md:mt-0 pt-6 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-zinc-700 w-full md:w-auto text-center items-center">
+                    <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">BEHANCE</a>
+                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/feed" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">LINKEDIN</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="text-center min-h-screen flex flex-col justify-center pt-[42px]">
+            <!-- Hero Header Section -->
+            <div class="mb-8 md:mb-16">
+                <div class="inline-block mx-auto">
+                    <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
+                        <span class="block">User</span>
+                        <span class="block text-red-500 serif-font">EXPERIENCE</span>
+                        <span class="inline-flex items-center gap-0 relative">
+                            <span>DES</span>
+                            <div id="theme-switch" class="relative inline-block align-middle ml-0 px-[8px] top-[5px]">
+                                <div class="switch-track">
+                                    <div class="switch-thumb"></div>
+                                </div>
+                                <div class="absolute inset-x-0 bottom-[-20px] text-xs text-gray-500 dark:text-gray-300 ml-0 underline font-thin">
+                                    <span class="ml-0 mr">Press</span>
+                                </div>
+                            </div>
+                            <span>GNER</span>
+                        </span>
+                    </h2>
+                    <p class="mt-1 md:mt-2 text-xs md:text-base text-gray-700 font-medium pr-8 text-right">
+                        Open to <span class="relative inline-block">new job offers
+                        <span class="h-2 w-2 bg-green-500 rounded-full absolute -right-4 top-1/2 -translate-y-1/2 animate-pulse"></span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Hero Tagline + Primary CTA -->
+            <div class="hero-cta-block">
+                <p class="hero-tagline">I design intuitive interfaces with thoughtful motion.</p>
+                <a href="#work" class="cta-primary">View My Work ↓</a>
+            </div>
+
+            <!-- ── INTEGRATED ABOUT SECTION ── -->
+            <section id="about" class="about-section" aria-labelledby="about-name">
+                <div class="panel design-panel">
+                    <span class="label" aria-label="What I design">WHAT I DESIGN</span>
+                    <ul role="list">
+                        <li>Product Design</li>
+                        <li>UI/UX Design</li>
+                        <li>Interaction Design</li>
+                        <li>Design Systems</li>
+                        <li>Motion Graphics</li>
+                    </ul>
+                </div>
+
+                <div class="portrait-wrap" aria-hidden="true">
+                    <img
+                        src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/about/ProfileP.png"
+                        alt="Anamika cyborg portrait artwork"
+                        class="portrait-img"
+                        loading="eager"
+                        decoding="async"
+                    >
+                </div>
+
+                <div class="panel facts-panel">
+                    <span class="label" aria-label="Fun facts">FUN FACTS</span>
+                    <ul role="list">
+                        <li>Started career in animation before moving into product design</li>
+                        <li>Built a concept product called GoFarming</li>
+                        <li>Love learning new things/hobbies</li>
+                        <li>Enjoy solving real-world problems through design</li>
+                    </ul>
+                </div>
+
+                <div class="name-block">
+                    <h1 id="about-name">ANAMIKA</h1>
+                    <p>Designer &bull; Animator &bull; Problem Solver</p>
+                </div>
+            </section>
+
+            <!-- Case Study Sections (Work) -->
+            <section id="work" class="mt-[54px] md:mt-[100px] max-w-6xl mx-auto w-full text-left">
+                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8">Case study</h2>
+
+                <div class="bookshelf">
+                    <!-- ── Book 1: Go-Farming ── -->
+                    <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
+                        <div class="book">
+                            <div class="book-pages"></div>
+                            <div class="book-spine">
+                                <span class="spine-title">Go-Farming</span>
+                                <span class="spine-dot"></span>
+                            </div>
+
+                            <div class="book-interior">
+                                <div class="interior-top">
+                                    <span class="interior-chapter">Case Study · 01</span>
+                                    <div class="interior-title">Go-Farming</div>
+                                    <div class="interior-divider"></div>
+                                    <p class="interior-desc">A digital platform empowering farmers with real-time data, market connections, and sustainable farming practices.</p>
+                                    <div class="interior-tags">
+                                        <span class="interior-tag">UX Research</span>
+                                        <span class="interior-tag">Mobile App</span>
+                                        <span class="interior-tag">Figma</span>
+                                    </div>
+                                </div>
+                                <div class="interior-bottom">
+                                    <span class="interior-page-num">p. 01</span>
+                                </div>
+                            </div>
+
+                            <!-- IMAGE COVER -->
+                            <div class="book-cover">
+                                <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg"
+                                     alt="Go-Farming Cover"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/ff4500?text=Go-Farming';"
+                                     style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+                            </div>
+                        </div>
+                        <span class="open-hint">↑ Click to visit</span>
+                    </div>
+
+                    <!-- ── Book 2: ASTC Redesign ── -->
+                    <div class="book-wrapper coming-soon" id="book-2">
+                        <div class="book">
+                            <div class="book-pages"></div>
+                            <div class="book-spine">
+                                <span class="spine-title">ASTC Redesign</span>
+                                <span class="spine-dot" style="background:#555"></span>
+                            </div>
+
+                            <div class="book-interior">
+                                <div class="interior-top">
+                                    <span class="interior-chapter">Case Study · 02</span>
+                                    <div class="interior-title">ASTC Redesign</div>
+                                    <div class="interior-divider" style="background:#999"></div>
+                                    <p class="interior-desc">A redesign of the ASTC Government transport website — improving accessibility and modernising ticket booking for Assam's commuters.</p>
+                                    <div class="interior-tags">
+                                        <span class="interior-tag">Web Redesign</span>
+                                        <span class="interior-tag">Accessibility</span>
+                                        <span class="interior-tag">In Progress</span>
+                                    </div>
+                                </div>
+                                <div class="interior-bottom">
+                                    <span style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;font-weight:600;">Coming Soon</span>
+                                    <span class="interior-page-num">p. 02</span>
+                                </div>
+                            </div>
+
+                            <!-- DARK COVER -->
+                            <div class="book-cover dark-cover">
+                                <div class="cover-accent-line"></div>
+                                <div class="cover-inner">
+                                    <div>
+                                        <div class="cover-eyebrow">Case Study · 02</div>
+                                        <div class="cover-title">ASTC<br>Redesign</div>
+                                        <div class="cover-subtitle">Modernising transit for Assam's commuters.</div>
+                                        <span class="coming-soon-badge">In Progress</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="open-hint" style="opacity:0.35;">Coming soon</span>
+                    </div>
+                </div>
+
+                <div class="shelf-line"></div>
+
+                <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-12">Creative Experiments</h2>
+
+                <div class="case-studies-narrative">
+
+                    <!-- Narrative Card 1: Go-Farming -->
+                    <div class="cs-card">
+                        <div class="cs-card-content">
+                            <div class="cs-card-title">Go-Farming</div>
+                            <div class="cs-card-tags">
+                                <span class="cs-card-tag">UX Research</span>
+                                <span class="cs-card-tag">Mobile App</span>
+                                <span class="cs-card-tag">Figma</span>
+                            </div>
+                            <div>
+                                <span class="cs-step-label">Problem</span>
+                                <p class="cs-card-text">Farmers across rural India rely on scattered, informal networks for market pricing and crop guidance — no unified digital tool exists to support their decisions in real time.</p>
+                            </div>
+                            <div>
+                                <span class="cs-step-label">Process</span>
+                                <p class="cs-card-text">User interviews with farmers to map pain points, followed by mobile-first information architecture in Figma and iterative testing from lo-fi wireframes to high-fidelity prototypes.</p>
+                            </div>
+                            <div>
+                                <span class="cs-step-label">Result</span>
+                                <p class="cs-card-text">A platform connecting farmers to live market rates, weather forecasts, and peer networks — built for low-bandwidth rural conditions.</p>
+                            </div>
+                        </div>
+                        <div class="cs-card-images">
+                            <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5adb6a60bf64735ca49b6dc7ca0f40b90705bdf4/images/goFarming-map.PNG" alt="Go-Farming map screen">
+                            <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="Go-Farming login screen">
+                        </div>
+                    </div>
+
+                    <!-- Narrative Card 2: UI Explorations -->
+                    <div class="cs-card">
+                        <div class="cs-card-images">
+                            <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/fooddelivery-page3.png" alt="Food delivery UI">
+                            <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/3607fcc57226b9b000dc3293f0793b1033584832/images/retro-landingpage.svg" alt="Retro landing page">
+                        </div>
+                        <div class="cs-card-content">
+                            <div class="cs-card-title">UI Explorations</div>
+                            <div class="cs-card-tags">
+                                <span class="cs-card-tag">UI Design</span>
+                                <span class="cs-card-tag">Visual Design</span>
+                                <span class="cs-card-tag">Motion</span>
+                            </div>
+                            <div>
+                                <span class="cs-step-label">About</span>
+                                <p class="cs-card-text">A collection of interface experiments exploring different visual languages — from a food delivery app focused on clarity and speed, to a retro-inspired web layout built around expressive type.</p>
+                            </div>
+                            <div>
+                                <span class="cs-step-label">Approach</span>
+                                <p class="cs-card-text">Each piece treats visual identity as a constraint — pushing typography, colour, and layout in a distinct direction per project rather than defaulting to a single house style.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Motion Reel -->
+                    <div class="cs-card cs-card--single">
+                        <div class="cs-card-content">
+                            <div class="cs-card-title">Motion Reel</div>
+                            <p class="cs-card-text">Animation work — transitions, micro-interactions, and motion-driven storytelling.</p>
+                        </div>
+                        <div class="w-full flex justify-center mt-2">
+                            <iframe width="100%" height="360" class="rounded-xl" style="max-width:640px;" src="https://www.youtube.com/embed/0EIUm9HO_Dg" title="Motion Reel" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-[54px] md:mt-[155px]">
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
+                <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
+
+                <a href="mailto:Anamika.gogoi126@gmail.com" class="cta-primary mb-8">Let's Talk →</a>
+                
+                <p class="text-sm md:text-base mb-2">Or copy my email directly:</p>
+                <div class="flex items-center">
+                    <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors text-red-500 dark:text-red-400">
+                        Anamika.gogoi126@gmail.com
+                    </a>
+                    <div id="copy-message" class="text-base text-green-500 ml-2"></div>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-4 mt-6 text-center">
+                    <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">BEHANCE</a>
+                    <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">INSTAGRAM</a>
+                    <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">LINKEDIN</a>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16 pb-8">
+            <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">Design & Developed</p>
+            <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">by Anamika Gogoi</p>
+        </footer>
+    </div>
+
+    <!-- Resume Page Content -->
+    <div class="resume-page p-4 md:p-16 flex flex-col items-center">
+        <header class="w-full max-w-2xl flex justify-between items-center mb-8">
+            <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600 dark:hover:text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                BACK
+            </button>
+            <div class="flex items-center">
+                <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
+                    DOWNLOAD
+                </a>
+                <div id="download-feedback" class="flex items-center ml-2 opacity-0 transition-opacity duration-300">
+                    <span id="download-message" class="text-sm text-green-600"></span>
+                    <svg xmlns="http://www.w3.org/2000/svg" id="download-icon" class="h-4 w-4 ml-1 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+        </header>
+        <div class="w-full h-full flex justify-center items-center py-10">
+             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" 
+                alt="Anamika Gogoi's Resume" 
+                onerror="this.onerror=null; this.src='https://placehold.co/800x1100/1a1a1a/f7f3ed?text=Anamika+Gogoi+Resume+Preview'"
+                class="w-full h-auto max-w-2xl max-h-[85vh] object-contain shadow-2xl rounded-xl">
+        </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="image-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300 p-4 md:p-8">
+        <button id="modal-close" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img id="modal-image" src="" alt="Full View" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl transform scale-95 transition-transform duration-300 mx-auto my-auto">
+    </div>
+
+    <!-- Interactive Portfolio Logic -->
+    <script>
+        function toggleBook(wrapper, url) {
+            if (wrapper.classList.contains('coming-soon')) return;
+            window.open(url, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const themeSwitch = document.getElementById('theme-switch');
+            const switchThumb = themeSwitch ? themeSwitch.querySelector('.switch-thumb') : null;
+            const digitalProductsIcon = document.getElementById('digital-products-icon');
+            const emailLink = document.getElementById('email-link');
+            const copyMessage = document.getElementById('copy-message');
+            const menuButton = document.getElementById('menu-button');
+            const navMenu = document.getElementById('nav-menu');
+            const iconMenu = document.getElementById('icon-menu');
+            const iconClose = document.getElementById('icon-close');
+            const mainPage = document.querySelector('.main-page');
+            const resumePage = document.querySelector('.resume-page');
+            const resumeLink = document.getElementById('resume-link');
+            const backButton = document.getElementById('back-button');
+            const downloadButton = document.getElementById('download-button');
+            const downloadFeedback = document.getElementById('download-feedback');
+            const downloadMessage = document.getElementById('download-message');
+            const bentoItems = document.querySelectorAll('.bento-item');
+            const imageModal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalClose = document.getElementById('modal-close');
+
+            const lightModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/df5721a1c43ee89131059c5b4bace377eea9c997/digital-art.svg';
+            const darkModeDigitalProductsIcon = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/13b9e711ecfc6e69af805a9de8aef28958c38570/digitalArt-darkmode.svg';
+
+            // --- 1. Dark Mode Toggle ---
+            if (themeSwitch) {
+                themeSwitch.addEventListener('click', () => {
+                    body.classList.toggle('dark-mode');
+                    body.classList.toggle('dark'); // Add this to trigger Tailwind dark mode classes seamlessly!
+                    
+                    if(switchThumb) switchThumb.parentElement.classList.toggle('active');
+                    
+                    if (body.classList.contains('dark-mode')) {
+                        if (digitalProductsIcon) digitalProductsIcon.src = darkModeDigitalProductsIcon;
+                    } else {
+                        if (digitalProductsIcon) digitalProductsIcon.src = lightModeDigitalProductsIcon;
                     }
                 });
-                const rect = section.getBoundingClientRect();
-                const x = ((event.clientX - rect.left) / rect.width - 0.5) * 14;
-                const y = ((event.clientY - rect.top) / rect.height - 0.5) * 14;
-                section.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
-            };
+            }
 
-            motionSections.forEach((section) => {
-                section.addEventListener("pointerenter", (event) => {
-                    moveSection(section, event);
+            // --- 2. Email Copy Functionality ---
+            if (emailLink) {
+                emailLink.addEventListener('click', () => {
+                    const email = emailLink.textContent.trim();
+                    const tempInput = document.createElement('input');
+                    tempInput.value = email;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    try {
+                        document.execCommand('copy');
+                        copyMessage.textContent = 'Copied!';
+                        copyMessage.style.opacity = 1;
+                        setTimeout(() => copyMessage.style.opacity = 0, 1500);
+                    } catch (err) {
+                        console.error('Failed to copy', err);
+                    }
+                    document.body.removeChild(tempInput);
                 });
-                section.addEventListener("pointermove", (event) => {
-                    moveSection(section, event);
+            }
+
+            // --- 3. Responsive Mobile Menu Toggle ---
+            if (menuButton && navMenu) {
+                menuButton.addEventListener('click', () => {
+                    const isHidden = navMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        // Open Menu
+                        navMenu.classList.remove('hidden');
+                        navMenu.classList.add('flex');
+                        iconMenu?.classList.add('scale-0', 'opacity-0');
+                        iconClose?.classList.remove('scale-0', 'opacity-0');
+                    } else {
+                        // Close Menu
+                        navMenu.classList.add('hidden');
+                        navMenu.classList.remove('flex');
+                        iconClose?.classList.add('scale-0', 'opacity-0');
+                        iconMenu?.classList.remove('scale-0', 'opacity-0');
+                    }
                 });
-                section.addEventListener("pointerleave", () => {
-                    section.style.transform = "translate(0, 0)";
+
+                // Auto-close menu when clicking any nav link (Mobile Only)
+                const navLinks = navMenu.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth < 768 && !navMenu.classList.contains('hidden')) {
+                            navMenu.classList.add('hidden');
+                            navMenu.classList.remove('flex');
+                            iconClose?.classList.add('scale-0', 'opacity-0');
+                            iconMenu?.classList.remove('scale-0', 'opacity-0');
+                        }
+                    });
+                });
+            }
+
+            // --- 4. Resume Page Transition ---
+            if (resumeLink && resumePage && backButton) {
+                resumeLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    resumePage.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                backButton.addEventListener('click', () => {
+                    resumePage.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // --- 5. Download Button Feedback ---
+            if (downloadButton && downloadFeedback && downloadMessage) {
+                downloadButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    downloadMessage.textContent = "Downloading...";
+                    downloadFeedback.style.opacity = '1';
+                    setTimeout(() => {
+                        downloadMessage.textContent = "Done!";
+                        setTimeout(() => downloadFeedback.style.opacity = '0', 2000);
+                    }, 1500);
+                });
+            }
+
+            // --- 6. Lightbox (Image Modal) ---
+            if (bentoItems.length > 0 && imageModal && modalImage && modalClose) {
+                bentoItems.forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        if (item.querySelector('iframe')) return;
+                        const img = item.querySelector('img');
+                        if (img) {
+                            modalImage.src = img.src;
+                            imageModal.classList.remove('hidden');
+                            requestAnimationFrame(() => {
+                                imageModal.classList.remove('opacity-0');
+                                modalImage.classList.remove('scale-95');
+                                modalImage.classList.add('scale-100');
+                            });
+                            document.body.style.overflow = 'hidden';
+                        }
+                    });
+                });
+
+                const closeModal = () => {
+                    imageModal.classList.add('opacity-0');
+                    modalImage.classList.add('scale-95');
+                    modalImage.classList.remove('scale-100');
+                    setTimeout(() => {
+                        imageModal.classList.add('hidden');
+                        document.body.style.overflow = '';
+                        modalImage.src = '';
+                    }, 300);
+                };
+
+                modalClose.addEventListener('click', closeModal);
+                imageModal.addEventListener('click', (e) => {
+                    if (e.target === imageModal) closeModal();
+                });
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) closeModal();
+                });
+            }
+
+            // --- 7. Mouse-tracking 3D Book Tilt ---
+            document.querySelectorAll('.book-wrapper:not(.coming-soon)').forEach(wrapper => {
+                const book = wrapper.querySelector('.book');
+                const cover = wrapper.querySelector('.book-cover');
+
+                let rafId = null;
+                let isHovering = false;
+
+                let targetRX = 0, targetRY = 0, targetRZ = 0;
+                let currentRX = 0, currentRY = 0, currentRZ = 0;
+                let openProgress = 0;
+
+                function lerp(a, b, t) { return a + (b - a) * t; }
+
+                function animate() {
+                    currentRX = lerp(currentRX, isHovering ? targetRX : 0, 0.08);
+                    currentRY = lerp(currentRY, isHovering ? targetRY : 0, 0.08);
+                    currentRZ = lerp(currentRZ, isHovering ? targetRZ : 0, 0.08);
+
+                    openProgress = lerp(openProgress, isHovering ? 1 : 0, 0.07);
+
+                    const ty = -10 * openProgress;
+                    book.style.transform = `rotateY(${currentRY}deg) rotateX(${currentRX}deg) rotateZ(${currentRZ}deg) translateY(${ty}px)`;
+                    book.style.filter    = `drop-shadow(${18 * openProgress}px ${28 * openProgress}px ${40 * openProgress}px rgba(0,0,0,${0.3 * openProgress}))`;
+
+                    const coverPeel = openProgress * (-18 + currentRY * 0.3);
+                    cover.style.transform  = `rotateY(${coverPeel}deg)`;
+                    cover.style.boxShadow  = `${5 + 11 * openProgress}px ${5 + 11 * openProgress}px ${20 + 24 * openProgress}px rgba(0,0,0,${0.22 + 0.13 * openProgress})`;
+
+                    const atRest = !isHovering
+                        && Math.abs(currentRX) < 0.05
+                        && Math.abs(currentRY) < 0.05
+                        && Math.abs(currentRZ) < 0.05
+                        && openProgress < 0.01;
+
+                    if (atRest) {
+                        currentRX = 0; currentRY = 0; currentRZ = 0;
+                        openProgress = 0;
+                        book.style.transform  = '';
+                        book.style.filter     = '';
+                        cover.style.transform = '';
+                        cover.style.boxShadow = '';
+                        wrapper.classList.remove('is-tracking');
+                        cancelAnimationFrame(rafId);
+                        rafId = null;
+                        return;
+                    }
+
+                    rafId = requestAnimationFrame(animate);
+                }
+
+                wrapper.addEventListener('mouseenter', (e) => {
+                    isHovering = true;
+                    wrapper.classList.add('is-tracking');
+
+                    const rect = wrapper.getBoundingClientRect();
+                    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+                    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+                    targetRY = -20 + nx * 18;
+                    targetRX =  5  - ny * 14;
+                    targetRZ = -5  + nx * 6;
+
+                    if (!rafId) rafId = requestAnimationFrame(animate);
+                });
+
+                wrapper.addEventListener('mousemove', (e) => {
+                    if (!isHovering) return;
+                    const rect = wrapper.getBoundingClientRect();
+                    const nx = (e.clientX - rect.left) / rect.width - 0.5;
+                    const ny = (e.clientY - rect.top) / rect.height - 0.5;
+                    targetRY = -20 + nx * 18;
+                    targetRX =  5  - ny * 14;
+                    targetRZ = -5  + nx * 6;
+                });
+
+                wrapper.addEventListener('mouseleave', () => {
+                    isHovering = false;
+                    if (!rafId) rafId = requestAnimationFrame(animate);
                 });
             });
+
+            // --- 8. Cyberpunk About Panels Pointer Physics (Tilt) ---
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const aboutPanels = document.querySelectorAll('.about-section .design-panel, .about-section .facts-panel');
+
+                const applyAboutTilt = (panel, e) => {
+                    const { left, top, width, height } = panel.getBoundingClientRect();
+                    const x = ((e.clientX - left) / width  - 0.5) * 14;
+                    const y = ((e.clientY - top)  / height - 0.5) * 14;
+                    panel.style.transform = `translate(${x.toFixed(2)}px, ${y.toFixed(2)}px)`;
+                };
+
+                const resetAboutTilt = (panel) => {
+                    panel.style.transform = 'translate(0, 0)';
+                };
+
+                aboutPanels.forEach(panel => {
+                    panel.addEventListener('pointerenter', e => {
+                        aboutPanels.forEach(other => { if (other !== panel) resetAboutTilt(other); });
+                        applyAboutTilt(panel, e);
+                    });
+                    panel.addEventListener('pointermove', e => applyAboutTilt(panel, e));
+                    panel.addEventListener('pointerleave', () => resetAboutTilt(panel));
+                });
+            }
         });
     </script>
 </body>
