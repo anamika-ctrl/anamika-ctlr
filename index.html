@@ -631,7 +631,7 @@
 
     <!-- Resume Page Content -->
     <div class="resume-page p-4 md:p-16 flex flex-col items-center">
-        <header class="w-full max-w-3xl flex justify-between items-center mb-8">
+        <header class="w-full max-w-2xl flex justify-between items-center mb-8">
             <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600 dark:hover:text-gray-400">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -650,14 +650,11 @@
                 </div>
             </div>
         </header>
-        
-        <!-- Updated from <img> to <iframe> to support PDF display -->
-        <div class="w-full h-full flex justify-center items-start py-10">
-             <iframe 
-                src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/e900c4db4e3d6a5429988a618fcda4370a0c60f1/images/UIUX%20resume.pdf" 
-                title="Anamika Gogoi's Resume"
-                class="w-full h-[85vh] max-w-3xl shadow-2xl rounded-xl border-none bg-white">
-             </iframe>
+        <div class="w-full h-full flex justify-center items-center py-10">
+             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" 
+                alt="Anamika Gogoi's Resume" 
+                onerror="this.onerror=null; this.src='https://placehold.co/800x1100/1a1a1a/f7f3ed?text=Anamika+Gogoi+Resume+Preview'"
+                class="w-full h-auto max-w-2xl max-h-[85vh] object-contain shadow-2xl rounded-xl">
         </div>
     </div>
 
@@ -769,15 +766,6 @@
             if (downloadButton && downloadFeedback && downloadMessage) {
                 downloadButton.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
-                    // Triggering actual download
-                    const link = document.createElement('a');
-                    link.href = 'https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/e900c4db4e3d6a5429988a618fcda4370a0c60f1/images/UIUX%20resume.pdf';
-                    link.download = 'Anamika_Gogoi_Resume.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-
                     downloadMessage.textContent = "Downloading...";
                     downloadFeedback.style.opacity = '1';
                     setTimeout(() => {
