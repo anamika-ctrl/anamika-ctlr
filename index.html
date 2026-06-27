@@ -50,23 +50,40 @@
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg);
             color: var(--fg);
-            transition: background-color 0.3s ease, color 0.3s ease, background-image 0.3s ease;
-            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png');
+            transition: color 0.4s ease, background-color 0.4s ease;
+        }
+
+        /* Both BGs sit fixed behind everything, only opacity transitions */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: -1;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
             background-repeat: no-repeat;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
         }
+        /* Light mode BG — visible by default */
+        body::before {
+            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png');
+            opacity: 1;
+        }
+        /* Dark mode BG — hidden by default */
+        body::after {
+            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png');
+            opacity: 0;
+        }
+        /* On dark mode: fade light BG out, fade dark BG in */
+        body.dark-mode::before { opacity: 0; }
+        body.dark-mode::after  { opacity: 1; }
 
         /* Applying the requested dark mode background globally to body */
         body.dark-mode {
             background-color: #121212;
             color: #f7f3ed;
-            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
         }
         
         /* Dark Mode Specific Overrides */
