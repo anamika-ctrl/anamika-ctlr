@@ -576,13 +576,27 @@
             :root { --book-w: 230px; --book-h: 340px; --spine-w: 34px; }
         }
 
+        /* ── Hero Screen: fills exactly the first viewport ── */
+        .hero-screen {
+            height: calc(100dvh - 185px); /* 185px = body-pad-top(64) + header-height(~57) + header-mb(64) */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .hero-screen {
+                height: calc(100dvh - 100px); /* 100px = body-pad-top(16) + header-height(52) + header-mb(32) */
+            }
+        }
+
         /* ── Hero CTA Block ── */
         .hero-cta-block {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: var(--space-2);
-            margin-bottom: var(--space-4);
+            margin-bottom: 0;
         }
         .hero-tagline {
             font-size: 1rem;
@@ -809,9 +823,12 @@
             </div>
         </header>
 
-        <main class="text-center min-h-screen flex flex-col justify-center pt-[42px]">
+        <main class="text-center">
+            <!-- Hero fills exactly the first viewport -->
+            <div class="hero-screen">
+
             <!-- Hero Header Section -->
-            <div class="mb-8 md:mb-16">
+            <div class="mb-6 md:mb-10">
                 <div class="inline-block mx-auto">
                     <h2 class="text-5xl md:text-8xl lg:text-9xl font-extrabold hero-text">
                         <span class="block">User</span>
@@ -842,6 +859,8 @@
                 <p class="hero-tagline">I design intuitive interfaces with thoughtful motion.</p>
                 <a href="#work" class="cta-primary">View My Work ↓</a>
             </div>
+
+            </div><!-- /hero-screen -->
 
             <!-- ── INTEGRATED ABOUT SECTION ── -->
             <section id="about" class="about-section" aria-labelledby="about-name">
@@ -1011,13 +1030,6 @@
                     <div class="gd-gallery-section">
                         <div class="gd-gallery-header">
                             <div class="gd-gallery-title">Graphic Design</div>
-                            <div class="gd-filters">
-                                <button class="gd-filter-btn active" data-filter="all">All</button>
-                                <button class="gd-filter-btn" data-filter="illustration">Illustration</button>
-                                <button class="gd-filter-btn" data-filter="branding">Branding</button>
-                                <button class="gd-filter-btn" data-filter="poster">Poster</button>
-                                <button class="gd-filter-btn" data-filter="typography">Typography</button>
-                            </div>
                         </div>
                         <div class="gd-grid">
 
@@ -1451,21 +1463,6 @@
                     panel.addEventListener('pointerleave', () => resetAboutTilt(panel));
                 });
             }
-            // --- 9. Graphic Design Gallery Filter ---
-            const gdFilterBtns = document.querySelectorAll('.gd-filter-btn');
-            const gdItems = document.querySelectorAll('.gd-item[data-category]');
-
-            gdFilterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    gdFilterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const filter = btn.dataset.filter;
-                    gdItems.forEach(item => {
-                        const match = filter === 'all' || item.dataset.category === filter;
-                        item.classList.toggle('gd-hidden', !match);
-                    });
-                });
-            });
         });
     </script>
 </body>
