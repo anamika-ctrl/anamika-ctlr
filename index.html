@@ -861,7 +861,7 @@
                 <div class="case-studies-narrative">
 
                     <!-- Narrative Card 1: WishVault (Now Clickable) -->
-                    <div class="cs-card cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl group" onclick="window.open('https://anamika-ctrl.github.io/WishVault/', '_blank')">
+                    <div class="cs-card cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl group" onclick="window.location.href='https://anamika-ctrl.github.io/WishVault/'">
                         <div class="cs-card-content">
                             <div class="cs-card-title group-hover:text-red-500 transition-colors duration-300 flex items-center gap-2">
                                 WishVault
@@ -1003,7 +1003,7 @@
     <script>
         function toggleBook(wrapper, url) {
             if (wrapper.classList.contains('coming-soon')) return;
-            window.open(url, '_blank');
+            window.location.href = url;
         }
 
         document.addEventListener('DOMContentLoaded', () => {
