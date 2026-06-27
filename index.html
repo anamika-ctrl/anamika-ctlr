@@ -85,17 +85,17 @@
 
         /* Dark Mode Switch Styling */
         .switch-track {
-            width: 26px;
+            width: 0.26em;
             height: 0.85em;
             background-color: #ccc;
-            border-radius: 13px;
+            border-radius: 0.13em;
             position: relative;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
         .switch-thumb {
-            width: 21px;
-            height: 21px;
+            width: calc(0.26em - 4px);
+            height: calc(0.26em - 4px);
             background-color: #fff;
             border-radius: 50%;
             position: absolute;
@@ -104,7 +104,7 @@
             transition: transform 0.3s ease;
         }
         .switch-track.active { background-color: #ff4500; }
-        .switch-track.active .switch-thumb { transform: translateY(calc(-0.85em + 25px)); }
+        .switch-track.active .switch-thumb { transform: translateY(-0.59em); }
         .switch-label {
             position: absolute;
             top: 50%;
