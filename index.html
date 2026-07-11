@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alt+Anamika - UX Designer & Animator</title>
     
-    <!-- Unified Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Oswald:wght@700;900&display=swap" rel="stylesheet">
     
-    <!-- GSAP for Animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
-    <!-- Tailwind CSS Engine -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -42,6 +38,7 @@
             --space-3: 24px;
             --space-4: 32px;
             
+            /* Main Book Dimensions */
             --spine-w: 40px;
             --book-w: 280px;
             --book-h: 400px;
@@ -55,151 +52,71 @@
             overflow-x: hidden;
         }
 
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
+        body::before, body::after {
+            content: ''; position: fixed; inset: 0; z-index: -1;
+            background-size: cover; background-position: center; background-repeat: no-repeat;
+            transition: opacity 0.4s ease; pointer-events: none;
         }
-        body::before {
-            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png');
-            opacity: 1;
-        }
-        body::after {
-            background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png');
-            opacity: 0;
-        }
+        body::before { background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png'); opacity: 1; }
+        body::after { background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png'); opacity: 0; }
         body.dark-mode::before { opacity: 0; }
         body.dark-mode::after  { opacity: 1; }
-
-        body.dark-mode {
-            background-color: #121212;
-            color: #f7f3ed;
-        }
-        
+        body.dark-mode { background-color: #121212; color: #f7f3ed; }
         body.dark-mode .hero-text { color: #f7f3ed; }
         body.dark-mode .hero-text .text-red-500 { color: #ff4500; }
         body.dark-mode .hover\:text-gray-600:hover { color: #ccc; }
         body.dark-mode .text-gray-700 { color: #ddd; }
 
-        .hero-text {
-            font-size: clamp(3.8rem, 14vw, 14rem);
-            line-height: 0.9;
-            transition: color 0.3s ease;
-        }
+        .hero-text { font-size: clamp(3.8rem, 14vw, 14rem); line-height: 0.9; transition: color 0.3s ease; }
         .hero-heading { font-family: 'Oswald', sans-serif; }
         .serif-font { font-family: 'Poppins', sans-serif; font-style: italic; }
 
         .switch-track {
-            width: 0.26em;
-            height: 0.85em;
-            background-color: #ccc;
-            border-radius: 0.13em;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+            width: 0.26em; height: 0.85em; background-color: #ccc; border-radius: 0.13em;
+            position: relative; cursor: pointer; transition: background-color 0.3s ease;
         }
         .switch-thumb {
-            width: calc(0.26em - 4px);
-            height: calc(0.26em - 4px);
-            background-color: #fff;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 2px;
-            left: 2px;
-            transition: transform 0.3s ease;
+            width: calc(0.26em - 4px); height: calc(0.26em - 4px); background-color: #fff;
+            border-radius: 50%; position: absolute; bottom: 2px; left: 2px; transition: transform 0.3s ease;
         }
         .switch-track.active { background-color: #ff4500; }
         .switch-track.active .switch-thumb { transform: translateY(-0.59em); }
         .switch-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 10px;
-            font-weight: bold;
-            color: #1a1a1a;
-            text-shadow: 1px 1px 2px #fff;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 10px; font-weight: bold; color: #1a1a1a; text-shadow: 1px 1px 2px #fff;
         }
-        body.dark-mode .switch-label {
-            color: #f7f3ed;
-            text-shadow: 1px 1px 2px #000;
-        }
+        body.dark-mode .switch-label { color: #f7f3ed; text-shadow: 1px 1px 2px #000; }
         
-        .email-link {
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
+        .email-link { cursor: pointer; text-decoration: none; color: inherit; }
         .email-link:hover { opacity: 0.8; }
         #copy-message { opacity: 0; transition: opacity 0.3s ease; }
 
-        .main-page, .resume-page {
-            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
+        .main-page, .resume-page { transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .resume-page {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100vh;
-            background-color: rgba(247, 243, 237, 0.98);
-            transform: translateY(-100vh);
-            overflow-y: auto;
-            z-index: 50;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: rgba(247, 243, 237, 0.98); transform: translateY(-100vh);
+            overflow-y: auto; z-index: 50;
         }
         body.dark-mode .resume-page { background-color: rgba(26, 26, 26, 0.98); }
         .resume-page.active { transform: translateY(0); }
 
         #intro-sequence {
-            /* Account for the header dynamically to fit screen perfectly */
-            height: max(600px, calc(100vh - 120px));
-            position: relative;
-            overflow: hidden;
-            border-radius: 2rem;
-            width: 100%;
+            height: max(600px, calc(100vh - 120px)); position: relative;
+            overflow: hidden; border-radius: 2rem; width: 100%;
         }
 
         .hero-screen {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            will-change: transform, opacity;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            z-index: 10; will-change: transform, opacity;
         }
-
-        .hero-cta-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: var(--space-2);
-            margin-bottom: 0;
-        }
-        .hero-tagline {
-            font-size: 1rem;
-            color: var(--muted);
-            font-weight: 400;
-        }
+        .hero-cta-block { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); margin-bottom: 0; }
+        .hero-tagline { font-size: 1rem; color: var(--muted); font-weight: 400; }
         body.dark-mode .hero-tagline { color: #9a9a9a; }
         .cta-primary {
-            display: inline-block;
-            padding: 14px 36px;
-            background: var(--fg);
-            color: var(--bg);
-            font-family: 'Oswald', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            text-decoration: none;
-            border-radius: 40px;
+            display: inline-block; padding: 14px 36px; background: var(--fg); color: var(--bg);
+            font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em;
+            text-transform: uppercase; text-decoration: none; border-radius: 40px;
             transition: background 0.2s, color 0.2s, transform 0.2s;
         }
         .cta-primary:hover { background: var(--red); color: #fff; transform: translateY(-2px); }
@@ -207,191 +124,101 @@
         body.dark-mode .cta-primary:hover { background: var(--red); color: #fff; }
 
         .about-section {
-            --about-fg: var(--red);
-            --about-blue: #175bd6;
-            --font-display: "Oswald", sans-serif;
-            --font-body: "Poppins", sans-serif;
-            
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 20;
-            background: transparent;
-            font-family: var(--font-body);
-            color: var(--about-fg);
-            display: grid;
-            grid-template-columns: minmax(180px, 1fr) auto minmax(240px, 1.2fr);
-            grid-template-rows: 1fr;
-            align-items: center;
-            justify-items: center;
-            gap: clamp(8px, 2vw, 40px);
-            padding: 0 4vw; 
-            perspective: 1200px; 
-            pointer-events: none; /* Container passes clicks through, panels override this */
+            --about-fg: var(--red); --about-blue: #175bd6;
+            --font-display: "Oswald", sans-serif; --font-body: "Poppins", sans-serif;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20;
+            background: transparent; font-family: var(--font-body); color: var(--about-fg);
+            display: grid; grid-template-columns: minmax(180px, 1fr) auto minmax(240px, 1.2fr);
+            grid-template-rows: 1fr; align-items: center; justify-items: center; gap: clamp(8px, 2vw, 40px);
+            padding: 0 4vw; perspective: 1200px; pointer-events: none;
         }
-
-        .about-section .design-panel, .about-section .design-panel-2 { grid-column: 1; grid-row: 1; justify-self: end; align-self: center; margin-bottom: 0;}
         
-        /* The central container layout containing portrait and name as a single relative system */
         .about-section .portrait-column {
-            grid-column: 2;
-            grid-row: 1;
+            grid-column: 2; grid-row: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 20px; width: clamp(280px, 38vw, 750px); height: 100%; max-height: 90vh;
+        }
+        .about-section .portrait-wrap { position: relative; width: 100%; max-height: 55vh; z-index: 5; will-change: transform; }
+        
+        /* Unified Left-Aligned Base for Panels */
+        .about-section .panel {
+            position: relative; z-index: 1; will-change: transform, opacity; pointer-events: none;
+            --slide-x: 0px; --slide-y: 100px; --tilt-x: 0px; --tilt-y: 0px;
+            transform: translate(calc(var(--slide-x) + var(--tilt-x)), calc(var(--slide-y) + var(--tilt-y)));
+            
+            /* Ensured identical box width & left-alignment structure for all 4 panels */
+            width: 280px; 
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px; /* Consistent gap between portrait and the name block */
-            width: clamp(280px, 38vw, 750px);
-            height: 100%;
-            max-height: 90vh; /* Keeps composition inside screen bounds */
+            align-items: flex-start;
+            text-align: left;
         }
-
-        .about-section .portrait-wrap {
-            position: relative;
-            width: 100%;
-            max-height: 55vh; /* Prevents overflow of the portrait artwork on short viewport laptops */
-            z-index: 5;
-            will-change: transform;
-        }
-
-        .about-section .facts-panel, .about-section .facts-panel-2 { grid-column: 3; grid-row: 1; justify-self: start; align-self: center; margin-top: -80px;}
-
-        .about-section .panel {
-            position: relative;
-            z-index: 1;
-            will-change: transform, opacity;
-            pointer-events: none; /* Activated by GSAP */
-            --slide-x: 0px;
-            --slide-y: 100px;
-            --tilt-x: 0px;
-            --tilt-y: 0px;
-            transform: translate(calc(var(--slide-x) + var(--tilt-x)), calc(var(--slide-y) + var(--tilt-y)));
-        }
-
-        .about-section .design-panel, .about-section .design-panel-2 {
-            width: max-content;
-            min-width: 180px;
-            opacity: 0;
-        }
-
-        .about-section .facts-panel, .about-section .facts-panel-2 {
-            width: min(100%, 350px);
-            opacity: 0;
-        }
-
+        
+        .about-section .design-panel, .about-section .design-panel-2 { grid-column: 1; grid-row: 1; justify-self: end; align-self: center; margin-bottom: 0; opacity: 0; }
+        .about-section .facts-panel, .about-section .facts-panel-2 { grid-column: 3; grid-row: 1; justify-self: start; align-self: center; margin-top: -80px; opacity: 0; }
+        
         .about-section .label {
-            display: inline-flex;
-            align-items: center;
-            min-height: 44px;
-            padding: 7px 18px;
-            margin: 0 0 13px;
-            background: var(--about-blue);
-            color: #fff;
-            font-family: var(--font-display);
-            font-size: clamp(14px, 1.55vw, 24px);
-            font-style: italic;
-            font-weight: 900;
-            line-height: 1;
+            display: inline-flex; align-items: center; min-height: 44px; padding: 7px 18px; margin: 0 0 13px;
+            background: var(--about-blue); color: #fff; font-family: var(--font-display); font-size: clamp(14px, 1.55vw, 24px);
+            font-style: italic; font-weight: 900; line-height: 1;
+            /* Guaranteed left alignment */
+            align-self: flex-start;
         }
-
-        .about-section ul { margin: 0; padding-left: 29px; list-style-type: disc; }
-        .about-section li {
-            padding-left: 9px;
-            font-size: clamp(14px, 1.5vw, 25px);
-            line-height: 1.28;
-            letter-spacing: 0.6px;
-            font-weight: normal;
-            color: var(--about-fg);
+        .about-section ul { 
+            margin: 0; padding-left: 29px; list-style-type: disc; 
+            /* Guaranteed left alignment */
+            text-align: left;
+            align-self: flex-start;
+            width: 100%;
         }
+        .about-section li { padding-left: 9px; font-size: clamp(14px, 1.5vw, 25px); line-height: 1.28; letter-spacing: 0.6px; font-weight: normal; color: var(--about-fg); }
         .about-section li::marker { color: var(--about-fg); }
         .about-section .design-panel li, .about-section .design-panel-2 li { margin: 1px 0; white-space: nowrap; }
         .about-section .facts-panel li, .about-section .facts-panel-2 li { margin: 0 0 20px; }
-
-        .about-section .portrait-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            will-change: transform, filter;
-        }
-
-        .about-section .portrait-img-1 {
-            width: 100%; height: auto;
-            max-height: 55vh;
-            display: block;
-            object-fit: contain;
-            opacity: 1; 
-            position: relative;
-        }
         
-        .about-section .portrait-img-2 {
-            width: 100%; height: 100%;
-            max-height: 55vh;
-            display: block;
-            object-fit: contain;
-            opacity: 0; 
-            position: absolute;
-            top: 0; left: 0;
-            transform: rotateY(180deg);
-        }
-
-        /* Adjusted name block styling to flow in relative flexbox alignment rather than fixed bottom: 31px */
-        .about-section .name-block {
-            position: relative;
-            width: 100%;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .about-section .name-block-inner {
-            opacity: 0;
-            will-change: transform, opacity;
-        }
-
-        .about-section .name-block h1 {
-            margin: 0;
-            font-family: var(--font-display);
-            font-size: clamp(48px, 6vw, 78px);
-            font-weight: 900;
-            line-height: 0.88;
-            color: inherit;
-        }
-
-        .about-section .name-block p {
-            margin: 8px 0 0;
-            font-size: clamp(16px, 1.8vw, 24px);
-            line-height: 1.1;
-            letter-spacing: 0.7px;
-            font-family: var(--font-body);
-            color: inherit;
-        }
+        .about-section .portrait-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; will-change: transform, filter; }
+        .about-section .portrait-img-1 { width: 100%; height: auto; max-height: 55vh; display: block; object-fit: contain; opacity: 1; position: relative; }
+        .about-section .portrait-img-2 { width: 100%; height: 100%; max-height: 55vh; display: block; object-fit: contain; opacity: 0; position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
+        .about-section .name-block { position: relative; width: 100%; text-align: center; z-index: 10; }
+        .about-section .name-block-inner { opacity: 0; will-change: transform, opacity; }
+        .about-section .name-block h1 { margin: 0; font-family: var(--font-display); font-size: clamp(48px, 6vw, 78px); font-weight: 900; line-height: 0.88; color: inherit; }
+        .about-section .name-block p { margin: 8px 0 0; font-size: clamp(16px, 1.8vw, 24px); line-height: 1.1; letter-spacing: 0.7px; font-family: var(--font-body); color: inherit; }
 
         @media (max-width: 600px) {
-            .about-section {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-                align-content: center;
-                gap: 20px;
-                padding: 10px;
-            }
+            .about-section { grid-template-columns: 1fr; grid-template-rows: auto auto auto; align-content: center; gap: 20px; padding: 10px; }
             .about-section .design-panel, .about-section .design-panel-2  { grid-column: 1; grid-row: 2; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); }
             .about-section .portrait-column { grid-column: 1; grid-row: 1; width: min(100%, 480px); height: auto; max-height: none;}
             .about-section .portrait-wrap { max-height: none; }
             .about-section .portrait-img-1, .about-section .portrait-img-2 { max-height: none; }
             .about-section .facts-panel, .about-section .facts-panel-2   { grid-column: 1; grid-row: 3; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); }
             .about-section li { font-size: 15px; white-space: normal; }
+            
+            /* Mobile adjustments for books */
             :root { --book-w: 230px; --book-h: 340px; --spine-w: 34px; }
+            .book-wrapper--sm { --book-w: 161px; --book-h: 238px; --spine-w: 24px; }
+        }
+
+        .work-layout-container {
+            min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: center;
+            width: 100%; max-w: 72rem; margin: 0 auto;
         }
 
         .bookshelf {
-            display: flex; flex-wrap: wrap; gap: 4rem 6rem;
-            align-items: flex-end; margin-bottom: 2rem; justify-content: flex-start;
+            display: flex; flex-wrap: wrap; gap: 3rem;
+            align-items: flex-end; justify-content: flex-start;
         }
+        @media (min-width: 768px) { .bookshelf { gap: 6rem; } }
 
         .book-wrapper {
             perspective: 2000px;
             width: calc(var(--spine-w) + var(--book-w)); height: var(--book-h);
             position: relative; cursor: pointer;
+        }
+
+        .book-wrapper--sm {
+            --spine-w: 28px;
+            --book-w: 196px;
+            --book-h: 280px;
         }
 
         .book {
@@ -411,6 +238,7 @@
             writing-mode: vertical-rl; transform: rotate(180deg);
             font-family: 'Oswald', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,243,237,0.5);
         }
+        .book-wrapper--sm .spine-title { font-size: 0.55rem; }
         .spine-dot { position: absolute; bottom: 1.5rem; width: 5px; height: 5px; background: var(--red); border-radius: 50%; }
 
         .book-pages {
@@ -430,19 +258,29 @@
             transition: background 0.3s ease, border-color 0.3s ease;
         }
         body.dark-mode .book-interior { background: #252520; border-color: rgba(255,255,255,0.05); }
+        .book-wrapper--sm .book-interior { padding: 1.25rem; }
 
         .interior-top { display: flex; flex-direction: column; gap: 0.7rem; }
         .interior-chapter { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); font-weight: 600; }
+        .book-wrapper--sm .interior-chapter { font-size: 0.45rem; }
+        
         .interior-title { font-family: 'Oswald', sans-serif; font-size: 1.4rem; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.03em; color: #1a1a1a; }
+        .book-wrapper--sm .interior-title { font-size: 1.1rem; }
         body.dark-mode .interior-title { color: #f7f3ed; }
+        
         .interior-divider { width: 36px; height: 2px; background: var(--red); margin: 0.2rem 0; }
         .interior-desc { font-family: 'Poppins', sans-serif; font-size: 0.73rem; color: #555; line-height: 1.7; font-style: italic; }
+        .book-wrapper--sm .interior-desc { font-size: 0.6rem; line-height: 1.5; }
         body.dark-mode .interior-desc { color: #aaa; }
+        
         .interior-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
         .interior-tag { font-size: 0.53rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; background: #f0ece6; border-radius: 20px; color: #666; }
+        .book-wrapper--sm .interior-tag { font-size: 0.45rem; padding: 2px 6px; }
         body.dark-mode .interior-tag { background: #333; color: #aaa; }
+        
         .interior-bottom { display: flex; align-items: center; justify-content: space-between; }
         .interior-page-num { font-family: 'Poppins', sans-serif; font-size: 0.62rem; font-style: italic; color: #bbb; }
+        .book-wrapper--sm .interior-page-num { font-size: 0.5rem; }
         body.dark-mode .interior-page-num { color: #555; }
 
         .book-cover {
@@ -454,67 +292,55 @@
             overflow: hidden; backface-visibility: hidden; z-index: 2;
         }
 
-        .dark-cover { background: #272727; }
-        .dark-cover .cover-inner { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 1.75rem; position: relative; }
-        .cover-accent-line { position: absolute; left: 0; top: 0; width: 5px; height: 100%; background: #555; }
-        .cover-eyebrow { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #777; font-weight: 600; margin-bottom: 0.4rem; }
-        .cover-title { font-family: 'Oswald', sans-serif; font-size: 1.6rem; line-height: 1.05; color: rgba(247,243,237,0.45); text-transform: uppercase; letter-spacing: 0.03em; }
-        .cover-subtitle { font-family: 'Poppins', sans-serif; font-size: 0.68rem; font-style: italic; color: rgba(247,243,237,0.3); margin-top: 0.4rem; line-height: 1.5; }
-        .coming-soon-badge { display: inline-block; margin-top: 1rem; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; background: rgba(255,255,255,0.07); color: rgba(247,243,237,0.5); border: 1px solid rgba(247,243,237,0.15); border-radius: 20px; padding: 3px 10px; }
+        .cover-art, .cover-editorial {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: 2px 8px 8px 2px;
+        }
+        
+        .cover-art { object-fit: cover; z-index: 2; opacity: 1; filter: blur(0px); }
+        
+        .cover-editorial {
+            background: #151515; z-index: 3;
+            opacity: 0; filter: blur(12px); pointer-events: none;
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 1.75rem; border-left: 4px solid var(--red);
+        }
+        body.dark-mode .cover-editorial { background: #222; }
+        .book-wrapper--sm .cover-editorial { padding: 1.25rem; border-left-width: 3px; }
+
+        .book-wrapper:hover .cover-art { opacity: 0; filter: blur(12px); }
+        .book-wrapper:hover .cover-editorial { opacity: 1; filter: blur(0px); }
+
+        .edit-eyebrow { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #888; font-weight: 600; margin-bottom: 0.4rem; }
+        .book-wrapper--sm .edit-eyebrow { font-size: 0.45rem; }
+        
+        .edit-title { font-family: 'Oswald', sans-serif; font-size: 1.7rem; line-height: 1.05; color: #fff; text-transform: uppercase; letter-spacing: 0.03em; }
+        .book-wrapper--sm .edit-title { font-size: 1.25rem; }
+        
+        .edit-desc { font-family: 'Poppins', sans-serif; font-size: 0.73rem; font-style: italic; color: #aaa; margin-top: 0.5rem; line-height: 1.5; }
+        .book-wrapper--sm .edit-desc { font-size: 0.6rem; }
+        
+        .edit-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1rem; }
+        .edit-tag { font-size: 0.53rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #ccc; }
+        .book-wrapper--sm .edit-tag { font-size: 0.45rem; padding: 2px 6px; }
+        
+        .edit-action { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); display: flex; align-items: center; gap: 4px; transition: color 0.3s; }
+        .book-wrapper--sm .edit-action { font-size: 0.55rem; }
+        .book-wrapper:hover .edit-action { color: #fff; }
 
         .book-wrapper.is-tracking .book { transition: none; }
         .book-wrapper.is-tracking .book-cover { transition: none; }
         
-        .open-hint { position: absolute; bottom: -1.6rem; left: 50%; transform: translateX(-50%); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-
-        .shelf-line { width: 100%; height: 3px; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.07) 20%, rgba(0,0,0,0.07) 80%, transparent); margin-top: 2rem; margin-bottom: 2rem; }
-        body.dark-mode .shelf-line { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07) 20%, rgba(255,255,255,0.07) 80%, transparent); }
-        .shelf-line::after { content: ''; display: block; height: 6px; background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent); }
-
-        .case-studies-narrative { display: flex; flex-direction: column; gap: var(--space-4); }
-        .cs-card { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); padding: var(--space-4); background: rgba(0,0,0,0.03); border-radius: 1.5rem; border: 1px solid rgba(0,0,0,0.06); }
-        .cs-card--single { grid-template-columns: 1fr; }
-        body.dark-mode .cs-card { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.06); }
-        .cs-card-content { display: flex; flex-direction: column; justify-content: center; gap: var(--space-1); }
-        .cs-card-title { font-family: 'Oswald', sans-serif; font-size: 1.6rem; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1; margin-bottom: 4px; }
-        .cs-step-label { display: block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); font-weight: 700; margin-bottom: 4px; margin-top: var(--space-2); }
-        .cs-step-label:first-of-type { margin-top: 0; }
-        .cs-card-text { font-size: 0.85rem; line-height: 1.65; color: var(--muted); }
-        body.dark-mode .cs-card-text { color: #9a9a9a; }
-        .cs-card-images { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-1); align-content: start; }
-        .cs-card-images img { width: 100%; height: 200px; object-fit: cover; object-position: top; border-radius: 0.75rem; }
-        .cs-card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--space-1); }
-        .cs-card-tag { font-size: 0.55rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; background: #f0ece6; border-radius: 20px; color: #666; }
-        body.dark-mode .cs-card-tag { background: #333; color: #aaa; }
-        @media (max-width: 768px) { .cs-card { grid-template-columns: 1fr; } .cs-card-images img { height: 160px; } }
-
-        .gd-gallery-section { padding: var(--space-4); }
-        .gd-sec-label { display: flex; align-items: center; gap: 12px; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
-        .gd-sec-label::after { content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.12); }
-        body.dark-mode .gd-sec-label::after { background: rgba(255,255,255,0.08); }
-        .gd-grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 210px; gap: 0.75rem; grid-auto-flow: dense; }
-        .gd-item { border-radius: 0.75rem; overflow: hidden; cursor: pointer; position: relative; border: 1px solid rgba(0,0,0,0.10); opacity: 0; transform: translateY(26px); transition: opacity 0.65s ease, transform 0.65s ease, border-color 0.3s ease, box-shadow 0.3s ease; }
-        body.dark-mode .gd-item { border-color: rgba(255,255,255,0.07); }
-        .gd-item.gd-visible { opacity: 1; transform: translateY(0); }
-        .gd-item.gd-visible.d1 { transition-delay: 0.08s; } .gd-item.gd-visible.d2 { transition-delay: 0.16s; } .gd-item.gd-visible.d3 { transition-delay: 0.24s; } .gd-item.gd-visible.d4 { transition-delay: 0.32s; } .gd-item.gd-visible.d5 { transition-delay: 0.40s; } .gd-item.gd-visible.d6 { transition-delay: 0.48s; } .gd-item.gd-visible.d7 { transition-delay: 0.56s; }
-        .gd-item.gd-visible:hover { transform: translateY(-5px); border-color: var(--red); box-shadow: 0 14px 36px rgba(0,0,0,0.18); z-index: 10; }
-        .gd-item::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--red), #ff7c44); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease; z-index: 4; pointer-events: none; }
-        .gd-item.gd-visible:hover::before { transform: scaleX(1); }
-        .gd-item.tall { grid-row: span 2; } .gd-item.wide { grid-column: span 2; }
-        .gd-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
-        .gd-item.gd-visible:hover img { transform: scale(1.05); }
-        .gd-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.30) 45%, transparent 70%); opacity: 0; transition: opacity 0.35s ease; display: flex; flex-direction: column; justify-content: flex-end; padding: 1.1rem 1.2rem; gap: 0.22rem; z-index: 2; }
-        .gd-item.gd-visible:hover .gd-overlay { opacity: 1; }
-        .gd-item-title { font-family: 'Oswald', sans-serif; font-size: 0.95rem; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; line-height: 1.1; }
-        .gd-item-cat { font-size: 0.52rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); }
-        @media (max-width: 768px) { .gd-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; } .gd-item.wide { grid-column: span 1; } }
-        @media (max-width: 480px) { .gd-grid { grid-template-columns: 1fr; grid-auto-rows: 200px; } .gd-item.tall { grid-row: span 1; } }
+        .open-hint { position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity 0.3s; }
+        .book-wrapper:hover .open-hint { opacity: 1; }
+        .book-wrapper--sm .open-hint { font-size: 0.5rem; bottom: -1.4rem; }
     </style>
 </head>
 <body class="p-4 md:p-16">
 
     <div class="main-page">
-        <!-- ── MASTER PIN WRAPPER: Anchors the header and intro flow together ── -->
+        <!-- ── MASTER PIN WRAPPER ── -->
         <div id="master-pin-wrap" class="w-full">
             
             <header class="flex justify-between items-center mb-8 md:mb-16 relative z-50">
@@ -549,7 +375,6 @@
             <main class="text-center">
                 <div id="intro-sequence">
                     
-                    <!-- ── THE HERO LAYER ── -->
                     <div class="hero-screen">
                         <div class="mb-6 md:mb-10">
                             <div class="inline-block mx-auto">
@@ -583,10 +408,8 @@
                         </div>
                     </div>
 
-                    <!-- ── THE ABOUT LAYER ── -->
                     <section id="about" class="about-section" aria-labelledby="about-name">
-                        
-                        <!-- CHAPTER 1: Panels -->
+                        <!-- Panels now share identical structural left-alignment via global .panel CSS rules -->
                         <div class="panel design-panel">
                             <span class="label" aria-label="What I design">WHAT I DESIGN</span>
                             <ul role="list">
@@ -597,49 +420,39 @@
                                 <li>Motion Graphics</li>
                             </ul>
                         </div>
-
                         <div class="panel facts-panel">
                             <span class="label" aria-label="Fun facts">FUN FACTS</span>
                             <ul role="list">
-                                <li>Started career in animation before moving into product design</li>
+                                <li>Redesigned the Keys On Rent tenant app</li>
                                 <li>Built a concept product called GoFarming</li>
-                                <li>Love learning new things/hobbies</li>
-                                <li>Enjoy solving real-world problems through design</li>
+                                <li>Built scalable design systems</li>
+                                <li>Conducted usability research</li>
                             </ul>
                         </div>
-                        
-                        <!-- CHAPTER 2: Placeholder Panels -->
                         <div class="panel design-panel-2">
-                            <span class="label" aria-label="New design label">NEW CHAPTER</span>
+                            <span class="label" aria-label="New design label">FEATURED IN</span>
                             <ul role="list">
-                                <li>Replace this placeholder</li>
-                                <li>Content for chapter two</li>
-                                <li>Maintains identical layout</li>
+                                <li>Big Nate</li>
+                                <li>Monster High</li>
+                                <li>Wolf King</li>
                             </ul>
                         </div>
-
                         <div class="panel facts-panel-2">
                             <span class="label" aria-label="New facts label">NEW FACTS</span>
                             <ul role="list">
-                                <li>Placeholder item for the right side panel</li>
-                                <li>Easily swap content in the HTML</li>
-                                <li>Animations remain completely automatic</li>
+                                <li>Animated for Nickelodeon projects</li>
+                                <li>Worked with BYJU'S content</li>
+                                <li>Worked with international clients</li>
                             </ul>
                         </div>
 
-                        <!-- Centered single composition column to hold both portrait and name perfectly aligned -->
                         <div class="portrait-column">
-                            <!-- PORTRAIT CONTAINER -->
                             <div class="portrait-wrap" aria-hidden="true">
                                 <div class="portrait-inner">
-                                    <!-- Chapter 1 Image -->
                                     <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/about/ProfileP.png" alt="Anamika portrait artwork 1" class="portrait-img-1">
-                                    <!-- Chapter 2 Image (Placeholder) -->
                                     <img src="https://placehold.co/800x1000/175bd6/ffffff?text=Portrait+Two" alt="Anamika portrait artwork 2" class="portrait-img-2">
                                 </div>
                             </div>
-
-                            <!-- NAME BLOCK -->
                             <div class="name-block">
                                 <div class="name-block-inner">
                                     <h1 id="about-name">ANAMIKA</h1>
@@ -649,188 +462,211 @@
                         </div>
                     </section>
                 </div>
-        </div> <!-- End of Master Pin Wrapper -->
+        </div> 
 
-                <section id="work" class="mt-[54px] md:mt-[100px] max-w-6xl mx-auto w-full text-left relative z-30">
-                    <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8">Case study</h2>
-
-                    <div class="bookshelf">
-                        <!-- Book 1 -->
-                        <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
-                            <div class="book">
-                                <div class="book-pages"></div>
-                                <div class="book-spine">
-                                    <span class="spine-title">Go-Farming</span>
-                                    <span class="spine-dot"></span>
-                                </div>
-                                <div class="book-interior">
-                                    <div class="interior-top">
-                                        <span class="interior-chapter">Case Study · 01</span>
-                                        <div class="interior-title">Go-Farming</div>
-                                        <div class="interior-divider"></div>
-                                        <p class="interior-desc">A digital platform empowering farmers with real-time data, market connections, and sustainable farming practices.</p>
-                                        <div class="interior-tags">
-                                            <span class="interior-tag">UX Research</span>
-                                            <span class="interior-tag">Mobile App</span>
-                                            <span class="interior-tag">Figma</span>
+                <section id="work" class="work-layout-container relative z-30 pt-16 md:pt-0">
+                    
+                    <div class="w-full flex flex-col gap-12 md:gap-20">
+                        
+                        <!-- TIER 1: Case Studies -->
+                        <div class="w-full">
+                            <h2 class="text-2xl md:text-4xl font-light tracking-tight text-left mb-6 text-gray-800 dark:text-gray-200">Case study</h2>
+                            
+                            <div class="bookshelf pl-0 md:pl-[5%]">
+                                
+                                <!-- Main Book 1 -->
+                                <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
+                                    <div class="book">
+                                        <div class="book-pages"></div>
+                                        <div class="book-spine">
+                                            <span class="spine-title">Go-Farming</span>
+                                            <span class="spine-dot"></span>
+                                        </div>
+                                        <div class="book-interior">
+                                            <div class="interior-top">
+                                                <span class="interior-chapter">Case Study · 01</span>
+                                                <div class="interior-title">Go-Farming</div>
+                                                <div class="interior-divider"></div>
+                                                <p class="interior-desc">A digital platform empowering farmers with real-time data, market connections, and sustainable farming practices.</p>
+                                                <div class="interior-tags">
+                                                    <span class="interior-tag">UX Research</span>
+                                                    <span class="interior-tag">Mobile App</span>
+                                                    <span class="interior-tag">Figma</span>
+                                                </div>
+                                            </div>
+                                            <div class="interior-bottom">
+                                                <span class="interior-page-num">p. 01</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="book-cover">
+                                            <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg" alt="Go-Farming Cover" onerror="this.onerror=null; this.src='https://placehold.co/600x800/1a1a1a/ff4500?text=Go-Farming';">
+                                            
+                                            <div class="cover-editorial">
+                                                <div>
+                                                    <div class="edit-eyebrow">Case Study · 01</div>
+                                                    <div class="edit-title">Go-Farming</div>
+                                                    <div class="edit-desc">Empowering agriculture through real-time data and sustainable practices.</div>
+                                                    <div class="edit-tags">
+                                                        <span class="edit-tag">UX Research</span>
+                                                        <span class="edit-tag">Product Design</span>
+                                                    </div>
+                                                </div>
+                                                <div class="edit-action">
+                                                    View Project 
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="interior-bottom">
-                                        <span class="interior-page-num">p. 01</span>
-                                    </div>
+                                    <span class="open-hint">Click to Open</span>
                                 </div>
-                                <div class="book-cover">
-                                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg" alt="Go-Farming Cover" onerror="this.onerror=null; this.src='https://placehold.co/600x400/1a1a1a/ff4500?text=Go-Farming';" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
-                                </div>
-                            </div>
-                            <span class="open-hint">↑ Click to visit</span>
-                        </div>
 
-                        <!-- Book 2 -->
-                        <div class="book-wrapper coming-soon" id="book-2">
-                            <div class="book">
-                                <div class="book-pages"></div>
-                                <div class="book-spine">
-                                    <span class="spine-title">ASTC Redesign</span>
-                                    <span class="spine-dot" style="background:#555"></span>
-                                </div>
-                                <div class="book-interior">
-                                    <div class="interior-top">
-                                        <span class="interior-chapter">Case Study · 02</span>
-                                        <div class="interior-title">ASTC Redesign</div>
-                                        <div class="interior-divider" style="background:#999"></div>
-                                        <p class="interior-desc">A redesign of the ASTC Government transport website — improving accessibility and modernising ticket booking for Assam's commuters.</p>
-                                        <div class="interior-tags">
-                                            <span class="interior-tag">Web Redesign</span>
-                                            <span class="interior-tag">Accessibility</span>
-                                            <span class="interior-tag">In Progress</span>
+                                <!-- Main Book 2 (Coming Soon) -->
+                                <div class="book-wrapper coming-soon" id="book-2">
+                                    <div class="book">
+                                        <div class="book-pages"></div>
+                                        <div class="book-spine">
+                                            <span class="spine-title">ASTC Redesign</span>
+                                            <span class="spine-dot" style="background:#555"></span>
+                                        </div>
+                                        <div class="book-interior">
+                                            <div class="interior-top">
+                                                <span class="interior-chapter">Case Study · 02</span>
+                                                <div class="interior-title">ASTC Redesign</div>
+                                                <div class="interior-divider" style="background:#999"></div>
+                                                <p class="interior-desc">A redesign of the ASTC Government transport website — improving accessibility and modernising ticket booking for Assam's commuters.</p>
+                                                <div class="interior-tags">
+                                                    <span class="interior-tag">Web Redesign</span>
+                                                    <span class="interior-tag">Accessibility</span>
+                                                </div>
+                                            </div>
+                                            <div class="interior-bottom">
+                                                <span style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;font-weight:600;">Coming Soon</span>
+                                                <span class="interior-page-num">p. 02</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="book-cover">
+                                            <img class="cover-art" src="https://placehold.co/600x800/222222/555555?text=ASTC+Redesign" alt="ASTC Cover">
+                                            
+                                            <div class="cover-editorial">
+                                                <div>
+                                                    <div class="edit-eyebrow">Case Study · 02</div>
+                                                    <div class="edit-title">ASTC<br>Redesign</div>
+                                                    <div class="edit-desc">Modernising transit and accessibility for Assam's commuters.</div>
+                                                    <span class="inline-block mt-4 text-[0.55rem] font-bold tracking-[0.15em] uppercase bg-white/10 text-white/50 border border-white/20 rounded-full px-3 py-1">In Progress</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="interior-bottom">
-                                        <span style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;font-weight:600;">Coming Soon</span>
-                                        <span class="interior-page-num">p. 02</span>
-                                    </div>
+                                    <span class="open-hint" style="opacity:0.35;">Coming soon</span>
                                 </div>
-                                <div class="book-cover dark-cover">
-                                    <div class="cover-accent-line"></div>
-                                    <div class="cover-inner">
-                                        <div>
-                                            <div class="cover-eyebrow">Case Study · 02</div>
-                                            <div class="cover-title">ASTC<br>Redesign</div>
-                                            <div class="cover-subtitle">Modernising transit for Assam's commuters.</div>
-                                            <span class="coming-soon-badge">In Progress</span>
+                                
+                            </div>
+                        </div>
+
+                        <!-- TIER 2: Creative Experiments -->
+                        <div class="w-full">
+                            <h2 class="text-xl md:text-2xl font-light tracking-tight text-left mb-6 text-gray-500">Creative Experiments</h2>
+                            
+                            <div class="bookshelf pl-0 md:pl-[5%]">
+                                
+                                <!-- Small Book 1 (WishVault - Upgraded Editorial) -->
+                                <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
+                                    <div class="book">
+                                        <div class="book-pages"></div>
+                                        <div class="book-spine">
+                                            <span class="spine-title">WishVault</span>
+                                            <span class="spine-dot" style="bottom: 1rem;"></span>
+                                        </div>
+                                        <div class="book-interior">
+                                            <div class="interior-top">
+                                                <span class="interior-chapter">Exp · 01</span>
+                                                <div class="interior-title">WishVault</div>
+                                                <div class="interior-divider"></div>
+                                                <p class="interior-desc">A universal wishlist platform that brings every saved product into one place.</p>
+                                                <div class="interior-tags">
+                                                    <span class="interior-tag">App</span>
+                                                    <span class="interior-tag">UI</span>
+                                                </div>
+                                            </div>
+                                            <div class="interior-bottom">
+                                                <span class="interior-page-num">p. 03</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="book-cover">
+                                            <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/0e824bb7e53af23cf603977a7734b9837e6c0fc7/images/wishvault_home.PNG" alt="WishVault Cover" style="object-position: top;">
+                                            
+                                            <!-- IMPROVED EDITORIAL HOVER -->
+                                            <div class="cover-editorial" style="padding: 1.25rem; justify-content: center; align-items: flex-start;">
+                                                <div style="font-family: 'Oswald', sans-serif; font-size: 1.8rem; color: #fff; line-height: 1; margin-bottom: 0.25rem; font-style: normal; text-transform: none; letter-spacing: 0;">WishVault</div>
+                                                <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--red); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-style: normal;">Problem</div>
+                                                <div style="font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-style: normal; color: #d1d5db; line-height: 1.6; text-align: left;">
+                                                    People save products across Amazon, Instagram, Pinterest and dozens of other platforms. Managing all those wishlists becomes messy and makes tracking prices almost impossible.
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                    <span class="open-hint">Click to Open</span>
                                 </div>
-                            </div>
-                            <span class="open-hint" style="opacity:0.35;">Coming soon</span>
-                        </div>
-                    </div>
 
-                    <div class="shelf-line"></div>
+                                <!-- Small Book 2 (Motion Reel - Video Preview Upgrade) -->
+                                <!-- Triggers the modal open script instead of a new tab -->
+                                <div class="book-wrapper book-wrapper--sm" id="book-4" onclick="openVideoModal('0EIUm9HO_Dg')">
+                                    <div class="book">
+                                        <div class="book-pages"></div>
+                                        <div class="book-spine">
+                                            <span class="spine-title">Motion & Media</span>
+                                            <span class="spine-dot" style="bottom: 1rem; background:#3b82f6;"></span>
+                                        </div>
+                                        <div class="book-interior">
+                                            <div class="interior-top">
+                                                <span class="interior-chapter" style="color:#3b82f6;">Exp · 02</span>
+                                                <div class="interior-title">Motion Reel</div>
+                                                <div class="interior-divider" style="background:#3b82f6;"></div>
+                                                <p class="interior-desc">Animation work, transitions, micro-interactions, and motion-driven storytelling.</p>
+                                                <div class="interior-tags">
+                                                    <span class="interior-tag">Motion</span>
+                                                    <span class="interior-tag">Graphics</span>
+                                                </div>
+                                            </div>
+                                            <div class="interior-bottom">
+                                                <span class="interior-page-num">p. 04</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="book-cover">
+                                            <!-- VIDEO PREVIEW REPLACES IMAGE -->
+                                            <video class="cover-art object-cover w-full h-full rounded-[2px_8px_8px_2px]" 
+                                                   src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" 
+                                                   poster="https://placehold.co/400x600/1a1a1a/3b82f6?text=Motion+Reel"
+                                                   muted playsinline loop preload="auto">
+                                            </video>
+                                            
+                                            <div class="cover-editorial" style="border-left-color: #3b82f6;">
+                                                <div>
+                                                    <div class="edit-eyebrow">Experiment · 02</div>
+                                                    <div class="edit-title">Motion &<br>Graphics</div>
+                                                    <div class="edit-desc">A collection of visual explorations and animated narratives.</div>
+                                                    <div class="edit-tags">
+                                                        <span class="edit-tag">Animation</span>
+                                                    </div>
+                                                </div>
+                                                <div class="edit-action" style="color: #3b82f6;">
+                                                    Watch Reel
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="open-hint">Click to Watch</span>
+                                </div>
 
-                    <h2 class="text-2xl md:text-5xl font-light tracking-tight text-left mb-8 mt-12">Creative Experiments</h2>
-
-                    <div class="case-studies-narrative">
-                        <div class="cs-card cursor-pointer transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl group" onclick="window.location.href='https://anamika-ctrl.github.io/WishVault_case-Study/'">
-                            <div class="cs-card-content">
-                                <div class="cs-card-title group-hover:text-red-500 transition-colors duration-300 flex items-center gap-2">
-                                    WishVault
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                </div>
-                                <div class="cs-card-tags">
-                                    <span class="cs-card-tag">UX Research</span>
-                                    <span class="cs-card-tag">Mobile App</span>
-                                    <span class="cs-card-tag">Figma</span>
-                                </div>
-                                <div>
-                                    <span class="cs-step-label">Problem</span>
-                                    <p class="cs-card-text">Indian online shoppers spread their saved items across Amazon, Flipkart, Myntra, Nykaa, Meesho and more. There is no single place to see everything, track prices, or share lists with friends and family.</p>
-                                </div>
-                                <div>
-                                    <span class="cs-step-label">Result</span>
-                                    <p class="cs-card-text">Created WishVault a universal wishlist platform that brings every saved product into one place, helping users track prices, organize purchases, and shop smarter.</p>
-                                </div>
-                            </div>
-                            <div class="cs-card-images">
-                                <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/0e824bb7e53af23cf603977a7734b9837e6c0fc7/images/wishvault_home.PNG" alt="WishVault screen">
-                                <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5aa7ef4a0e7b8552f35f9f9bc032b0dc11413344/login-page1.svg" alt="WishVault login screen">
-                            </div>
-                        </div>
-
-                        <div class="gd-gallery-section">
-                            <div class="gd-sec-label">Graphic Design</div>
-                            <div class="gd-grid">
-                                <div class="gd-item bento-item tall" data-category="illustration">
-                                    <img src="https://placehold.co/400x420/1a1a1a/ff4500?text=Illustration" alt="Illustration" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Illustration</span>
-                                        <span class="gd-item-cat">Illustration</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item d1" data-category="branding">
-                                    <img src="https://placehold.co/400x210/1a1a1a/f7f3ed?text=Branding" alt="Branding" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Brand Identity</span>
-                                        <span class="gd-item-cat">Branding</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item d2" data-category="poster">
-                                    <img src="https://placehold.co/400x210/1a1a1a/ff4500?text=Poster" alt="Poster" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Poster Design</span>
-                                        <span class="gd-item-cat">Poster</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item wide d3" data-category="typography">
-                                    <img src="https://placehold.co/800x210/0d0d0d/f7f3ed?text=Typography" alt="Typography" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Type Exploration</span>
-                                        <span class="gd-item-cat">Typography</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item d4" data-category="poster">
-                                    <img src="https://placehold.co/400x210/1a1a1a/ff4500?text=Event" alt="Poster 2" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Event Poster</span>
-                                        <span class="gd-item-cat">Poster</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item d5" data-category="illustration">
-                                    <img src="https://placehold.co/400x210/1a1a1a/ff4500?text=Digital+Art" alt="Illustration 2" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Digital Art</span>
-                                        <span class="gd-item-cat">Illustration</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item d6" data-category="branding">
-                                    <img src="https://placehold.co/400x210/1a1a1a/f7f3ed?text=Logo" alt="Branding 2" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Logo Design</span>
-                                        <span class="gd-item-cat">Branding</span>
-                                    </div>
-                                </div>
-                                <div class="gd-item bento-item d7" data-category="typography">
-                                    <img src="https://placehold.co/400x210/0d0d0d/ff4500?text=Lettering" alt="Typography 2" loading="lazy">
-                                    <div class="gd-overlay">
-                                        <span class="gd-item-title">Lettering</span>
-                                        <span class="gd-item-cat">Typography</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        <div class="cs-card cs-card--single">
-                            <div class="cs-card-content">
-                                <div class="cs-card-title">Motion Reel</div>
-                                <p class="cs-card-text">Animation work — transitions, micro-interactions, and motion-driven storytelling.</p>
-                            </div>
-                            <div class="w-full flex justify-center mt-2">
-                                <iframe width="100%" height="360" class="rounded-xl" style="max-width:640px;" src="https://www.youtube.com/embed/0EIUm9HO_Dg" title="Motion Reel" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-                            </div>
-                        </div>
                     </div>
                 </section>
 
@@ -861,7 +697,7 @@
                 <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">by Anamika Gogoi</p>
             </footer>
         
-    </div> <!-- End Main Page -->
+    </div> 
 
     <div class="resume-page p-4 md:p-16 flex flex-col items-center">
         <header class="w-full max-w-2xl flex justify-between items-center mb-8">
@@ -875,12 +711,6 @@
                 <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
                     DOWNLOAD
                 </a>
-                <div id="download-feedback" class="flex items-center ml-2 opacity-0 transition-opacity duration-300">
-                    <span id="download-message" class="text-sm text-green-600"></span>
-                    <svg xmlns="http://www.w3.org/2000/svg" id="download-icon" class="h-4 w-4 ml-1 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                </div>
             </div>
         </header>
         <div class="w-full h-full flex justify-center items-center py-10">
@@ -891,13 +721,14 @@
         </div>
     </div>
 
-    <div id="image-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/90 backdrop-blur-sm opacity-0 transition-opacity duration-300 p-4 md:p-8">
-        <button id="modal-close" class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+    <!-- FULLSCREEN VIDEO MODAL -->
+    <div id="video-modal" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/95 opacity-0 transition-opacity duration-300">
+        <button id="close-modal" class="absolute top-6 right-6 text-white/70 hover:text-red-500 transition-colors z-[101]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
-        <img id="modal-image" src="" alt="Full View" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl transform scale-95 transition-transform duration-300 mx-auto my-auto">
+        <div class="relative w-full max-w-5xl aspect-video mx-4 shadow-2xl rounded-xl overflow-hidden bg-black" id="modal-content">
+            <!-- Iframe injected via JS to prevent background playback -->
+        </div>
     </div>
 
     <script>
@@ -906,21 +737,57 @@
             window.location.href = url;
         }
 
+        // GLOBAL VIDEO MODAL CONTROLS
+        const videoModal = document.getElementById('video-modal');
+        const modalContent = document.getElementById('modal-content');
+        
+        window.openVideoModal = function(videoId) {
+            if (!videoModal || !modalContent) return;
+            videoModal.classList.remove('hidden');
+            setTimeout(() => videoModal.classList.remove('opacity-0'), 10);
+            
+            // Inject YouTube player with autoplay 
+            modalContent.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            document.body.style.overflow = 'hidden';
+        };
+
+        window.closeVideoModalFunc = function() {
+            if (!videoModal || !modalContent) return;
+            videoModal.classList.add('opacity-0');
+            setTimeout(() => {
+                videoModal.classList.add('hidden');
+                modalContent.innerHTML = ''; // Destroys iframe stopping audio
+                document.body.style.overflow = '';
+            }, 300);
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             const body = document.body;
             const themeSwitch = document.getElementById('theme-switch');
             const switchThumb = themeSwitch ? themeSwitch.querySelector('.switch-thumb') : null;
             const emailLink = document.getElementById('email-link');
             const copyMessage = document.getElementById('copy-message');
-            const menuButton = document.getElementById('menu-button');
-            const navMenu = document.getElementById('nav-menu');
-            const iconMenu = document.getElementById('icon-menu');
-            const iconClose = document.getElementById('icon-close');
             
+            // Video Modal Event Listeners
+            const closeModalBtn = document.getElementById('close-modal');
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeVideoModalFunc);
+            
+            if (videoModal) {
+                videoModal.addEventListener('click', (e) => {
+                    // Close if clicking the dark background (outside iframe container)
+                    if (e.target === videoModal) closeVideoModalFunc();
+                });
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && videoModal && !videoModal.classList.contains('hidden')) {
+                    closeVideoModalFunc();
+                }
+            });
+
             if (themeSwitch) {
                 themeSwitch.addEventListener('click', () => {
                     body.classList.toggle('dark-mode');
-                    body.classList.toggle('dark');
                     if(switchThumb) switchThumb.parentElement.classList.toggle('active');
                 });
             }
@@ -941,31 +808,7 @@
                 });
             }
 
-            if (menuButton && navMenu) {
-                menuButton.addEventListener('click', () => {
-                    const isHidden = navMenu.classList.contains('hidden');
-                    if (isHidden) {
-                        navMenu.classList.remove('hidden'); navMenu.classList.add('flex');
-                        iconMenu?.classList.add('scale-0', 'opacity-0');
-                        iconClose?.classList.remove('scale-0', 'opacity-0');
-                    } else {
-                        navMenu.classList.add('hidden'); navMenu.classList.remove('flex');
-                        iconClose?.classList.add('scale-0', 'opacity-0');
-                        iconMenu?.classList.remove('scale-0', 'opacity-0');
-                    }
-                });
-                navMenu.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => {
-                        if (window.innerWidth < 768 && !navMenu.classList.contains('hidden')) {
-                            navMenu.classList.add('hidden'); navMenu.classList.remove('flex');
-                            iconClose?.classList.add('scale-0', 'opacity-0');
-                            iconMenu?.classList.remove('scale-0', 'opacity-0');
-                        }
-                    });
-                });
-            }
-
-            // Bookshelf Physics
+            // Universal Bookshelf Physics - Updated with Video Hover logic
             document.querySelectorAll('.book-wrapper:not(.coming-soon)').forEach(wrapper => {
                 const book = wrapper.querySelector('.book');
                 const cover = wrapper.querySelector('.book-cover');
@@ -981,6 +824,7 @@
 
                     book.style.transform = `rotateY(${currentRY}deg) rotateX(${currentRX}deg) rotateZ(${currentRZ}deg) translateY(${-10 * openProgress}px)`;
                     book.style.filter    = `drop-shadow(${18 * openProgress}px ${28 * openProgress}px ${40 * openProgress}px rgba(0,0,0,${0.3 * openProgress}))`;
+                    
                     cover.style.transform  = `rotateY(${openProgress * (-18 + currentRY * 0.3)}deg)`;
                     cover.style.boxShadow  = `${5 + 11 * openProgress}px ${5 + 11 * openProgress}px ${20 + 24 * openProgress}px rgba(0,0,0,${0.22 + 0.13 * openProgress})`;
 
@@ -994,6 +838,14 @@
 
                 wrapper.addEventListener('mouseenter', (e) => {
                     isHovering = true; wrapper.classList.add('is-tracking');
+                    
+                    // Video Auto-Play logic for hover preview
+                    const vid = wrapper.querySelector('video.cover-art');
+                    if(vid) {
+                        vid.currentTime = 0;
+                        vid.play().catch(e => console.log('Autoplay handled dynamically'));
+                    }
+
                     const rect = wrapper.getBoundingClientRect();
                     const nx = (e.clientX - rect.left) / rect.width - 0.5, ny = (e.clientY - rect.top) / rect.height - 0.5;
                     targetRY = -20 + nx * 18; targetRX = 5 - ny * 14; targetRZ = -5 + nx * 6;
@@ -1005,9 +857,16 @@
                     const nx = (e.clientX - rect.left) / rect.width - 0.5, ny = (e.clientY - rect.top) / rect.height - 0.5;
                     targetRY = -20 + nx * 18; targetRX = 5 - ny * 14; targetRZ = -5 + nx * 6;
                 });
-                wrapper.addEventListener('mouseleave', () => { isHovering = false; if (!rafId) rafId = requestAnimationFrame(animate); });
-            });
+                wrapper.addEventListener('mouseleave', () => { 
+                    isHovering = false; 
+                    
+                    // Video Pause logic on hover exit
+                    const vid = wrapper.querySelector('video.cover-art');
+                    if(vid) vid.pause();
 
+                    if (!rafId) rafId = requestAnimationFrame(animate); 
+                });
+            });
 
             gsap.registerPlugin(ScrollTrigger);
 
@@ -1018,133 +877,34 @@
             const panels1 = document.querySelectorAll('.design-panel, .facts-panel');
             const panels2 = document.querySelectorAll('.design-panel-2, .facts-panel-2');
 
-            // Set Initial States specifically for the transition
-            // 110vh ensures the portrait is completely hidden below the fold initially.
-            // As the timeline scrubs, it will smoothly enter from the bottom.
             gsap.set(portraitWrap, { y: "110vh" }); 
             gsap.set(panels1, { opacity: 0, y: 40, pointerEvents: "none" });
             gsap.set(panels2, { opacity: 0, y: 40, pointerEvents: "none" });
             gsap.set(nameBlock, { opacity: 0, y: 30 });
             gsap.set(".portrait-img-2", { opacity: 0 });
 
-            // Master Pinned Timeline
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: masterPin,
-                    // Pin exactly where the element is rendered initially to prevent scrolling jumps
                     start: () => "top " + masterPin.offsetTop, 
-                    end: "+=3800", // Pacing distance
-                    pin: true,
-                    scrub: 1, 
-                    anticipatePin: 1
+                    end: "+=3800",
+                    pin: true, scrub: 1, anticipatePin: 1
                 }
             });
 
-            // ════════ PHASE 1: Premium Parallax Swap ════════
-            // Hero scrolls UP and fades away.
-            // Portrait rises UP from the bottom at the same time.
-            tl.to(heroScreen, {
-                y: "-45vh",
-                scale: 0.9,
-                opacity: 0,
-                duration: 4,
-                ease: "power2.inOut"
-            }, 0)
-            .to(portraitWrap, {
-                y: "0vh",
-                duration: 4,
-                ease: "power2.inOut" // The easing naturally creates the 10% "peek" effect midway
-            }, 0)
-
-            // ════════ PHASE 2: Assembly ════════
-            // Hero has mostly exited, now About content drops into place
-            .to(panels1, {
-                opacity: 1,
-                y: 0,
-                duration: 2.5,
-                ease: "power3.out",
-                onStart: () => gsap.set(panels1, { pointerEvents: "auto" }),
-                onReverseComplete: () => gsap.set(panels1, { pointerEvents: "none" })
-            }, "-=1") // Starts slightly before the portrait finishes rising
-            .to(nameBlock, {
-                opacity: 1,
-                y: 0,
-                duration: 2,
-                ease: "power2.out"
-            }, "-=2")
-
-            // Give the user a moment to digest Chapter 1 content
-            .addLabel("reading-pause", "+=1.5")
-
-            // ════════ PHASE 3: Chapter 2 Transition (3D Flip) ════════
-            .to(".portrait-inner", { 
-                rotationY: 90, 
-                scale: 0.95, 
-                filter: "blur(3px)", 
-                duration: 2, 
-                ease: "power2.in" 
-            }, "reading-pause")
-            .to(panels1, { 
-                opacity: 0, 
-                y: -40,
-                duration: 2, 
-                ease: "power2.in",
-                onStart: () => gsap.set(panels1, { pointerEvents: "none" }),
-                onReverseComplete: () => gsap.set(panels1, { pointerEvents: "auto" })
-            }, "reading-pause")
-            .to(nameBlock, { 
-                opacity: 0, 
-                y: 20, 
-                duration: 2, 
-                ease: "power2.in" 
-            }, "reading-pause")
-
-            .addLabel("chapter-swap")
-            .set(".portrait-img-1", { opacity: 0 }, "chapter-swap")
-            .set(".portrait-img-2", { opacity: 1 }, "chapter-swap")
-            
-            .to(".portrait-inner", { 
-                rotationY: 180, 
-                scale: 1, 
-                filter: "blur(0px)", 
-                duration: 2, 
-                ease: "power2.out" 
-            }, "chapter-swap")
-            .to(panels2, {
-                opacity: 1, 
-                y: 0, 
-                duration: 2.5, 
-                ease: "power3.out",
-                onStart: () => gsap.set(panels2, { pointerEvents: "auto" }),
-                onReverseComplete: () => gsap.set(panels2, { pointerEvents: "none" })
-            }, "chapter-swap+=0.5");
-
-
-            // Subtle Physics on panels during hover
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                const aboutPanels = document.querySelectorAll('.about-section .panel');
-                const applyAboutTilt = (panel, e) => {
-                    const { left, top, width, height } = panel.getBoundingClientRect();
-                    const x = ((e.clientX - left) / width  - 0.5) * 14;
-                    const y = ((e.clientY - top)  / height - 0.5) * 14;
-                    gsap.to(panel, { "--tilt-x": `${x.toFixed(2)}px`, "--tilt-y": `${y.toFixed(2)}px`, duration: 0.15, ease: "power1.out", overwrite: "auto" });
-                };
-                const resetAboutTilt = (panel) => gsap.to(panel, { "--tilt-x": "0px", "--tilt-y": "0px", duration: 0.8, ease: "power2.out", overwrite: "auto" });
-
-                aboutPanels.forEach(panel => {
-                    panel.addEventListener('pointerenter', e => { aboutPanels.forEach(other => { if (other !== panel) resetAboutTilt(other); }); applyAboutTilt(panel, e); });
-                    panel.addEventListener('pointermove', e => applyAboutTilt(panel, e));
-                    panel.addEventListener('pointerleave', () => resetAboutTilt(panel));
-                });
-            }
-
-            // Setup Graphic Design Scroll Observer
-            const gdObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) { entry.target.classList.add('gd-visible'); gdObserver.unobserve(entry.target); }
-                });
-            }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
-            document.querySelectorAll('.gd-item').forEach(el => gdObserver.observe(el));
+            tl.to(heroScreen, { y: "-45vh", scale: 0.9, opacity: 0, duration: 4, ease: "power2.inOut" }, 0)
+              .to(portraitWrap, { y: "0vh", duration: 4, ease: "power2.inOut" }, 0)
+              .to(panels1, { opacity: 1, y: 0, duration: 2.5, ease: "power3.out", onStart: () => gsap.set(panels1, { pointerEvents: "auto" }), onReverseComplete: () => gsap.set(panels1, { pointerEvents: "none" }) }, "-=1")
+              .to(nameBlock, { opacity: 1, y: 0, duration: 2, ease: "power2.out" }, "-=2")
+              .addLabel("reading-pause", "+=1.5")
+              .to(".portrait-inner", { rotationY: 90, scale: 0.95, filter: "blur(3px)", duration: 2, ease: "power2.in" }, "reading-pause")
+              .to(panels1, { opacity: 0, y: -40, duration: 2, ease: "power2.in", onStart: () => gsap.set(panels1, { pointerEvents: "none" }), onReverseComplete: () => gsap.set(panels1, { pointerEvents: "auto" }) }, "reading-pause")
+              .to(nameBlock, { opacity: 0, y: 20, duration: 2, ease: "power2.in" }, "reading-pause")
+              .addLabel("chapter-swap")
+              .set(".portrait-img-1", { opacity: 0 }, "chapter-swap")
+              .set(".portrait-img-2", { opacity: 1 }, "chapter-swap")
+              .to(".portrait-inner", { rotationY: 180, scale: 1, filter: "blur(0px)", duration: 2, ease: "power2.out" }, "chapter-swap")
+              .to(panels2, { opacity: 1, y: 0, duration: 2.5, ease: "power3.out", onStart: () => gsap.set(panels2, { pointerEvents: "auto" }), onReverseComplete: () => gsap.set(panels2, { pointerEvents: "none" }) }, "chapter-swap+=0.5");
 
             // Resume Page Toggles
             const resumeLink = document.getElementById('resume-link');
@@ -1154,7 +914,6 @@
                 resumeLink.addEventListener('click', (e) => { e.preventDefault(); resumePage.classList.add('active'); document.body.style.overflow = 'hidden'; });
                 backButton.addEventListener('click', () => { resumePage.classList.remove('active'); document.body.style.overflow = ''; });
             }
-
         });
     </script>
 </body>
