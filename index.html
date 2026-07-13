@@ -38,10 +38,10 @@
             --space-3: 24px;
             --space-4: 32px;
             
-            /* Main Book Dimensions */
-            --spine-w: 40px;
-            --book-w: 280px;
-            --book-h: 400px;
+            /* Main Book Dimensions - Scaled down by ~17.5% */
+            --spine-w: 34px;
+            --book-w: 230px;
+            --book-h: 330px;
         }
 
         body {
@@ -100,9 +100,11 @@
         body.dark-mode .resume-page { background-color: rgba(26, 26, 26, 0.98); }
         .resume-page.active { transform: translateY(0); }
 
+        #master-pin-wrap { width: 100%; height: 100dvh; position: relative; overflow: hidden; }
+        
         #intro-sequence {
-            height: max(600px, calc(100vh - 120px)); position: relative;
-            overflow: hidden; border-radius: 2rem; width: 100%;
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            overflow: hidden; border-radius: 2rem;
         }
 
         .hero-screen {
@@ -139,18 +141,11 @@
         }
         .about-section .portrait-wrap { position: relative; width: 100%; max-height: 55vh; z-index: 5; will-change: transform; }
         
-        /* Unified Left-Aligned Base for Panels */
         .about-section .panel {
             position: relative; z-index: 1; will-change: transform, opacity; pointer-events: none;
             --slide-x: 0px; --slide-y: 100px; --tilt-x: 0px; --tilt-y: 0px;
             transform: translate(calc(var(--slide-x) + var(--tilt-x)), calc(var(--slide-y) + var(--tilt-y)));
-            
-            /* Ensured identical box width & left-alignment structure for all 4 panels */
-            width: 280px; 
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            text-align: left;
+            width: 280px; display: flex; flex-direction: column; align-items: flex-start; text-align: left;
         }
         
         .about-section .design-panel, .about-section .design-panel-2 { grid-column: 1; grid-row: 1; justify-self: end; align-self: center; margin-bottom: 0; opacity: 0; }
@@ -159,17 +154,9 @@
         .about-section .label {
             display: inline-flex; align-items: center; min-height: 44px; padding: 7px 18px; margin: 0 0 13px;
             background: var(--about-blue); color: #fff; font-family: var(--font-display); font-size: clamp(14px, 1.55vw, 24px);
-            font-style: italic; font-weight: 900; line-height: 1;
-            /* Guaranteed left alignment */
-            align-self: flex-start;
+            font-style: italic; font-weight: 900; line-height: 1; align-self: flex-start;
         }
-        .about-section ul { 
-            margin: 0; padding-left: 29px; list-style-type: disc; 
-            /* Guaranteed left alignment */
-            text-align: left;
-            align-self: flex-start;
-            width: 100%;
-        }
+        .about-section ul { margin: 0; padding-left: 29px; list-style-type: disc; text-align: left; align-self: flex-start; width: 100%; }
         .about-section li { padding-left: 9px; font-size: clamp(14px, 1.5vw, 25px); line-height: 1.28; letter-spacing: 0.6px; font-weight: normal; color: var(--about-fg); }
         .about-section li::marker { color: var(--about-fg); }
         .about-section .design-panel li, .about-section .design-panel-2 li { margin: 1px 0; white-space: nowrap; }
@@ -192,22 +179,16 @@
             .about-section .facts-panel, .about-section .facts-panel-2   { grid-column: 1; grid-row: 3; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); }
             .about-section li { font-size: 15px; white-space: normal; }
             
-            /* Mobile adjustments for books */
-            :root { --book-w: 230px; --book-h: 340px; --spine-w: 34px; }
-            .book-wrapper--sm { --book-w: 161px; --book-h: 238px; --spine-w: 24px; }
-        }
-
-        .work-layout-container {
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center;
-            width: 100%; max-w: 72rem; margin: 0 auto;
+            /* Reduced mobile sizes to maintain proportional scaling */
+            :root { --book-w: 190px; --book-h: 280px; --spine-w: 28px; }
+            .book-wrapper--sm { --book-w: 133px; --book-h: 196px; --spine-w: 20px; }
         }
 
         .bookshelf {
-            display: flex; flex-wrap: wrap; gap: 3rem;
+            display: flex; flex-wrap: wrap; gap: 2.5rem;
             align-items: flex-end; justify-content: flex-start;
         }
-        @media (min-width: 768px) { .bookshelf { gap: 6rem; } }
+        @media (min-width: 768px) { .bookshelf { gap: 4.5rem; } }
 
         .book-wrapper {
             perspective: 2000px;
@@ -215,10 +196,11 @@
             position: relative; cursor: pointer;
         }
 
+        /* Small Books Configuration - Scaled down ~17.5% */
         .book-wrapper--sm {
-            --spine-w: 28px;
-            --book-w: 196px;
-            --book-h: 280px;
+            --spine-w: 23px;
+            --book-w: 161px;
+            --book-h: 230px;
         }
 
         .book {
@@ -236,9 +218,9 @@
         }
         .spine-title {
             writing-mode: vertical-rl; transform: rotate(180deg);
-            font-family: 'Oswald', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,243,237,0.5);
+            font-family: 'Oswald', sans-serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,243,237,0.5);
         }
-        .book-wrapper--sm .spine-title { font-size: 0.55rem; }
+        .book-wrapper--sm .spine-title { font-size: 0.5rem; }
         .spine-dot { position: absolute; bottom: 1.5rem; width: 5px; height: 5px; background: var(--red); border-radius: 50%; }
 
         .book-pages {
@@ -254,33 +236,33 @@
             width: var(--book-w); height: var(--book-h);
             background: #faf7f3; border-radius: 2px 8px 8px 2px;
             z-index: 1; display: flex; flex-direction: column; justify-content: space-between;
-            padding: 2rem 1.6rem; overflow: hidden; border: 1px solid rgba(0,0,0,0.07);
+            padding: 1.5rem 1.2rem; overflow: hidden; border: 1px solid rgba(0,0,0,0.07);
             transition: background 0.3s ease, border-color 0.3s ease;
         }
         body.dark-mode .book-interior { background: #252520; border-color: rgba(255,255,255,0.05); }
-        .book-wrapper--sm .book-interior { padding: 1.25rem; }
+        .book-wrapper--sm .book-interior { padding: 1rem; }
 
-        .interior-top { display: flex; flex-direction: column; gap: 0.7rem; }
-        .interior-chapter { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); font-weight: 600; }
+        .interior-top { display: flex; flex-direction: column; gap: 0.6rem; }
+        .interior-chapter { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); font-weight: 600; }
         .book-wrapper--sm .interior-chapter { font-size: 0.45rem; }
         
-        .interior-title { font-family: 'Oswald', sans-serif; font-size: 1.4rem; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.03em; color: #1a1a1a; }
-        .book-wrapper--sm .interior-title { font-size: 1.1rem; }
+        .interior-title { font-family: 'Oswald', sans-serif; font-size: 1.2rem; line-height: 1.1; text-transform: uppercase; letter-spacing: 0.03em; color: #1a1a1a; }
+        .book-wrapper--sm .interior-title { font-size: 0.95rem; }
         body.dark-mode .interior-title { color: #f7f3ed; }
         
         .interior-divider { width: 36px; height: 2px; background: var(--red); margin: 0.2rem 0; }
-        .interior-desc { font-family: 'Poppins', sans-serif; font-size: 0.73rem; color: #555; line-height: 1.7; font-style: italic; }
-        .book-wrapper--sm .interior-desc { font-size: 0.6rem; line-height: 1.5; }
+        .interior-desc { font-family: 'Poppins', sans-serif; font-size: 0.65rem; color: #555; line-height: 1.6; font-style: italic; }
+        .book-wrapper--sm .interior-desc { font-size: 0.55rem; line-height: 1.4; }
         body.dark-mode .interior-desc { color: #aaa; }
         
-        .interior-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.6rem; }
-        .interior-tag { font-size: 0.53rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; background: #f0ece6; border-radius: 20px; color: #666; }
-        .book-wrapper--sm .interior-tag { font-size: 0.45rem; padding: 2px 6px; }
+        .interior-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+        .interior-tag { font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 7px; background: #f0ece6; border-radius: 20px; color: #666; }
+        .book-wrapper--sm .interior-tag { font-size: 0.4rem; padding: 2px 5px; }
         body.dark-mode .interior-tag { background: #333; color: #aaa; }
         
         .interior-bottom { display: flex; align-items: center; justify-content: space-between; }
-        .interior-page-num { font-family: 'Poppins', sans-serif; font-size: 0.62rem; font-style: italic; color: #bbb; }
-        .book-wrapper--sm .interior-page-num { font-size: 0.5rem; }
+        .interior-page-num { font-family: 'Poppins', sans-serif; font-size: 0.55rem; font-style: italic; color: #bbb; }
+        .book-wrapper--sm .interior-page-num { font-size: 0.45rem; }
         body.dark-mode .interior-page-num { color: #555; }
 
         .book-cover {
@@ -304,46 +286,45 @@
             background: #151515; z-index: 3;
             opacity: 0; filter: blur(12px); pointer-events: none;
             display: flex; flex-direction: column; justify-content: space-between;
-            padding: 1.75rem; border-left: 4px solid var(--red);
+            padding: 1.4rem; border-left: 4px solid var(--red);
         }
         body.dark-mode .cover-editorial { background: #222; }
-        .book-wrapper--sm .cover-editorial { padding: 1.25rem; border-left-width: 3px; }
+        .book-wrapper--sm .cover-editorial { padding: 1rem; border-left-width: 3px; }
 
         .book-wrapper:hover .cover-art { opacity: 0; filter: blur(12px); }
         .book-wrapper:hover .cover-editorial { opacity: 1; filter: blur(0px); }
 
-        .edit-eyebrow { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: #888; font-weight: 600; margin-bottom: 0.4rem; }
+        .edit-eyebrow { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #888; font-weight: 600; margin-bottom: 0.4rem; }
         .book-wrapper--sm .edit-eyebrow { font-size: 0.45rem; }
         
-        .edit-title { font-family: 'Oswald', sans-serif; font-size: 1.7rem; line-height: 1.05; color: #fff; text-transform: uppercase; letter-spacing: 0.03em; }
-        .book-wrapper--sm .edit-title { font-size: 1.25rem; }
+        .edit-title { font-family: 'Oswald', sans-serif; font-size: 1.45rem; line-height: 1.05; color: #fff; text-transform: uppercase; letter-spacing: 0.03em; }
+        .book-wrapper--sm .edit-title { font-size: 1.1rem; }
         
-        .edit-desc { font-family: 'Poppins', sans-serif; font-size: 0.73rem; font-style: italic; color: #aaa; margin-top: 0.5rem; line-height: 1.5; }
-        .book-wrapper--sm .edit-desc { font-size: 0.6rem; }
+        .edit-desc { font-family: 'Poppins', sans-serif; font-size: 0.65rem; font-style: italic; color: #aaa; margin-top: 0.5rem; line-height: 1.4; }
+        .book-wrapper--sm .edit-desc { font-size: 0.55rem; }
         
-        .edit-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 1rem; }
-        .edit-tag { font-size: 0.53rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #ccc; }
-        .book-wrapper--sm .edit-tag { font-size: 0.45rem; padding: 2px 6px; }
+        .edit-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.8rem; }
+        .edit-tag { font-size: 0.5rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 7px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; color: #ccc; }
+        .book-wrapper--sm .edit-tag { font-size: 0.4rem; padding: 2px 5px; }
         
-        .edit-action { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); display: flex; align-items: center; gap: 4px; transition: color 0.3s; }
-        .book-wrapper--sm .edit-action { font-size: 0.55rem; }
+        .edit-action { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--red); display: flex; align-items: center; gap: 4px; transition: color 0.3s; }
+        .book-wrapper--sm .edit-action { font-size: 0.5rem; }
         .book-wrapper:hover .edit-action { color: #fff; }
 
         .book-wrapper.is-tracking .book { transition: none; }
         .book-wrapper.is-tracking .book-cover { transition: none; }
         
-        .open-hint { position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity 0.3s; }
+        .open-hint { position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity 0.3s; }
         .book-wrapper:hover .open-hint { opacity: 1; }
-        .book-wrapper--sm .open-hint { font-size: 0.5rem; bottom: -1.4rem; }
+        .book-wrapper--sm .open-hint { font-size: 0.45rem; bottom: -1.4rem; }
     </style>
 </head>
-<body class="p-4 md:p-16">
+<body class="p-0 m-0">
 
     <div class="main-page">
-        <!-- ── MASTER PIN WRAPPER ── -->
-        <div id="master-pin-wrap" class="w-full">
+        <div id="master-pin-wrap">
             
-            <header class="flex justify-between items-center mb-8 md:mb-16 relative z-50">
+            <header class="absolute top-0 left-0 right-0 p-4 md:px-16 md:py-8 flex justify-between items-center z-[100] pointer-events-auto">
                 <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
                 
                 <button id="menu-button" class="md:hidden p-2 focus:outline-none relative w-8 h-8 flex items-center justify-center">
@@ -358,10 +339,10 @@
                 <div id="nav-menu" class="hidden md:flex flex-col md:flex-row absolute md:static top-full left-0 right-0 bg-[#f7f3ed] dark:bg-[#121212] md:bg-transparent md:dark:bg-transparent p-6 md:p-0 shadow-2xl md:shadow-none z-50 rounded-2xl md:rounded-none border border-black/5 dark:border-white/5 md:border-none mt-4 md:mt-0 flex-grow justify-end transition-all origin-top">
                     <nav class="flex-grow flex md:justify-center">
                         <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-6 text-sm md:text-base font-medium items-center w-full md:w-auto">
-                            <li class="w-full md:w-auto text-center"><a href="#work" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">WORK</a></li>
-                            <li class="w-full md:w-auto text-center"><a href="#about" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">ABOUT</a></li>
+                            <li class="w-full md:w-auto text-center"><a href="#work" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full scroll-nav">WORK</a></li>
+                            <li class="w-full md:w-auto text-center"><a href="#about" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full scroll-nav">ABOUT</a></li>
                             <li class="w-full md:w-auto text-center"><a href="#" id="resume-link" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">RESUME</a></li>
-                            <li class="w-full md:w-auto text-center"><a href="#contact" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">CONTACT</a></li>
+                            <li class="w-full md:w-auto text-center"><a href="#contact" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full scroll-nav">CONTACT</a></li>
                         </ul>
                     </nav>
                     <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium mt-6 md:mt-0 pt-6 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-zinc-700 w-full md:w-auto text-center items-center">
@@ -372,9 +353,8 @@
                 </div>
             </header>
 
-            <main class="text-center">
+            <main class="w-full h-full relative text-center">
                 <div id="intro-sequence">
-                    
                     <div class="hero-screen">
                         <div class="mb-6 md:mb-10">
                             <div class="inline-block mx-auto">
@@ -402,14 +382,13 @@
                             </div>
                         </div>
 
-                        <div class="hero-cta-block">
+                        <div class="hero-cta-block pointer-events-auto">
                             <p class="hero-tagline">I design intuitive interfaces with thoughtful motion.</p>
-                            <a href="#work" class="cta-primary">View My Work ↓</a>
+                            <a href="#work" class="cta-primary scroll-nav">View My Work ↓</a>
                         </div>
                     </div>
 
                     <section id="about" class="about-section" aria-labelledby="about-name">
-                        <!-- Panels now share identical structural left-alignment via global .panel CSS rules -->
                         <div class="panel design-panel">
                             <span class="label" aria-label="What I design">WHAT I DESIGN</span>
                             <ul role="list">
@@ -462,241 +441,233 @@
                         </div>
                     </section>
                 </div>
-        </div> 
 
-                <section id="work" class="work-layout-container relative z-30 pt-16 md:pt-0">
+                <section id="work" class="absolute inset-0 w-full h-full z-30 pointer-events-none">
                     
-                    <div class="w-full flex flex-col gap-12 md:gap-20">
-                        
-                        <!-- TIER 1: Case Studies -->
-                        <div class="w-full">
-                            <h2 class="text-2xl md:text-4xl font-light tracking-tight text-left mb-6 text-gray-800 dark:text-gray-200">Case study</h2>
+                    <div class="work-showcase-container absolute inset-0 flex flex-col justify-center items-center w-full" style="opacity: 0; visibility: hidden; transform: translateY(120px) scale(0.95);">
+                        <!-- Added pb-12 and gap reduction to 36px to ensure compact layout and clear footer -->
+                        <div class="work-showcase w-full max-w-[72rem] mx-auto px-4 md:px-16 pb-12 pt-4 pointer-events-auto" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 36px;">
                             
-                            <div class="bookshelf pl-0 md:pl-[5%]">
-                                
-                                <!-- Main Book 1 -->
-                                <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
-                                    <div class="book">
-                                        <div class="book-pages"></div>
-                                        <div class="book-spine">
-                                            <span class="spine-title">Go-Farming</span>
-                                            <span class="spine-dot"></span>
-                                        </div>
-                                        <div class="book-interior">
-                                            <div class="interior-top">
-                                                <span class="interior-chapter">Case Study · 01</span>
-                                                <div class="interior-title">Go-Farming</div>
-                                                <div class="interior-divider"></div>
-                                                <p class="interior-desc">A digital platform empowering farmers with real-time data, market connections, and sustainable farming practices.</p>
-                                                <div class="interior-tags">
-                                                    <span class="interior-tag">UX Research</span>
-                                                    <span class="interior-tag">Mobile App</span>
-                                                    <span class="interior-tag">Figma</span>
-                                                </div>
+                            <!-- Case Study Section -->
+                            <div class="w-full text-left">
+                                <h2 class="text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4 text-gray-800 dark:text-gray-200">Case study</h2>
+                                <div class="bookshelf pl-0 md:pl-[5%]">
+                                    <!-- Main Book 1 -->
+                                    <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
+                                        <div class="book">
+                                            <div class="book-pages"></div>
+                                            <div class="book-spine">
+                                                <span class="spine-title">Go-Farming</span>
+                                                <span class="spine-dot"></span>
                                             </div>
-                                            <div class="interior-bottom">
-                                                <span class="interior-page-num">p. 01</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="book-cover">
-                                            <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg" alt="Go-Farming Cover" onerror="this.onerror=null; this.src='https://placehold.co/600x800/1a1a1a/ff4500?text=Go-Farming';">
-                                            
-                                            <div class="cover-editorial">
-                                                <div>
-                                                    <div class="edit-eyebrow">Case Study · 01</div>
-                                                    <div class="edit-title">Go-Farming</div>
-                                                    <div class="edit-desc">Empowering agriculture through real-time data and sustainable practices.</div>
-                                                    <div class="edit-tags">
-                                                        <span class="edit-tag">UX Research</span>
-                                                        <span class="edit-tag">Product Design</span>
+                                            <div class="book-interior">
+                                                <div class="interior-top">
+                                                    <span class="interior-chapter">Case Study · 01</span>
+                                                    <div class="interior-title">Go-Farming</div>
+                                                    <div class="interior-divider"></div>
+                                                    <p class="interior-desc">A digital platform empowering farmers with real-time data, market connections, and sustainable farming practices.</p>
+                                                    <div class="interior-tags">
+                                                        <span class="interior-tag">UX Research</span>
+                                                        <span class="interior-tag">Mobile App</span>
+                                                        <span class="interior-tag">Figma</span>
                                                     </div>
                                                 </div>
-                                                <div class="edit-action">
-                                                    View Project 
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                                <div class="interior-bottom">
+                                                    <span class="interior-page-num">p. 01</span>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <span class="open-hint">Click to Open</span>
-                                </div>
-
-                                <!-- Main Book 2 (Coming Soon) -->
-                                <div class="book-wrapper coming-soon" id="book-2">
-                                    <div class="book">
-                                        <div class="book-pages"></div>
-                                        <div class="book-spine">
-                                            <span class="spine-title">ASTC Redesign</span>
-                                            <span class="spine-dot" style="background:#555"></span>
-                                        </div>
-                                        <div class="book-interior">
-                                            <div class="interior-top">
-                                                <span class="interior-chapter">Case Study · 02</span>
-                                                <div class="interior-title">ASTC Redesign</div>
-                                                <div class="interior-divider" style="background:#999"></div>
-                                                <p class="interior-desc">A redesign of the ASTC Government transport website — improving accessibility and modernising ticket booking for Assam's commuters.</p>
-                                                <div class="interior-tags">
-                                                    <span class="interior-tag">Web Redesign</span>
-                                                    <span class="interior-tag">Accessibility</span>
-                                                </div>
-                                            </div>
-                                            <div class="interior-bottom">
-                                                <span style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;font-weight:600;">Coming Soon</span>
-                                                <span class="interior-page-num">p. 02</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="book-cover">
-                                            <img class="cover-art" src="https://placehold.co/600x800/222222/555555?text=ASTC+Redesign" alt="ASTC Cover">
                                             
-                                            <div class="cover-editorial">
-                                                <div>
-                                                    <div class="edit-eyebrow">Case Study · 02</div>
-                                                    <div class="edit-title">ASTC<br>Redesign</div>
-                                                    <div class="edit-desc">Modernising transit and accessibility for Assam's commuters.</div>
-                                                    <span class="inline-block mt-4 text-[0.55rem] font-bold tracking-[0.15em] uppercase bg-white/10 text-white/50 border border-white/20 rounded-full px-3 py-1">In Progress</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="open-hint" style="opacity:0.35;">Coming soon</span>
-                                </div>
-                                
-                            </div>
-                        </div>
-
-                        <!-- TIER 2: Creative Experiments -->
-                        <div class="w-full">
-                            <h2 class="text-xl md:text-2xl font-light tracking-tight text-left mb-6 text-gray-500">Creative Experiments</h2>
-                            
-                            <div class="bookshelf pl-0 md:pl-[5%]">
-                                
-                                <!-- Small Book 1 (WishVault - Upgraded Editorial) -->
-                                <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
-                                    <div class="book">
-                                        <div class="book-pages"></div>
-                                        <div class="book-spine">
-                                            <span class="spine-title">WishVault</span>
-                                            <span class="spine-dot" style="bottom: 1rem;"></span>
-                                        </div>
-                                        <div class="book-interior">
-                                            <div class="interior-top">
-                                                <span class="interior-chapter">Exp · 01</span>
-                                                <div class="interior-title">WishVault</div>
-                                                <div class="interior-divider"></div>
-                                                <p class="interior-desc">A universal wishlist platform that brings every saved product into one place.</p>
-                                                <div class="interior-tags">
-                                                    <span class="interior-tag">App</span>
-                                                    <span class="interior-tag">UI</span>
-                                                </div>
-                                            </div>
-                                            <div class="interior-bottom">
-                                                <span class="interior-page-num">p. 03</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="book-cover">
-                                            <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/0e824bb7e53af23cf603977a7734b9837e6c0fc7/images/wishvault_home.PNG" alt="WishVault Cover" style="object-position: top;">
-                                            
-                                            <!-- IMPROVED EDITORIAL HOVER -->
-                                            <div class="cover-editorial" style="padding: 1.25rem; justify-content: center; align-items: flex-start;">
-                                                <div style="font-family: 'Oswald', sans-serif; font-size: 1.8rem; color: #fff; line-height: 1; margin-bottom: 0.25rem; font-style: normal; text-transform: none; letter-spacing: 0;">WishVault</div>
-                                                <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--red); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-style: normal;">Problem</div>
-                                                <div style="font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-style: normal; color: #d1d5db; line-height: 1.6; text-align: left;">
-                                                    People save products across Amazon, Instagram, Pinterest and dozens of other platforms. Managing all those wishlists becomes messy and makes tracking prices almost impossible.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <span class="open-hint">Click to Open</span>
-                                </div>
-
-                                <!-- Small Book 2 (Motion Reel - Video Preview Upgrade) -->
-                                <!-- Triggers the modal open script instead of a new tab -->
-                                <div class="book-wrapper book-wrapper--sm" id="book-4" onclick="openVideoModal('0EIUm9HO_Dg')">
-                                    <div class="book">
-                                        <div class="book-pages"></div>
-                                        <div class="book-spine">
-                                            <span class="spine-title">Motion & Media</span>
-                                            <span class="spine-dot" style="bottom: 1rem; background:#3b82f6;"></span>
-                                        </div>
-                                        <div class="book-interior">
-                                            <div class="interior-top">
-                                                <span class="interior-chapter" style="color:#3b82f6;">Exp · 02</span>
-                                                <div class="interior-title">Motion Reel</div>
-                                                <div class="interior-divider" style="background:#3b82f6;"></div>
-                                                <p class="interior-desc">Animation work, transitions, micro-interactions, and motion-driven storytelling.</p>
-                                                <div class="interior-tags">
-                                                    <span class="interior-tag">Motion</span>
-                                                    <span class="interior-tag">Graphics</span>
-                                                </div>
-                                            </div>
-                                            <div class="interior-bottom">
-                                                <span class="interior-page-num">p. 04</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="book-cover">
-                                            <!-- VIDEO PREVIEW REPLACES IMAGE -->
-                                            <video class="cover-art object-cover w-full h-full rounded-[2px_8px_8px_2px]" 
-                                                   src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" 
-                                                   poster="https://placehold.co/400x600/1a1a1a/3b82f6?text=Motion+Reel"
-                                                   muted playsinline loop preload="auto">
-                                            </video>
-                                            
-                                            <div class="cover-editorial" style="border-left-color: #3b82f6;">
-                                                <div>
-                                                    <div class="edit-eyebrow">Experiment · 02</div>
-                                                    <div class="edit-title">Motion &<br>Graphics</div>
-                                                    <div class="edit-desc">A collection of visual explorations and animated narratives.</div>
-                                                    <div class="edit-tags">
-                                                        <span class="edit-tag">Animation</span>
+                                            <div class="book-cover">
+                                                <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg" alt="Go-Farming Cover" onerror="this.onerror=null; this.src='https://placehold.co/600x800/1a1a1a/ff4500?text=Go-Farming';">
+                                                <div class="cover-editorial">
+                                                    <div>
+                                                        <div class="edit-eyebrow">Case Study · 01</div>
+                                                        <div class="edit-title">Go-Farming</div>
+                                                        <div class="edit-desc">Empowering agriculture through real-time data and sustainable practices.</div>
+                                                        <div class="edit-tags">
+                                                            <span class="edit-tag">UX Research</span>
+                                                            <span class="edit-tag">Product Design</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="edit-action">
+                                                        View Project 
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                                                     </div>
                                                 </div>
-                                                <div class="edit-action" style="color: #3b82f6;">
-                                                    Watch Reel
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                            </div>
+                                        </div>
+                                        <span class="open-hint">Click to Open</span>
+                                    </div>
+
+                                    <!-- Main Book 2 (Coming Soon) -->
+                                    <div class="book-wrapper coming-soon" id="book-2">
+                                        <div class="book">
+                                            <div class="book-pages"></div>
+                                            <div class="book-spine">
+                                                <span class="spine-title">ASTC Redesign</span>
+                                                <span class="spine-dot" style="background:#555"></span>
+                                            </div>
+                                            <div class="book-interior">
+                                                <div class="interior-top">
+                                                    <span class="interior-chapter">Case Study · 02</span>
+                                                    <div class="interior-title">ASTC Redesign</div>
+                                                    <div class="interior-divider" style="background:#999"></div>
+                                                    <p class="interior-desc">A redesign of the ASTC Government transport website — improving accessibility and modernising ticket booking for Assam's commuters.</p>
+                                                    <div class="interior-tags">
+                                                        <span class="interior-tag">Web Redesign</span>
+                                                        <span class="interior-tag">Accessibility</span>
+                                                    </div>
+                                                </div>
+                                                <div class="interior-bottom">
+                                                    <!-- Reduced internal text sizing inline slightly -->
+                                                    <span style="font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;font-weight:600;">Coming Soon</span>
+                                                    <span class="interior-page-num">p. 02</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="book-cover">
+                                                <img class="cover-art" src="https://placehold.co/600x800/222222/555555?text=ASTC+Redesign" alt="ASTC Cover">
+                                                <div class="cover-editorial">
+                                                    <div>
+                                                        <div class="edit-eyebrow">Case Study · 02</div>
+                                                        <div class="edit-title">ASTC<br>Redesign</div>
+                                                        <div class="edit-desc">Modernising transit and accessibility for Assam's commuters.</div>
+                                                        <span class="inline-block mt-2 text-[0.45rem] font-bold tracking-[0.15em] uppercase bg-white/10 text-white/50 border border-white/20 rounded-full px-2 py-[2px]">In Progress</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <span class="open-hint" style="opacity:0.35;">Coming soon</span>
                                     </div>
-                                    <span class="open-hint">Click to Watch</span>
                                 </div>
-
                             </div>
-                        </div>
 
+                            <div class="w-full text-left">
+                                <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4 text-gray-800 dark:text-gray-200">Creative Experiments</h2>
+                                <div class="bookshelf pl-0 md:pl-[5%]">
+                                    <!-- Small Book 1 (WishVault) -->
+                                    <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
+                                        <div class="book">
+                                            <div class="book-pages"></div>
+                                            <div class="book-spine">
+                                                <span class="spine-title">WishVault</span>
+                                                <span class="spine-dot" style="bottom: 1rem;"></span>
+                                            </div>
+                                            <div class="book-interior">
+                                                <div class="interior-top">
+                                                    <span class="interior-chapter">Exp · 01</span>
+                                                    <div class="interior-title">WishVault</div>
+                                                    <div class="interior-divider"></div>
+                                                    <p class="interior-desc">A universal wishlist platform that brings every saved product into one place.</p>
+                                                    <div class="interior-tags">
+                                                        <span class="interior-tag">App</span>
+                                                        <span class="interior-tag">UI</span>
+                                                    </div>
+                                                </div>
+                                                <div class="interior-bottom">
+                                                    <span class="interior-page-num">p. 03</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="book-cover">
+                                                <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/0e824bb7e53af23cf603977a7734b9837e6c0fc7/images/wishvault_home.PNG" alt="WishVault Cover" style="object-position: top;">
+                                                <div class="cover-editorial" style="padding: 1rem; justify-content: center; align-items: flex-start;">
+                                                    <div style="font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: #fff; line-height: 1; margin-bottom: 0.25rem; font-style: normal; text-transform: none; letter-spacing: 0;">WishVault</div>
+                                                    <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.75rem; color: var(--red); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-style: normal;">Problem</div>
+                                                    <div style="font-family: 'Poppins', sans-serif; font-size: 0.65rem; font-style: normal; color: #d1d5db; line-height: 1.5; text-align: left;">
+                                                        People save products across Amazon, Instagram, Pinterest and dozens of other platforms. Managing all those wishlists becomes messy and makes tracking prices almost impossible.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="open-hint">Click to Open</span>
+                                    </div>
+
+                                    <!-- Small Book 2 (Motion Reel) -->
+                                    <div class="book-wrapper book-wrapper--sm" id="book-4" onclick="openVideoModal('0EIUm9HO_Dg')">
+                                        <div class="book">
+                                            <div class="book-pages"></div>
+                                            <div class="book-spine">
+                                                <span class="spine-title">Motion & Media</span>
+                                                <span class="spine-dot" style="bottom: 1rem; background:#3b82f6;"></span>
+                                            </div>
+                                            <div class="book-interior">
+                                                <div class="interior-top">
+                                                    <span class="interior-chapter" style="color:#3b82f6;">Exp · 02</span>
+                                                    <div class="interior-title">Motion Reel</div>
+                                                    <div class="interior-divider" style="background:#3b82f6;"></div>
+                                                    <p class="interior-desc">Animation work, transitions, micro-interactions, and motion-driven storytelling.</p>
+                                                    <div class="interior-tags">
+                                                        <span class="interior-tag">Motion</span>
+                                                        <span class="interior-tag">Graphics</span>
+                                                    </div>
+                                                </div>
+                                                <div class="interior-bottom">
+                                                    <span class="interior-page-num">p. 04</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="book-cover">
+                                                <video class="cover-art object-cover w-full h-full rounded-[2px_8px_8px_2px]" 
+                                                       src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" 
+                                                       poster="https://placehold.co/400x600/1a1a1a/3b82f6?text=Motion+Reel"
+                                                       muted playsinline loop preload="auto">
+                                                </video>
+                                                <div class="cover-editorial" style="border-left-color: #3b82f6;">
+                                                    <div>
+                                                        <div class="edit-eyebrow">Experiment · 02</div>
+                                                        <div class="edit-title">Motion &<br>Graphics</div>
+                                                        <div class="edit-desc">A collection of visual explorations and animated narratives.</div>
+                                                        <div class="edit-tags">
+                                                            <span class="edit-tag">Animation</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="edit-action" style="color: #3b82f6;">
+                                                        Watch Reel
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="open-hint">Click to Watch</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </section>
 
-                <section id="contact" class="flex flex-col items-center justify-center flex-grow mt-[54px] md:mt-[155px]">
-                    <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
-                    <h2 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
+                <section id="contact" class="absolute inset-0 flex flex-col items-center justify-center w-full h-full z-40 px-4" style="opacity: 0; visibility: hidden;">
+                    <div class="contact-wrap pointer-events-auto flex flex-col items-center">
+                        <h2 class="contact-el text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
+                        <h2 class="contact-el text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
 
-                    <a href="mailto:Anamika.gogoi126@gmail.com" class="cta-primary mb-8">Let's Talk →</a>
-                    
-                    <p class="text-sm md:text-base mb-2">Or copy my email directly:</p>
-                    <div class="flex items-center">
-                        <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors text-red-500 dark:text-red-400">
-                            Anamika.gogoi126@gmail.com
-                        </a>
-                        <div id="copy-message" class="text-base text-green-500 ml-2"></div>
-                    </div>
-                    
-                    <div class="flex flex-wrap justify-center gap-4 mt-6 text-center">
-                        <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">BEHANCE</a>
-                        <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">INSTAGRAM</a>
-                        <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">LINKEDIN</a>
+                        <a href="mailto:Anamika.gogoi126@gmail.com" class="contact-cta cta-primary mb-8">Let's Talk →</a>
+                        
+                        <p class="contact-el text-sm md:text-base mb-2">Or copy my email directly:</p>
+                        <div class="contact-el flex items-center">
+                            <a id="email-link" class="text-sm md:text-base email-link px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors text-red-500 dark:text-red-400">
+                                Anamika.gogoi126@gmail.com
+                            </a>
+                            <div id="copy-message" class="text-base text-green-500 ml-2 absolute translate-x-full right-[-80px]"></div>
+                        </div>
+                        
+                        <div class="contact-el flex flex-wrap justify-center gap-4 mt-6 text-center">
+                            <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">BEHANCE</a>
+                            <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">INSTAGRAM</a>
+                            <a href="https://www.linkedin.com/feed" target="_blank" class="px-6 py-2 border border-gray-400 dark:border-gray-600 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">LINKEDIN</a>
+                        </div>
                     </div>
                 </section>
             </main>
             
-            <footer class="mt-auto pt-8 w-full text-left px-4 md:px-16 pb-8">
+            <footer class="absolute bottom-0 left-0 w-full text-left px-4 md:px-16 pb-6 z-50 pointer-events-none">
                 <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">Design & Developed</p>
                 <p class="text-xs md:text-sm text-gray-700 dark:text-gray-400">by Anamika Gogoi</p>
             </footer>
-        
+        </div> 
+
     </div> 
 
     <div class="resume-page p-4 md:p-16 flex flex-col items-center">
@@ -721,13 +692,12 @@
         </div>
     </div>
 
-    <!-- FULLSCREEN VIDEO MODAL -->
     <div id="video-modal" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/95 opacity-0 transition-opacity duration-300">
         <button id="close-modal" class="absolute top-6 right-6 text-white/70 hover:text-red-500 transition-colors z-[101]">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         <div class="relative w-full max-w-5xl aspect-video mx-4 shadow-2xl rounded-xl overflow-hidden bg-black" id="modal-content">
-            <!-- Iframe injected via JS to prevent background playback -->
+            <!-- Iframe injected via JS -->
         </div>
     </div>
 
@@ -737,7 +707,6 @@
             window.location.href = url;
         }
 
-        // GLOBAL VIDEO MODAL CONTROLS
         const videoModal = document.getElementById('video-modal');
         const modalContent = document.getElementById('modal-content');
         
@@ -746,7 +715,6 @@
             videoModal.classList.remove('hidden');
             setTimeout(() => videoModal.classList.remove('opacity-0'), 10);
             
-            // Inject YouTube player with autoplay 
             modalContent.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
             document.body.style.overflow = 'hidden';
         };
@@ -756,7 +724,7 @@
             videoModal.classList.add('opacity-0');
             setTimeout(() => {
                 videoModal.classList.add('hidden');
-                modalContent.innerHTML = ''; // Destroys iframe stopping audio
+                modalContent.innerHTML = ''; 
                 document.body.style.overflow = '';
             }, 300);
         };
@@ -768,13 +736,11 @@
             const emailLink = document.getElementById('email-link');
             const copyMessage = document.getElementById('copy-message');
             
-            // Video Modal Event Listeners
             const closeModalBtn = document.getElementById('close-modal');
             if (closeModalBtn) closeModalBtn.addEventListener('click', closeVideoModalFunc);
             
             if (videoModal) {
                 videoModal.addEventListener('click', (e) => {
-                    // Close if clicking the dark background (outside iframe container)
                     if (e.target === videoModal) closeVideoModalFunc();
                 });
             }
@@ -808,7 +774,7 @@
                 });
             }
 
-            // Universal Bookshelf Physics - Updated with Video Hover logic
+            // Universal Bookshelf Physics
             document.querySelectorAll('.book-wrapper:not(.coming-soon)').forEach(wrapper => {
                 const book = wrapper.querySelector('.book');
                 const cover = wrapper.querySelector('.book-cover');
@@ -838,14 +804,11 @@
 
                 wrapper.addEventListener('mouseenter', (e) => {
                     isHovering = true; wrapper.classList.add('is-tracking');
-                    
-                    // Video Auto-Play logic for hover preview
                     const vid = wrapper.querySelector('video.cover-art');
                     if(vid) {
                         vid.currentTime = 0;
                         vid.play().catch(e => console.log('Autoplay handled dynamically'));
                     }
-
                     const rect = wrapper.getBoundingClientRect();
                     const nx = (e.clientX - rect.left) / rect.width - 0.5, ny = (e.clientY - rect.top) / rect.height - 0.5;
                     targetRY = -20 + nx * 18; targetRX = 5 - ny * 14; targetRZ = -5 + nx * 6;
@@ -859,11 +822,8 @@
                 });
                 wrapper.addEventListener('mouseleave', () => { 
                     isHovering = false; 
-                    
-                    // Video Pause logic on hover exit
                     const vid = wrapper.querySelector('video.cover-art');
                     if(vid) vid.pause();
-
                     if (!rafId) rafId = requestAnimationFrame(animate); 
                 });
             });
@@ -877,34 +837,108 @@
             const panels1 = document.querySelectorAll('.design-panel, .facts-panel');
             const panels2 = document.querySelectorAll('.design-panel-2, .facts-panel-2');
 
+            // Setup initial states
             gsap.set(portraitWrap, { y: "110vh" }); 
-            gsap.set(panels1, { opacity: 0, y: 40, pointerEvents: "none" });
-            gsap.set(panels2, { opacity: 0, y: 40, pointerEvents: "none" });
+            gsap.set(panels1, { autoAlpha: 0, y: 40 });
+            gsap.set(panels2, { autoAlpha: 0, y: 40 });
             gsap.set(nameBlock, { opacity: 0, y: 30 });
             gsap.set(".portrait-img-2", { opacity: 0 });
+            
+            // Refactored to merge sections into a single Work Showcase
+            gsap.set(".work-showcase-container", { autoAlpha: 0, y: 120, scale: 0.95 });
+            gsap.set("#contact", { autoAlpha: 0 });
 
+            // Master Cinematic Timeline
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: masterPin,
-                    start: () => "top " + masterPin.offsetTop, 
-                    end: "+=3800",
-                    pin: true, scrub: 1, anticipatePin: 1
+                    start: "top top", 
+                    end: "+=9000",
+                    pin: true, 
+                    scrub: 1, 
+                    anticipatePin: 1
                 }
             });
 
+            /* --- PHASE 1: Hero -> About --- */
             tl.to(heroScreen, { y: "-45vh", scale: 0.9, opacity: 0, duration: 4, ease: "power2.inOut" }, 0)
               .to(portraitWrap, { y: "0vh", duration: 4, ease: "power2.inOut" }, 0)
-              .to(panels1, { opacity: 1, y: 0, duration: 2.5, ease: "power3.out", onStart: () => gsap.set(panels1, { pointerEvents: "auto" }), onReverseComplete: () => gsap.set(panels1, { pointerEvents: "none" }) }, "-=1")
+              
+              // Enter Panels 1
+              .to(panels1, { autoAlpha: 1, y: 0, duration: 2.5, ease: "power3.out" }, "-=1")
               .to(nameBlock, { opacity: 1, y: 0, duration: 2, ease: "power2.out" }, "-=2")
-              .addLabel("reading-pause", "+=1.5")
-              .to(".portrait-inner", { rotationY: 90, scale: 0.95, filter: "blur(3px)", duration: 2, ease: "power2.in" }, "reading-pause")
-              .to(panels1, { opacity: 0, y: -40, duration: 2, ease: "power2.in", onStart: () => gsap.set(panels1, { pointerEvents: "none" }), onReverseComplete: () => gsap.set(panels1, { pointerEvents: "auto" }) }, "reading-pause")
-              .to(nameBlock, { opacity: 0, y: 20, duration: 2, ease: "power2.in" }, "reading-pause")
+              
+              .addLabel("reading-pause-1", "+=2") 
+              
+              // Flip mechanics
+              .to(".portrait-inner", { rotationY: 90, scale: 0.95, filter: "blur(3px)", duration: 2, ease: "power2.in" }, "reading-pause-1")
+              .to(panels1, { autoAlpha: 0, y: -40, duration: 2, ease: "power2.in" }, "reading-pause-1")
+              .to(nameBlock, { opacity: 0, y: 20, duration: 2, ease: "power2.in" }, "reading-pause-1")
+              
               .addLabel("chapter-swap")
               .set(".portrait-img-1", { opacity: 0 }, "chapter-swap")
               .set(".portrait-img-2", { opacity: 1 }, "chapter-swap")
+              
+              // Enter Panels 2
               .to(".portrait-inner", { rotationY: 180, scale: 1, filter: "blur(0px)", duration: 2, ease: "power2.out" }, "chapter-swap")
-              .to(panels2, { opacity: 1, y: 0, duration: 2.5, ease: "power3.out", onStart: () => gsap.set(panels2, { pointerEvents: "auto" }), onReverseComplete: () => gsap.set(panels2, { pointerEvents: "none" }) }, "chapter-swap+=0.5");
+              .to(panels2, { autoAlpha: 1, y: 0, duration: 2.5, ease: "power3.out" }, "chapter-swap+=0.5")
+              
+              /* --- PHASE 2: About -> Work Showcase --- */
+              .addLabel("about-end", "+=2.5") // Reading pause for 2nd panels
+              
+              // Move portrait/text upwards and fade
+              .to(portraitWrap, { y: "-40vh", opacity: 0, duration: 4, ease: "power2.inOut" }, "about-end")
+              .to(panels2, { y: "-50px", autoAlpha: 0, duration: 4, ease: "power2.inOut" }, "about-end")
+              
+              // Rise up the entire Unified Work Showcase
+              .to(".work-showcase-container", { autoAlpha: 1, y: 0, scale: 1, duration: 4, ease: "power2.out" }, "about-end+=1")
+              
+              /* --- PHASE 3: Work Showcase -> Contact --- */
+              .addLabel("work-showcase-end", "+=3.5") // Settle to view books
+              
+              // Move Work Showcase backward (slight scale down) and fade out
+              .to(".work-showcase-container", { scale: 0.9, autoAlpha: 0, duration: 4, ease: "power2.inOut" }, "work-showcase-end")
+              
+              // Reveal Contact container
+              .set("#contact", { autoAlpha: 1 }, "work-showcase-end")
+              
+              // Slide upward standard elements
+              .fromTo(".contact-el", 
+                    { y: 80, autoAlpha: 0 }, 
+                    { y: 0, autoAlpha: 1, duration: 4, stagger: 0.2, ease: "power2.out" }, "work-showcase-end+=1")
+              
+              // CTA Animates absolute last
+              .fromTo(".contact-cta", 
+                    { y: 50, autoAlpha: 0 }, 
+                    { y: 0, autoAlpha: 1, duration: 3, ease: "power2.out" }, "-=2")
+
+              .addLabel("end", "+=2"); // Buffer to prevent instantly unpinning
+
+            // Custom manual linking system to navigate across the scrubber smoothly
+            document.querySelectorAll('a.scroll-nav').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    
+                    let label = "";
+                    if (targetId === "about") label = "reading-pause-1";
+                    if (targetId === "work") label = "about-end";
+                    if (targetId === "contact") label = "work-showcase-end";
+                    
+                    if (label && tl.labels[label] !== undefined) {
+                        const progress = tl.labels[label] / tl.duration();
+                        const scrollTrigger = tl.scrollTrigger;
+                        const scrollPos = scrollTrigger.start + (scrollTrigger.end - scrollTrigger.start) * progress;
+                        
+                        // Use GSAP if scrollTo loaded, otherwise native smooth scroll
+                        if (gsap.plugins.ScrollToPlugin) {
+                            gsap.to(window, { scrollTo: scrollPos, duration: 1.5, ease: "power2.inOut" });
+                        } else {
+                            window.scrollTo({ top: scrollPos, behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
 
             // Resume Page Toggles
             const resumeLink = document.getElementById('resume-link');
