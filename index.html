@@ -643,7 +643,7 @@
                         <h2 class="contact-el text-4xl md:text-6xl font-extrabold tracking-tight">INTERESTED IN</h2>
                         <h2 class="contact-el text-4xl md:text-6xl font-extrabold tracking-tight mb-8">WORKING TOGETHER?</h2>
 
-                        <a href="mailto:Anamika.gogoi126@gmail.com" class="contact-cta cta-primary mb-8">Let's Talk →</a>
+                        <a href="mailto:Anamika.gogoi126@gmail.com" class="contact-el contact-cta cta-primary mb-8">Let's Talk →</a>
                         
                         <p class="contact-el text-sm md:text-base mb-2">Or copy my email directly:</p>
                         <div class="contact-el flex items-center">
@@ -906,11 +906,6 @@
               .fromTo(".contact-el", 
                     { y: 80, autoAlpha: 0 }, 
                     { y: 0, autoAlpha: 1, duration: 4, stagger: 0.2, ease: "power2.out" }, "work-showcase-end+=1")
-              
-              // CTA Animates absolute last
-              .fromTo(".contact-cta", 
-                    { y: 50, autoAlpha: 0 }, 
-                    { y: 0, autoAlpha: 1, duration: 3, ease: "power2.out" }, "-=2")
 
               .addLabel("end", "+=2"); // Buffer to prevent instantly unpinning
 
