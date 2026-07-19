@@ -57,6 +57,7 @@
             background-size: cover; background-position: center; background-repeat: no-repeat;
             transition: opacity 0.4s ease; pointer-events: none;
         }
+        
         body::before { background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png'); opacity: 1; }
         body::after { background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png'); opacity: 0; }
         body.dark-mode::before { opacity: 0; }
@@ -75,6 +76,7 @@
             width: 0.26em; height: 0.85em; background-color: #ccc; border-radius: 0.13em;
             position: relative; cursor: pointer; transition: background-color 0.3s ease;
         }
+        
         .switch-thumb {
             width: calc(0.26em - 4px); height: calc(0.26em - 4px); background-color: #fff;
             border-radius: 50%; position: absolute; bottom: 2px; left: 2px; transition: transform 0.3s ease;
@@ -91,14 +93,25 @@
         .email-link:hover { opacity: 0.8; }
         #copy-message { opacity: 0; transition: opacity 0.3s ease; }
 
-        .main-page, .resume-page { transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .main-page { transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .resume-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: rgba(247, 243, 237, 0.98); transform: translateY(-100vh);
+            background-color: rgba(247, 243, 237, 0.98); 
+            transform: scale(0.8);
+            opacity: 0;
+            visibility: hidden;
             overflow-y: auto; z-index: 50;
+            transform-origin: center;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, visibility 0s linear 0.6s;
         }
+        
         body.dark-mode .resume-page { background-color: rgba(26, 26, 26, 0.98); }
-        .resume-page.active { transform: translateY(0); }
+        .resume-page.active { 
+            transform: scale(1);
+            opacity: 1;
+            visibility: visible;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, visibility 0s linear 0s;
+        }
 
         #master-pin-wrap { width: 100%; height: 100dvh; position: relative; overflow: hidden; }
         
@@ -115,6 +128,7 @@
         .hero-cta-block { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); margin-bottom: 0; }
         .hero-tagline { font-size: 1rem; color: var(--muted); font-weight: 400; }
         body.dark-mode .hero-tagline { color: #9a9a9a; }
+        
         .cta-primary {
             display: inline-block; padding: 14px 36px; background: var(--fg); color: var(--bg);
             font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.2em;
@@ -133,23 +147,39 @@
             display: grid; grid-template-columns: minmax(180px, 1fr) auto minmax(240px, 1.2fr);
             grid-template-rows: 1fr; align-items: center; justify-items: center; gap: clamp(8px, 2vw, 40px);
             padding: 0 4vw; perspective: 1200px; pointer-events: none;
+            will-change: transform, opacity, scale;
         }
         
         .about-section .portrait-column {
             grid-column: 2; grid-row: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
             gap: 20px; width: clamp(280px, 38vw, 750px); height: 100%; max-height: 90vh;
         }
-        .about-section .portrait-wrap { position: relative; width: 100%; max-height: 55vh; z-index: 5; will-change: transform; }
+        
+        .about-section .panel-slot {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+        }
+        
+        .about-section .left-slot {
+            grid-column: 1; grid-row: 1; justify-self: end; align-self: center;
+            transform: translateX(clamp(60px, 10vw, 140px));
+        }
+        
+        .about-section .right-slot {
+            grid-column: 3; grid-row: 1; justify-self: start; align-self: center; margin-top: -80px;
+        }
         
         .about-section .panel {
+            grid-column: 1; grid-row: 1; align-self: start;
             position: relative; z-index: 1; will-change: transform, opacity; pointer-events: none;
             --slide-x: 0px; --slide-y: 100px; --tilt-x: 0px; --tilt-y: 0px;
             transform: translate(calc(var(--slide-x) + var(--tilt-x)), calc(var(--slide-y) + var(--tilt-y)));
             width: 280px; display: flex; flex-direction: column; align-items: flex-start; text-align: left;
         }
         
-        .about-section .design-panel, .about-section .design-panel-2 { grid-column: 1; grid-row: 1; justify-self: end; align-self: center; margin-bottom: 0; opacity: 0; }
-        .about-section .facts-panel, .about-section .facts-panel-2 { grid-column: 3; grid-row: 1; justify-self: start; align-self: center; margin-top: -80px; opacity: 0; }
+        .about-section .design-panel, .about-section .design-panel-2 { opacity: 0; }
+        .about-section .facts-panel, .about-section .facts-panel-2 { opacity: 0; }
         
         .about-section .label {
             display: inline-flex; align-items: center; min-height: 44px; padding: 7px 18px; margin: 0 0 13px;
@@ -162,24 +192,78 @@
         .about-section .design-panel li, .about-section .design-panel-2 li { margin: 1px 0; white-space: nowrap; }
         .about-section .facts-panel li, .about-section .facts-panel-2 li { margin: 0 0 20px; }
         
-        .about-section .portrait-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; will-change: transform, filter; }
-        .about-section .portrait-img-1 { width: 100%; height: auto; max-height: 55vh; display: block; object-fit: contain; opacity: 1; position: relative; }
-        .about-section .portrait-img-2 { width: 100%; height: 100%; max-height: 55vh; display: block; object-fit: contain; opacity: 0; position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
+        .about-section .portrait-wrap { 
+            position: relative; 
+            width: 100%; 
+            max-height: 55vh; 
+            z-index: 5; 
+            will-change: transform; 
+        }
+        
+        .about-section .portrait-inner { 
+            position: relative; 
+            width: 100%; 
+            height: 100%; 
+            transform-style: preserve-3d; 
+            will-change: transform; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-section .portrait-front, 
+        .about-section .portrait-back { 
+            width: 100%; 
+            height: auto; 
+            max-height: 55vh; 
+            display: block; 
+            object-fit: contain; 
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .about-section .portrait-front { 
+            position: relative; 
+            transform: rotateY(0deg); 
+            z-index: 2;
+        }
+
+        .about-section .portrait-back { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            height: 100%; 
+            transform: rotateY(180deg); 
+            z-index: 1;
+        }
+
         .about-section .name-block { position: relative; width: 100%; text-align: center; z-index: 10; }
         .about-section .name-block-inner { opacity: 0; will-change: transform, opacity; }
         .about-section .name-block h1 { margin: 0; font-family: var(--font-display); font-size: clamp(48px, 6vw, 78px); font-weight: 900; line-height: 0.88; color: inherit; }
-        .about-section .name-block p { margin: 8px 0 0; font-size: clamp(16px, 1.8vw, 24px); line-height: 1.1; letter-spacing: 0.7px; font-family: var(--font-body); color: inherit; }
+
+        .about-section .subtitle-wrap {
+            position: relative; width: 100%; margin: 8px 0 0;
+            font-size: clamp(16px, 1.8vw, 24px); line-height: 1.1; height: 1.1em;
+        }
+        .about-section .subtitle {
+            position: absolute; top: 0; left: 0; width: 100%; margin: 0;
+            font-size: inherit; line-height: inherit; letter-spacing: 0.7px;
+            font-family: var(--font-body); color: inherit; text-align: center;
+            will-change: transform, opacity;
+        }
+        .about-section .subtitle-1 { opacity: 1; transform: translateY(0); }
+        .about-section .subtitle-2 { opacity: 0; transform: translateY(14px); }
 
         @media (max-width: 600px) {
             .about-section { grid-template-columns: 1fr; grid-template-rows: auto auto auto; align-content: center; gap: 20px; padding: 10px; }
-            .about-section .design-panel, .about-section .design-panel-2  { grid-column: 1; grid-row: 2; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); }
+            .about-section .left-slot { grid-column: 1; grid-row: 2; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); transform: none; }
+            .about-section .right-slot { grid-column: 1; grid-row: 3; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); }
+            .about-section .panel { width: 100%; }
             .about-section .portrait-column { grid-column: 1; grid-row: 1; width: min(100%, 480px); height: auto; max-height: none;}
             .about-section .portrait-wrap { max-height: none; }
-            .about-section .portrait-img-1, .about-section .portrait-img-2 { max-height: none; }
-            .about-section .facts-panel, .about-section .facts-panel-2   { grid-column: 1; grid-row: 3; align-self: center; justify-self: center; margin: 0; width: min(100%, 430px); }
+            .about-section .portrait-front, .about-section .portrait-back { max-height: none; }
             .about-section li { font-size: 15px; white-space: normal; }
             
-            /* Reduced mobile sizes to maintain proportional scaling */
             :root { --book-w: 190px; --book-h: 280px; --spine-w: 28px; }
             .book-wrapper--sm { --book-w: 133px; --book-h: 196px; --spine-w: 20px; }
         }
@@ -196,7 +280,6 @@
             position: relative; cursor: pointer;
         }
 
-        /* Small Books Configuration - Scaled down ~17.5% */
         .book-wrapper--sm {
             --spine-w: 23px;
             --book-w: 161px;
@@ -320,7 +403,6 @@
     </style>
 </head>
 <body class="p-0 m-0">
-
     <div class="main-page">
         <div id="master-pin-wrap">
             
@@ -337,24 +419,18 @@
                 </button>
 
                 <div id="nav-menu" class="hidden md:flex flex-col md:flex-row absolute md:static top-full left-0 right-0 bg-[#f7f3ed] dark:bg-[#121212] md:bg-transparent md:dark:bg-transparent p-6 md:p-0 shadow-2xl md:shadow-none z-50 rounded-2xl md:rounded-none border border-black/5 dark:border-white/5 md:border-none mt-4 md:mt-0 flex-grow justify-end transition-all origin-top">
-                    <nav class="flex-grow flex md:justify-center">
-                        <ul class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-6 text-sm md:text-base font-medium items-center w-full md:w-auto">
-                            <li class="w-full md:w-auto text-center"><a href="#work" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full scroll-nav">WORK</a></li>
-                            <li class="w-full md:w-auto text-center"><a href="#about" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full scroll-nav">ABOUT</a></li>
-                            <li class="w-full md:w-auto text-center"><a href="#" id="resume-link" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full">RESUME</a></li>
-                            <li class="w-full md:w-auto text-center"><a href="#contact" class="hover:text-gray-600 dark:hover:text-gray-400 block py-2 md:py-0 w-full scroll-nav">CONTACT</a></li>
-                        </ul>
-                    </nav>
-                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium mt-6 md:mt-0 pt-6 md:pt-0 border-t md:border-t-0 border-gray-200 dark:border-zinc-700 w-full md:w-auto text-center items-center">
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 text-sm md:text-base font-medium w-full md:w-auto text-center items-center">
                         <a href="https://www.behance.net/anamikagogoi2" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">BEHANCE</a>
                         <a href="https://www.instagram.com/ryokou_yume" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">INSTAGRAM</a>
                         <a href="https://www.linkedin.com/feed" target="_blank" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">LINKEDIN</a>
+                        <a href="#" id="resume-link" class="hover:text-gray-600 dark:hover:text-gray-400 w-full md:w-auto py-2 md:py-0">RESUME</a>
                     </div>
                 </div>
             </header>
 
             <main class="w-full h-full relative text-center">
                 <div id="intro-sequence">
+                    
                     <div class="hero-screen">
                         <div class="mb-6 md:mb-10">
                             <div class="inline-block mx-auto">
@@ -389,53 +465,61 @@
                     </div>
 
                     <section id="about" class="about-section" aria-labelledby="about-name">
-                        <div class="panel design-panel">
-                            <span class="label" aria-label="What I design">WHAT I DESIGN</span>
-                            <ul role="list">
-                                <li>Product Design</li>
-                                <li>UI/UX Design</li>
-                                <li>Interaction Design</li>
-                                <li>Design Systems</li>
-                                <li>Motion Graphics</li>
-                            </ul>
+                        <div class="panel-slot left-slot">
+                            <div class="panel design-panel">
+                                <span class="label" aria-label="What I design">WHAT I DESIGN</span>
+                                <ul role="list">
+                                    <li>Product Design</li>
+                                    <li>UI/UX Design</li>
+                                    <li>Interaction Design</li>
+                                    <li>Design Systems</li>
+                                    <li>Motion Graphics</li>
+                                </ul>
+                            </div>
+                            <div class="panel design-panel-2">
+                                <span class="label" aria-label="New design label">FEATURED IN</span>
+                                <ul role="list">
+                                    <li>Big Nate</li>
+                                    <li>Monster High</li>
+                                    <li>Wolf King</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="panel facts-panel">
-                            <span class="label" aria-label="Fun facts">FUN FACTS</span>
-                            <ul role="list">
-                                <li>Redesigned the Keys On Rent tenant app</li>
-                                <li>Built a concept product called GoFarming</li>
-                                <li>Built scalable design systems</li>
-                                <li>Conducted usability research</li>
-                            </ul>
-                        </div>
-                        <div class="panel design-panel-2">
-                            <span class="label" aria-label="New design label">FEATURED IN</span>
-                            <ul role="list">
-                                <li>Big Nate</li>
-                                <li>Monster High</li>
-                                <li>Wolf King</li>
-                            </ul>
-                        </div>
-                        <div class="panel facts-panel-2">
-                            <span class="label" aria-label="New facts label">NEW FACTS</span>
-                            <ul role="list">
-                                <li>Animated for Nickelodeon projects</li>
-                                <li>Worked with BYJU'S content</li>
-                                <li>Worked with international clients</li>
-                            </ul>
+                        
+                        <div class="panel-slot right-slot">
+                            <div class="panel facts-panel">
+                                <span class="label" aria-label="Fun facts">FUN FACTS</span>
+                                <ul role="list">
+                                    <li>Redesigned the Keys On Rent tenant app</li>
+                                    <li>Built a concept product called GoFarming</li>
+                                    <li>Built scalable design systems</li>
+                                    <li>Conducted usability research</li>
+                                </ul>
+                            </div>
+                            <div class="panel facts-panel-2">
+                                <span class="label" aria-label="New facts label">NEW FACTS</span>
+                                <ul role="list">
+                                    <li>Animated for Nickelodeon projects</li>
+                                    <li>Worked with BYJU'S content</li>
+                                    <li>Worked with international clients</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="portrait-column">
                             <div class="portrait-wrap" aria-hidden="true">
                                 <div class="portrait-inner">
-                                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/about/ProfileP.png" alt="Anamika portrait artwork 1" class="portrait-img-1">
-                                    <img src="https://placehold.co/800x1000/175bd6/ffffff?text=Portrait+Two" alt="Anamika portrait artwork 2" class="portrait-img-2">
+                                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/4912ef6421880f4ac2b2353f866c42d40b9e7a27/images/about/me%20ui%20ux.png" alt="Anamika UI/UX portrait" class="portrait-front">
+                                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/4912ef6421880f4ac2b2353f866c42d40b9e7a27/images/about/me%20animator%20(1).png" alt="Anamika portrait artwork 2" class="portrait-back">
                                 </div>
                             </div>
                             <div class="name-block">
                                 <div class="name-block-inner">
                                     <h1 id="about-name">ANAMIKA</h1>
-                                    <p>Designer &bull; Animator &bull; Problem Solver</p>
+                                    <div class="subtitle-wrap">
+                                        <p class="subtitle subtitle-1">Animator &bull; Visualizer &bull; Storyteller</p>
+                                        <p class="subtitle subtitle-2">Designer &bull; Problem Solver &bull; User Flow</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -443,16 +527,14 @@
                 </div>
 
                 <section id="work" class="absolute inset-0 w-full h-full z-30 pointer-events-none">
-                    
-                    <div class="work-showcase-container absolute inset-0 flex flex-col justify-center items-center w-full" style="opacity: 0; visibility: hidden; transform: translateY(120px) scale(0.95);">
-                        <!-- Added pb-12 and gap reduction to 36px to ensure compact layout and clear footer -->
+                    <!-- Adjusted initial inline styles for continuous cinematic sync: Set translateY to 110vh and scale 0.9 to match Hero -> About distance & values -->
+                    <div class="work-showcase-container absolute inset-0 flex flex-col justify-center items-center w-full" style="opacity: 0; transform: translateY(110vh) scale(0.9); transform-origin: center center;">
                         <div class="work-showcase w-full max-w-[72rem] mx-auto px-4 md:px-16 pb-12 pt-4 pointer-events-auto" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 36px;">
                             
-                            <!-- Case Study Section -->
                             <div class="w-full text-left">
                                 <h2 class="text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4 text-gray-800 dark:text-gray-200">Case study</h2>
                                 <div class="bookshelf pl-0 md:pl-[5%]">
-                                    <!-- Main Book 1 -->
+                                    
                                     <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
                                         <div class="book">
                                             <div class="book-pages"></div>
@@ -499,7 +581,6 @@
                                         <span class="open-hint">Click to Open</span>
                                     </div>
 
-                                    <!-- Main Book 2 (Coming Soon) -->
                                     <div class="book-wrapper coming-soon" id="book-2">
                                         <div class="book">
                                             <div class="book-pages"></div>
@@ -519,7 +600,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="interior-bottom">
-                                                    <!-- Reduced internal text sizing inline slightly -->
                                                     <span style="font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:#999;font-weight:600;">Coming Soon</span>
                                                     <span class="interior-page-num">p. 02</span>
                                                 </div>
@@ -545,7 +625,6 @@
                             <div class="w-full text-left">
                                 <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4 text-gray-800 dark:text-gray-200">Creative Experiments</h2>
                                 <div class="bookshelf pl-0 md:pl-[5%]">
-                                    <!-- Small Book 1 (WishVault) -->
                                     <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
                                         <div class="book">
                                             <div class="book-pages"></div>
@@ -583,7 +662,6 @@
                                         <span class="open-hint">Click to Open</span>
                                     </div>
 
-                                    <!-- Small Book 2 (Motion Reel) -->
                                     <div class="book-wrapper book-wrapper--sm" id="book-4" onclick="openVideoModal('0EIUm9HO_Dg')">
                                         <div class="book">
                                             <div class="book-pages"></div>
@@ -679,16 +757,16 @@
                 BACK
             </button>
             <div class="flex items-center">
-                <a href="#" id="download-button" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
+                <a href="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/a229fac17585659761642a3753fe8efd22da0673/images/UIUX%20resume.pdf" id="download-button" target="_blank" download="Anamika_Gogoi_Resume.pdf" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
                     DOWNLOAD
                 </a>
             </div>
         </header>
         <div class="w-full h-full flex justify-center items-center py-10">
-             <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/bfb620986b30e629c5536d228eb28f537240e296/images/Anamika%20Gogoi.png" 
-                alt="Anamika Gogoi's Resume" 
-                onerror="this.onerror=null; this.src='https://placehold.co/800x1100/1a1a1a/f7f3ed?text=Anamika+Gogoi+Resume+Preview'"
-                class="w-full h-auto max-w-2xl max-h-[85vh] object-contain shadow-2xl rounded-xl">
+             <iframe src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@a229fac17585659761642a3753fe8efd22da0673/images/UIUX%20resume.pdf"
+                title="Anamika Gogoi's Resume"
+                class="w-full max-w-2xl h-[85vh] shadow-2xl rounded-xl border-0 bg-white">
+            </iframe>
         </div>
     </div>
 
@@ -697,7 +775,6 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
         <div class="relative w-full max-w-5xl aspect-video mx-4 shadow-2xl rounded-xl overflow-hidden bg-black" id="modal-content">
-            <!-- Iframe injected via JS -->
         </div>
     </div>
 
@@ -836,16 +913,20 @@
             const nameBlock = document.querySelector('.name-block-inner');
             const panels1 = document.querySelectorAll('.design-panel, .facts-panel');
             const panels2 = document.querySelectorAll('.design-panel-2, .facts-panel-2');
+            const subtitle1 = document.querySelector('.subtitle-1');
+            const subtitle2 = document.querySelector('.subtitle-2');
 
             // Setup initial states
             gsap.set(portraitWrap, { y: "110vh" }); 
-            gsap.set(panels1, { autoAlpha: 0, y: 40 });
-            gsap.set(panels2, { autoAlpha: 0, y: 40 });
+            gsap.set(panels1, { autoAlpha: 0 });
+            gsap.set(panels2, { autoAlpha: 0 });
             gsap.set(nameBlock, { opacity: 0, y: 30 });
-            gsap.set(".portrait-img-2", { opacity: 0 });
+            gsap.set(subtitle1, { autoAlpha: 1, y: 0 });
+            gsap.set(subtitle2, { autoAlpha: 0, y: 14 });
             
-            // Refactored to merge sections into a single Work Showcase
-            gsap.set(".work-showcase-container", { autoAlpha: 0, y: 120, scale: 0.95 });
+            // Set up Gallery to start below the screen for a cinematic slide-up 
+            // Matching initial position to 110vh with a scale of 0.9 to perfect pair with the exit
+            gsap.set(".work-showcase-container", { opacity: 0, y: "110vh", scale: 0.9, transformOrigin: "center center" });
             gsap.set("#contact", { autoAlpha: 0 });
 
             // Master Cinematic Timeline
@@ -865,51 +946,64 @@
               .to(portraitWrap, { y: "0vh", duration: 4, ease: "power2.inOut" }, 0)
               
               // Enter Panels 1
-              .to(panels1, { autoAlpha: 1, y: 0, duration: 2.5, ease: "power3.out" }, "-=1")
+              .to(panels1, { autoAlpha: 1, duration: 2.5, ease: "power2.inOut" }, "-=1")
               .to(nameBlock, { opacity: 1, y: 0, duration: 2, ease: "power2.out" }, "-=2")
               
               .addLabel("reading-pause-1", "+=2") 
               
-              // Flip mechanics
-              .to(".portrait-inner", { rotationY: 90, scale: 0.95, filter: "blur(3px)", duration: 2, ease: "power2.in" }, "reading-pause-1")
-              .to(panels1, { autoAlpha: 0, y: -40, duration: 2, ease: "power2.in" }, "reading-pause-1")
-              .to(nameBlock, { opacity: 0, y: 20, duration: 2, ease: "power2.in" }, "reading-pause-1")
+              // 3D Portrait Flip Mechanics
+              .to(".portrait-inner", { rotationY: 180, duration: 4, ease: "power2.inOut" }, "reading-pause-1")
+
+              // Transition panels1 out smoothly
+              .to(panels1, { autoAlpha: 0, duration: 2, ease: "power1.inOut" }, "reading-pause-1")
+
+              // Subtitle crossfade
+              .to(subtitle1, { autoAlpha: 0, y: -14, duration: 1.3, ease: "power2.inOut" }, "reading-pause-1+=2")
+              .to(subtitle2, { autoAlpha: 1, y: 0, duration: 1.3, ease: "power2.inOut" }, "reading-pause-1+=2")
               
-              .addLabel("chapter-swap")
-              .set(".portrait-img-1", { opacity: 0 }, "chapter-swap")
-              .set(".portrait-img-2", { opacity: 1 }, "chapter-swap")
-              
-              // Enter Panels 2
-              .to(".portrait-inner", { rotationY: 180, scale: 1, filter: "blur(0px)", duration: 2, ease: "power2.out" }, "chapter-swap")
-              .to(panels2, { autoAlpha: 1, y: 0, duration: 2.5, ease: "power3.out" }, "chapter-swap+=0.5")
+              // Transition panels2 in
+              .to(panels2, { autoAlpha: 1, duration: 2, ease: "power1.inOut" }, "reading-pause-1+=2")
               
               /* --- PHASE 2: About -> Work Showcase --- */
-              .addLabel("about-end", "+=2.5") // Reading pause for 2nd panels
+              .addLabel("about-exit", "+=1") 
               
-              // Move portrait/text upwards and fade
-              .to(portraitWrap, { y: "-40vh", opacity: 0, duration: 4, ease: "power2.inOut" }, "about-end")
-              .to(panels2, { y: "-50px", autoAlpha: 0, duration: 4, ease: "power2.inOut" }, "about-end")
+              // 1. CINEMATIC ABOUT EXIT: Move entire .about-section composition exactly like Hero transition
+              // Transform upward (-45vh) and scale down slightly (0.9) mirroring Phase 1 perfectly
+              .to(".about-section", { 
+                  y: "-45vh", 
+                  scale: 0.9,
+                  opacity: 0,
+                  transformOrigin: "center center",
+                  duration: 4, 
+                  ease: "none" 
+              }, "about-exit")
               
-              // Rise up the entire Unified Work Showcase
-              .to(".work-showcase-container", { autoAlpha: 1, y: 0, scale: 1, duration: 4, ease: "power2.out" }, "about-end+=1")
+              // 2. Synced entry to exactly overlap with the exit for zero speed interruption
+              .addLabel("work-start", "about-exit")
+              
+              // 3. CINEMATIC SHOWCASE ENTRY: Slide up to 0, scale 0.9 -> 1.0, pure opacity fade in
+              .to(".work-showcase-container", { 
+                  opacity: 1, 
+                  y: "0px", 
+                  scale: 1, 
+                  duration: 4, 
+                  ease: "none" 
+              }, "work-start")
               
               /* --- PHASE 3: Work Showcase -> Contact --- */
-              .addLabel("work-showcase-end", "+=3.5") // Settle to view books
+              .addLabel("work-showcase-end", "+=2") 
               
-              // Move Work Showcase backward (slight scale down) and fade out
+              .to(".work-showcase-container", { scale: 0.9, autoAlpha: 0, duration: 3, ease: "power2.inOut" }, "work-showcase-end")
               .to(".work-showcase-container", { scale: 0.9, autoAlpha: 0, duration: 4, ease: "power2.inOut" }, "work-showcase-end")
               
-              // Reveal Contact container
               .set("#contact", { autoAlpha: 1 }, "work-showcase-end")
               
-              // Slide upward standard elements
               .fromTo(".contact-el", 
                     { y: 80, autoAlpha: 0 }, 
                     { y: 0, autoAlpha: 1, duration: 4, stagger: 0.2, ease: "power2.out" }, "work-showcase-end+=1")
 
-              .addLabel("end", "+=2"); // Buffer to prevent instantly unpinning
+              .addLabel("end", "+=2");
 
-            // Custom manual linking system to navigate across the scrubber smoothly
             document.querySelectorAll('a.scroll-nav').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -917,7 +1011,7 @@
                     
                     let label = "";
                     if (targetId === "about") label = "reading-pause-1";
-                    if (targetId === "work") label = "about-end";
+                    if (targetId === "work") label = "work-start"; 
                     if (targetId === "contact") label = "work-showcase-end";
                     
                     if (label && tl.labels[label] !== undefined) {
@@ -925,7 +1019,6 @@
                         const scrollTrigger = tl.scrollTrigger;
                         const scrollPos = scrollTrigger.start + (scrollTrigger.end - scrollTrigger.start) * progress;
                         
-                        // Use GSAP if scrollTo loaded, otherwise native smooth scroll
                         if (gsap.plugins.ScrollToPlugin) {
                             gsap.to(window, { scrollTo: scrollPos, duration: 1.5, ease: "power2.inOut" });
                         } else {
@@ -935,13 +1028,19 @@
                 });
             });
 
-            // Resume Page Toggles
             const resumeLink = document.getElementById('resume-link');
             const resumePage = document.querySelector('.resume-page');
             const backButton = document.getElementById('back-button');
             if (resumeLink && resumePage && backButton) {
-                resumeLink.addEventListener('click', (e) => { e.preventDefault(); resumePage.classList.add('active'); document.body.style.overflow = 'hidden'; });
-                backButton.addEventListener('click', () => { resumePage.classList.remove('active'); document.body.style.overflow = ''; });
+                resumeLink.addEventListener('click', (e) => { 
+                    e.preventDefault(); 
+                    resumePage.classList.add('active'); 
+                    document.body.style.overflow = 'hidden'; 
+                });
+                backButton.addEventListener('click', () => { 
+                    resumePage.classList.remove('active'); 
+                    document.body.style.overflow = ''; 
+                });
             }
         });
     </script>
