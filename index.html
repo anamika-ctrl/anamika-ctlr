@@ -532,7 +532,6 @@
                         <div class="work-showcase w-full max-w-[72rem] mx-auto px-4 md:px-16 pb-12 pt-4 pointer-events-auto" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 36px;">
                             
                             <div class="w-full text-left">
-                                <!-- Removed text-gray-800 & dark:text-gray-200 to allow smooth color inheritance in both modes -->
                                 <h2 class="text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4">Case study</h2>
                                 <div class="bookshelf pl-0 md:pl-[5%]">
                                     
@@ -624,7 +623,6 @@
                             </div>
 
                             <div class="w-full text-left">
-                                <!-- Removed text-gray-800 & dark:text-gray-200 to allow smooth color inheritance in both modes -->
                                 <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4">Creative Experiments</h2>
                                 <div class="bookshelf pl-0 md:pl-[5%]">
                                     <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
@@ -772,11 +770,11 @@
         </div>
     </div>
 
-    <div id="video-modal" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/95 opacity-0 transition-opacity duration-300">
-        <button id="close-modal" class="absolute top-6 right-6 text-white/70 hover:text-red-500 transition-colors z-[101]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+    <div id="video-modal" class="fixed inset-0 z-[100] hidden bg-black opacity-0 transition-opacity duration-300">
+        <button id="close-modal" class="absolute top-6 right-6 text-white/70 hover:text-red-500 transition-colors z-[101] bg-black/50 rounded-full p-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
-        <div class="relative w-full max-w-5xl aspect-video mx-4 shadow-2xl rounded-xl overflow-hidden bg-black" id="modal-content">
+        <div class="absolute inset-0 w-full h-full overflow-hidden bg-black" id="modal-content">
         </div>
     </div>
 
