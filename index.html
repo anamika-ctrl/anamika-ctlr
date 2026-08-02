@@ -94,6 +94,7 @@
         #copy-message { opacity: 0; transition: opacity 0.3s ease; }
 
         .main-page { transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        
         .resume-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: rgba(247, 243, 237, 0.98); 
@@ -531,7 +532,8 @@
                         <div class="work-showcase w-full max-w-[72rem] mx-auto px-4 md:px-16 pb-12 pt-4 pointer-events-auto" style="display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 36px;">
                             
                             <div class="w-full text-left">
-                                <h2 class="text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4 text-gray-800 dark:text-gray-200">Case study</h2>
+                                <!-- Removed text-gray-800 & dark:text-gray-200 to allow smooth color inheritance in both modes -->
+                                <h2 class="text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4">Case study</h2>
                                 <div class="bookshelf pl-0 md:pl-[5%]">
                                     
                                     <div class="book-wrapper" id="book-1" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/Go-Farming')">
@@ -622,7 +624,8 @@
                             </div>
 
                             <div class="w-full text-left">
-                                <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4 text-gray-800 dark:text-gray-200">Creative Experiments</h2>
+                                <!-- Removed text-gray-800 & dark:text-gray-200 to allow smooth color inheritance in both modes -->
+                                <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4">Creative Experiments</h2>
                                 <div class="bookshelf pl-0 md:pl-[5%]">
                                     <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
                                         <div class="book">
@@ -830,6 +833,8 @@
             if (themeSwitch) {
                 themeSwitch.addEventListener('click', () => {
                     body.classList.toggle('dark-mode');
+                    // Toggling 'dark' here activates all the built-in Tailwind dark: classes!
+                    document.documentElement.classList.toggle('dark'); 
                     if(switchThumb) switchThumb.parentElement.classList.toggle('active');
                 });
             }
