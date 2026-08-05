@@ -647,7 +647,7 @@
                         </div>
 
                         <div class="hero-cta-block pointer-events-auto mb-10">
-                            <p class="hero-tagline">I design intuitive interfaces with thoughtful motion.</p>
+                            <p class="hero-tagline">Solving problems, one screen at a time.</p>
                             <a href="#work" class="cta-primary scroll-nav">View My Work ↓</a>
                         </div>
                         
@@ -1295,7 +1295,7 @@
             let mm = gsap.matchMedia();
 
             /* =========================================================
-               DESKTOP EXPERIENCE (min-width: 769px) - UNCHANGED
+               DESKTOP EXPERIENCE (min-width: 769px)
                ========================================================= */
             mm.add("(min-width: 769px)", () => {
                 gsap.set([portraitWrap, nameBlock, designPanel, factsPanel, designPanel2, factsPanel2, subtitle1, subtitle2, ".about-section", ".portrait-inner"], { clearProps: "all" });
@@ -1344,6 +1344,7 @@
                   .addLabel("work-start", "about-exit")
                   .to(".work-showcase-container", { opacity: 1, y: "0px", scale: 1, duration: 4, ease: "none" }, "work-start")
                   .to(workScrollGuide, { autoAlpha: 1, y: 0, duration: 2, ease: "power2.out" }, "work-start+=2")
+                  .addLabel("work-visible", "work-start+=4")
                   
                   .addLabel("work-exit", "+=2") 
                   .to(".work-showcase-container", {
@@ -1354,13 +1355,14 @@
                   .addLabel("contact-start", "work-exit")
                   .to("#contact", { autoAlpha: 1, y: "0px", scale: 1, duration: 4, ease: "none" }, "contact-start")
                   .to(".contact-el", { y: 0, autoAlpha: 1, duration: 2, stagger: 0.15, ease: "power2.out" }, "contact-start+=1.5")
+                  .addLabel("contact-visible", "contact-start+=4")
                   .addLabel("end", "+=2");
 
                 return () => {};
             });
 
             /* =========================================================
-               MOBILE EXPERIENCE (max-width: 768px) - REDESIGNED
+               MOBILE EXPERIENCE (max-width: 768px)
                ========================================================= */
             mm.add("(max-width: 768px)", () => {
                 gsap.set([portraitWrap, nameBlock, designPanel, factsPanel, designPanel2, factsPanel2, subtitle1, subtitle2, ".about-section", ".portrait-inner"], { clearProps: "all" });
@@ -1437,6 +1439,7 @@
                      .to(aboutScrollGuide, { autoAlpha: 0, duration: 1 }, "about-exit-mob")
                      .to(".work-showcase-container", { opacity: 1, y: "0px", scale: 1, duration: 3, ease: "power2.out" }, "about-exit-mob+=1")
                      .to(workScrollGuide, { autoAlpha: 1, y: 0, duration: 1.5 }, "about-exit-mob+=2")
+                     .addLabel("work-visible-mob", "about-exit-mob+=4")
 
                 // --- WORK SHOWCASE -> CONTACT ---
                 mobTl.addLabel("work-exit-mob", "+=2")
@@ -1444,6 +1447,7 @@
                      .to(workScrollGuide, { autoAlpha: 0, duration: 1 }, "work-exit-mob")
                      .to("#contact", { autoAlpha: 1, y: "0px", scale: 1, duration: 3, ease: "power2.out" }, "work-exit-mob+=1")
                      .to(".contact-el", { y: 0, autoAlpha: 1, duration: 2, stagger: 0.15, ease: "power2.out" }, "work-exit-mob+=2")
+                     .addLabel("contact-visible-mob", "work-exit-mob+=3.5")
                      .addLabel("end-mob", "+=2");
 
                 return () => {};
@@ -1457,8 +1461,8 @@
                     
                     let label = "";
                     if (targetId === "about") label = isMobile ? "s1" : "reading-pause-1";
-                    if (targetId === "work") label = isMobile ? "about-exit-mob" : "work-start"; 
-                    if (targetId === "contact") label = isMobile ? "work-exit-mob" : "contact-start";
+                    if (targetId === "work") label = isMobile ? "work-visible-mob" : "work-visible"; 
+                    if (targetId === "contact") label = isMobile ? "contact-visible-mob" : "contact-visible";
                     
                     if (label) {
                         ScrollTrigger.getAll().forEach(st => {
