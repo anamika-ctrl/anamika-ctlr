@@ -95,18 +95,20 @@
 
         .main-page { transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         
+        /* Updated resume-page for full screen fit */
         .resume-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: rgba(247, 243, 237, 0.98); 
+            background-color: var(--bg); 
             transform: scale(0.8);
             opacity: 0;
             visibility: hidden;
-            overflow-y: auto; z-index: 50;
+            overflow: hidden; 
+            z-index: 150; /* Elevated z-index to cover header */
             transform-origin: center;
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, visibility 0s linear 0.6s;
         }
         
-        body.dark-mode .resume-page { background-color: rgba(26, 26, 26, 0.98); }
+        body.dark-mode .resume-page { background-color: #121212; }
         .resume-page.active { 
             transform: scale(1);
             opacity: 1;
@@ -748,26 +750,25 @@
 
     </div> 
 
-    <div class="resume-page p-4 md:p-16 flex flex-col items-center">
-        <header class="w-full max-w-2xl flex justify-between items-center mb-8">
-            <button id="back-button" class="flex items-center text-sm md:text-base font-medium hover:text-gray-600 dark:hover:text-gray-400">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                BACK
-            </button>
-            <div class="flex items-center">
-                <a href="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/a229fac17585659761642a3753fe8efd22da0673/images/UIUX%20resume.pdf" id="download-button" target="_blank" download="Anamika_Gogoi_Resume.pdf" class="px-4 py-2 rounded-full border border-gray-400 dark:border-gray-600 text-sm hover:bg-gray-200 dark:hover:bg-zinc-800 transition-colors">
-                    DOWNLOAD
-                </a>
-            </div>
-        </header>
-        <div class="w-full h-full flex justify-center items-center py-10">
-             <iframe src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@a229fac17585659761642a3753fe8efd22da0673/images/UIUX%20resume.pdf"
-                title="Anamika Gogoi's Resume"
-                class="w-full max-w-2xl h-[85vh] shadow-2xl rounded-xl border-0 bg-white">
-            </iframe>
-        </div>
+    <div class="resume-page p-0 block bg-white dark:bg-[#1a1a1a]">
+        <!-- Floating Close Button -->
+        <button id="close-resume-btn" class="absolute top-4 right-4 md:top-6 md:right-6 z-[200] bg-black/20 hover:bg-red-500 text-black hover:text-white dark:text-white dark:bg-white/20 dark:hover:bg-red-500 rounded-full p-2 transition-all shadow-md backdrop-blur-sm cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- Floating Download Button -->
+        <a href="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/a229fac17585659761642a3753fe8efd22da0673/images/UIUX%20resume.pdf" id="download-button" target="_blank" download="Anamika_Gogoi_Resume.pdf" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-[200] px-6 py-3 rounded-full bg-black text-white dark:bg-white dark:text-black shadow-xl hover:scale-105 transition-transform font-bold text-xs md:text-sm tracking-wider flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+            DOWNLOAD PDF
+        </a>
+
+        <!-- Fullscreen PDF Iframe -->
+        <iframe src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@a229fac17585659761642a3753fe8efd22da0673/images/UIUX%20resume.pdf#toolbar=0"
+            title="Anamika Gogoi's Resume"
+            class="w-full h-full border-0 m-0 p-0 block bg-transparent">
+        </iframe>
     </div>
 
     <div id="video-modal" class="fixed inset-0 z-[100] hidden bg-black opacity-0 transition-opacity duration-300">
@@ -853,7 +854,6 @@
                 });
             }
 
-            // Universal Bookshelf Physics
             document.querySelectorAll('.book-wrapper:not(.coming-soon)').forEach(wrapper => {
                 const book = wrapper.querySelector('.book');
                 const cover = wrapper.querySelector('.book-cover');
@@ -1048,16 +1048,20 @@
                 });
             });
 
+            // Handle Full-Screen Resume Toggle
             const resumeLink = document.getElementById('resume-link');
             const resumePage = document.querySelector('.resume-page');
-            const backButton = document.getElementById('back-button');
-            if (resumeLink && resumePage && backButton) {
+            const closeResumeBtn = document.getElementById('close-resume-btn');
+            
+            if (resumeLink && resumePage && closeResumeBtn) {
                 resumeLink.addEventListener('click', (e) => { 
                     e.preventDefault(); 
                     resumePage.classList.add('active'); 
                     document.body.style.overflow = 'hidden'; 
                 });
-                backButton.addEventListener('click', () => { 
+                
+                // Hide resume modal when clicking the close button
+                closeResumeBtn.addEventListener('click', () => { 
                     resumePage.classList.remove('active'); 
                     document.body.style.overflow = ''; 
                 });
