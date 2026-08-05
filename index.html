@@ -54,12 +54,30 @@
 
         body::before, body::after {
             content: ''; position: fixed; inset: 0; z-index: -1;
-            background-size: cover; background-position: center; background-repeat: no-repeat;
+            background-size: cover, cover, cover, auto, cover;
+            background-position: center;
+            background-repeat: no-repeat, no-repeat, no-repeat, repeat, no-repeat;
             transition: opacity 0.4s ease; pointer-events: none;
         }
         
-        body::before { background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png'); opacity: 1; }
-        body::after { background-image: url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png'); opacity: 0; }
+        body::before { 
+            background-image: 
+                url('https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@main/images/whhite%20BG.png'),
+                url('https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@043062591825a78eae701fb19cf5bd617909a520/images/whhite%20BG.png'),
+                url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/main/images/whhite%20BG.png'),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #f7f3ed, #ebdcd0); 
+            opacity: 1; 
+        }
+        body::after { 
+            background-image: 
+                url('https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@main/images/BG.png'),
+                url('https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@2c2509048105327e8d7a5fd4e569281a7ea044c4/images/BG.png'),
+                url('https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/main/images/BG.png'),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #121212, #1f1f1f); 
+            opacity: 0; 
+        }
         body.dark-mode::before { opacity: 0; }
         body.dark-mode::after  { opacity: 1; }
         body.dark-mode { background-color: #121212; color: #f7f3ed; }
@@ -408,7 +426,7 @@
         .book-wrapper:hover .open-hint { opacity: 1; }
         .book-wrapper--sm .open-hint { font-size: 0.45rem; bottom: -1.4rem; }
 
-        /* Animation for custom scroll indicator wheel */
+        /* Custom Scroll Wheel & Pulse Animations for Guides */
         @keyframes scrollWheelAnim {
             0% { transform: translate(-50%, 0); opacity: 1; }
             80% { transform: translate(-50%, 6px); opacity: 0; }
@@ -418,6 +436,22 @@
             animation: scrollWheelAnim 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
         }
 
+        @keyframes pulsePillAnim {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.04); opacity: 1; }
+        }
+        .pulse-pill {
+            animation: pulsePillAnim 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceDownAnim {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(4px); }
+        }
+        .bounce-down {
+            animation: bounceDownAnim 1.2s ease-in-out infinite;
+        }
+
         /* Mobile specific pulsing cues for interactive elements */
         @keyframes pulseTapAnim {
             0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
@@ -425,7 +459,6 @@
         }
 
         @media (max-width: 768px) {
-            /* Keep hints visible on mobile since there is no hover */
             .open-hint {
                 opacity: 0.8 !important;
                 animation: pulseTapAnim 2.5s ease-in-out infinite;
@@ -461,7 +494,6 @@
 
             <main class="w-full h-full relative text-center">
                 <div id="intro-sequence">
-                    
                     <div class="hero-screen">
                         <div class="mb-6 md:mb-10">
                             <div class="inline-block mx-auto">
@@ -494,9 +526,9 @@
                             <a href="#work" class="cta-primary scroll-nav">View My Work ↓</a>
                         </div>
                         
-                        <!-- Scroll Guide Indicator -->
+                        <!-- Hero Scroll Guide Indicator -->
                         <div class="scroll-indicator absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20">
-                            <span class="text-[9px] md:text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500 font-semibold opacity-80">Scroll to explore</span>
+                            <span class="text-[9px] md:text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500 font-semibold opacity-80">Scroll</span>
                             <div class="w-4 h-7 md:w-5 md:h-8 border-2 border-gray-400 dark:border-gray-500 rounded-full relative opacity-70">
                                 <div class="w-1 h-1.5 md:w-1 md:h-2 bg-gray-400 dark:bg-gray-500 rounded-full absolute top-1 left-1/2 transform -translate-x-1/2 scroll-wheel-anim"></div>
                             </div>
@@ -548,8 +580,16 @@
                         <div class="portrait-column">
                             <div class="portrait-wrap" aria-hidden="true">
                                 <div class="portrait-inner">
-                                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/4912ef6421880f4ac2b2353f866c42d40b9e7a27/images/about/me%20ui%20ux.png" alt="Anamika UI/UX portrait" class="portrait-front">
-                                    <img src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/4912ef6421880f4ac2b2353f866c42d40b9e7a27/images/about/me%20animator%20(1).png" alt="Anamika portrait artwork 2" class="portrait-back">
+                                    <img src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@4912ef6421880f4ac2b2353f866c42d40b9e7a27/images/about/me%20ui%20ux.png" 
+                                         alt="Anamika UI/UX portrait" 
+                                         class="portrait-front"
+                                         referrerpolicy="no-referrer"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/600x800/1a1a1a/ff4500?text=Anamika+UI%2FUX';">
+                                    <img src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@4912ef6421880f4ac2b2353f866c42d40b9e7a27/images/about/me%20animator%20(1).png" 
+                                         alt="Anamika portrait artwork 2" 
+                                         class="portrait-back"
+                                         referrerpolicy="no-referrer"
+                                         onerror="this.onerror=null; this.src='https://placehold.co/600x800/ff4500/ffffff?text=Anamika+Animator';">
                                 </div>
                             </div>
                             <div class="name-block">
@@ -560,6 +600,14 @@
                                         <p class="subtitle subtitle-2">Designer &bull; Problem Solver &bull; User Flow</p>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Animated Scroll Guide specifically for the About Section -->
+                        <div class="about-scroll-guide absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-30 opacity-0">
+                            <span class="text-[9px] md:text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500 font-semibold opacity-80">Scroll</span>
+                            <div class="w-4 h-7 md:w-5 md:h-8 border-2 border-gray-400 dark:border-gray-500 rounded-full relative opacity-70">
+                                <div class="w-1 h-1.5 md:w-1 md:h-2 bg-gray-400 dark:bg-gray-500 rounded-full absolute top-1 left-1/2 transform -translate-x-1/2 scroll-wheel-anim"></div>
                             </div>
                         </div>
                     </section>
@@ -598,7 +646,11 @@
                                             </div>
                                             
                                             <div class="book-cover">
-                                                <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg" alt="Go-Farming Cover" onerror="this.onerror=null; this.src='https://placehold.co/600x800/1a1a1a/ff4500?text=Go-Farming';">
+                                                <img class="cover-art" 
+                                                     src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@de8fd384b60e31b90111b7f4e49c9e76f8997fd6/images/CaseStudy-cover.jpg" 
+                                                     alt="Go-Farming Cover" 
+                                                     referrerpolicy="no-referrer"
+                                                     onerror="this.onerror=null; this.src='https://placehold.co/600x800/1a1a1a/ff4500?text=Go-Farming';">
                                                 <div class="cover-editorial" style="border-left-color: #879E46;">
                                                     <div>
                                                         <div class="edit-eyebrow">Case Study · 01</div>
@@ -616,7 +668,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Interactive cue modified for mobile touch awareness -->
                                         <span class="open-hint">
                                             <span class="hidden md:inline">Click</span>
                                             <span class="md:hidden">Tap</span> to Open
@@ -648,7 +699,11 @@
                                             </div>
                                             
                                             <div class="book-cover">
-                                                <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/fd2d296969a50095e0a1414b5751cd6755b4cdcd/images/Coming%20soon.png" alt="ASTC Cover">
+                                                <img class="cover-art" 
+                                                     src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@fd2d296969a50095e0a1414b5751cd6755b4cdcd/images/Coming%20soon.png" 
+                                                     alt="ASTC Cover"
+                                                     referrerpolicy="no-referrer"
+                                                     onerror="this.onerror=null; this.src='https://placehold.co/600x800/333333/ffffff?text=ASTC+Coming+Soon';">
                                                 <div class="cover-editorial" style="border-left-color: #606366;">
                                                     <div>
                                                         <div class="edit-eyebrow">Case Study · 02</div>
@@ -664,8 +719,11 @@
                                 </div>
                             </div>
 
-                            <div class="w-full text-left">
-                                <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight mb-3 md:mb-4">Creative Experiments</h2>
+                            <div class="w-full text-left relative">
+                                <div class="flex items-center justify-between mb-3 md:mb-4">
+                                    <h2 class="creative-exp-title text-2xl md:text-4xl font-light tracking-tight">Creative Experiments</h2>
+                                </div>
+
                                 <div class="bookshelf pl-0 md:pl-[5%]">
                                     <div class="book-wrapper book-wrapper--sm" id="book-3" onclick="toggleBook(this, 'https://anamika-ctrl.github.io/WishVault_case-Study/')">
                                         <div class="book">
@@ -691,7 +749,12 @@
                                             </div>
                                             
                                             <div class="book-cover">
-                                                <img class="cover-art" src="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/7ff6c6ec4feeb9df92d0766ac9dd9a5568c79e80/images/a3f30ed2ab5c06153dbccbb524b3892b.jpg" alt="WishVault Cover" style="object-position: top;">
+                                                <img class="cover-art" 
+                                                     src="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@7ff6c6ec4feeb9df92d0766ac9dd9a5568c79e80/images/a3f30ed2ab5c06153dbccbb524b3892b.jpg" 
+                                                     alt="WishVault Cover" 
+                                                     style="object-position: top;"
+                                                     referrerpolicy="no-referrer"
+                                                     onerror="this.onerror=null; this.src='https://placehold.co/600x800/2F34C3/ffffff?text=WishVault';">
                                                 <div class="cover-editorial" style="padding: 1rem; justify-content: center; align-items: flex-start; border-left-color: #2F34C3;">
                                                     <div style="font-family: 'Oswald', sans-serif; font-size: 1.5rem; color: #fff; line-height: 1; margin-bottom: 0.25rem; font-style: normal; text-transform: none; letter-spacing: 0;">WishVault</div>
                                                     <div style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.75rem; color: #2F34C3; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; font-style: normal;">Problem</div>
@@ -733,7 +796,7 @@
                                             <div class="book-cover">
                                                 <video class="cover-art object-cover w-full h-full rounded-[2px_8px_8px_2px]" 
                                                        src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4" 
-                                                       poster="https://raw.githubusercontent.com/anamika-ctrl/anamika-ctlr/5c4a55f55b72514d8a5cc5c5a5ff3fad570c39f4/images/Frame%202134280599.png"
+                                                       poster="https://cdn.jsdelivr.net/gh/anamika-ctrl/anamika-ctlr@5c4a55f55b72514d8a5cc5c5a5ff3fad570c39f4/images/Frame%202134280599.png"
                                                        muted playsinline loop preload="auto">
                                                 </video>
                                                 <div class="cover-editorial" style="border-left-color: #D72023;">
@@ -760,6 +823,14 @@
                                 </div>
                             </div>
                             
+                        </div>
+
+                        <!-- Animated Scroll Guide for Work & Creative Experiments Section -->
+                        <div class="work-scroll-guide absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-30 opacity-0">
+                            <span class="text-[9px] md:text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500 font-semibold opacity-80">Scroll</span>
+                            <div class="w-4 h-7 md:w-5 md:h-8 border-2 border-gray-400 dark:border-gray-500 rounded-full relative opacity-70">
+                                <div class="w-1 h-1.5 md:w-1 md:h-2 bg-gray-400 dark:bg-gray-500 rounded-full absolute top-1 left-1/2 transform -translate-x-1/2 scroll-wheel-anim"></div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -860,6 +931,27 @@
             const emailLink = document.getElementById('email-link');
             const copyMessage = document.getElementById('copy-message');
             
+            // Mobile navigation menu toggle
+            const menuButton = document.getElementById('menu-button');
+            const navMenu = document.getElementById('nav-menu');
+            const iconMenu = document.getElementById('icon-menu');
+            const iconClose = document.getElementById('icon-close');
+
+            if (menuButton && navMenu) {
+                menuButton.addEventListener('click', () => {
+                    const isOpen = !navMenu.classList.contains('hidden');
+                    if (isOpen) {
+                        navMenu.classList.add('hidden');
+                        iconMenu.classList.remove('scale-0', 'opacity-0');
+                        iconClose.classList.add('scale-0', 'opacity-0');
+                    } else {
+                        navMenu.classList.remove('hidden');
+                        iconMenu.classList.add('scale-0', 'opacity-0');
+                        iconClose.classList.remove('scale-0', 'opacity-0');
+                    }
+                });
+            }
+
             const closeModalBtn = document.getElementById('close-modal');
             if (closeModalBtn) closeModalBtn.addEventListener('click', closeVideoModalFunc);
             
@@ -962,15 +1054,19 @@
             const panels2 = document.querySelectorAll('.design-panel-2, .facts-panel-2');
             const subtitle1 = document.querySelector('.subtitle-1');
             const subtitle2 = document.querySelector('.subtitle-2');
-            const scrollIndicator = document.querySelector('.scroll-indicator'); // Target the new guide
+            const scrollIndicator = document.querySelector('.scroll-indicator'); 
+            const aboutScrollGuide = document.querySelector('.about-scroll-guide');
+            const workScrollGuide = document.querySelector('.work-scroll-guide');
 
-            // Setup initial states
+            // Setup initial GSAP states
             gsap.set(portraitWrap, { y: "110vh" }); 
             gsap.set(panels1, { autoAlpha: 0 });
             gsap.set(panels2, { autoAlpha: 0 });
             gsap.set(nameBlock, { opacity: 0, y: 30 });
             gsap.set(subtitle1, { autoAlpha: 1, y: 0 });
             gsap.set(subtitle2, { autoAlpha: 0, y: 14 });
+            gsap.set(aboutScrollGuide, { autoAlpha: 0, y: 20 });
+            gsap.set(workScrollGuide, { autoAlpha: 0, y: 20 });
             
             // Set up Gallery to start below the screen for a cinematic slide-up 
             gsap.set(".work-showcase-container", { opacity: 0, y: "110vh", scale: 0.9, transformOrigin: "center center" });
@@ -992,13 +1088,13 @@
             });
 
             /* --- PHASE 1: Hero -> About --- */
-            // Include scrollIndicator in the initial fade out alongside heroScreen
             tl.to([heroScreen, scrollIndicator], { y: "-45vh", scale: 0.9, opacity: 0, duration: 4, ease: "power2.inOut" }, 0)
               .to(portraitWrap, { y: "0vh", duration: 4, ease: "power2.inOut" }, 0)
               
-              // Enter Panels 1
+              // Enter About Section Panels & Animated Scroll Guide
               .to(panels1, { autoAlpha: 1, duration: 2.5, ease: "power2.inOut" }, "-=1")
               .to(nameBlock, { opacity: 1, y: 0, duration: 2, ease: "power2.out" }, "-=2")
+              .to(aboutScrollGuide, { autoAlpha: 1, y: 0, duration: 2, ease: "power2.out" }, "-=2")
               
               .addLabel("reading-pause-1", "+=2") 
               
@@ -1027,11 +1123,12 @@
                   duration: 4, 
                   ease: "none" 
               }, "about-exit")
+              .to(aboutScrollGuide, { autoAlpha: 0, y: -20, duration: 2, ease: "power1.in" }, "about-exit")
               
-              // 2. Synced entry to exactly overlap with the exit for zero speed interruption
+              // 2. Synced entry to overlap seamlessly
               .addLabel("work-start", "about-exit")
               
-              // 3. CINEMATIC SHOWCASE ENTRY
+              // 3. CINEMATIC SHOWCASE ENTRY & WORK SCROLL GUIDE APPEARANCE
               .to(".work-showcase-container", { 
                   opacity: 1, 
                   y: "0px", 
@@ -1039,6 +1136,7 @@
                   duration: 4, 
                   ease: "none" 
               }, "work-start")
+              .to(workScrollGuide, { autoAlpha: 1, y: 0, duration: 2, ease: "power2.out" }, "work-start+=2")
               
               /* --- PHASE 3: Work Showcase -> Contact --- */
               .addLabel("work-exit", "+=2") 
@@ -1052,6 +1150,7 @@
                   duration: 4,
                   ease: "none"
               }, "work-exit")
+              .to(workScrollGuide, { autoAlpha: 0, y: -20, duration: 2, ease: "power1.in" }, "work-exit")
               
               // 2. Synced point for Contact
               .addLabel("contact-start", "work-exit")
