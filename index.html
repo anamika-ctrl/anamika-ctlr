@@ -95,7 +95,6 @@
 
         .main-page { transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); }
         
-        /* Updated resume-page for full screen fit */
         .resume-page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: var(--bg); 
@@ -103,7 +102,7 @@
             opacity: 0;
             visibility: hidden;
             overflow: hidden; 
-            z-index: 150; /* Elevated z-index to cover header */
+            z-index: 150; 
             transform-origin: center;
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, visibility 0s linear 0.6s;
         }
@@ -400,15 +399,44 @@
         .book-wrapper.is-tracking .book { transition: none; }
         .book-wrapper.is-tracking .book-cover { transition: none; }
         
-        .open-hint { position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity 0.3s; }
+        /* Interactive Guides CSS */
+        .open-hint { 
+            position: absolute; bottom: -1.8rem; left: 50%; transform: translateX(-50%); 
+            font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; 
+            color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity 0.3s; 
+        }
         .book-wrapper:hover .open-hint { opacity: 1; }
         .book-wrapper--sm .open-hint { font-size: 0.45rem; bottom: -1.4rem; }
+
+        /* Animation for custom scroll indicator wheel */
+        @keyframes scrollWheelAnim {
+            0% { transform: translate(-50%, 0); opacity: 1; }
+            80% { transform: translate(-50%, 6px); opacity: 0; }
+            100% { transform: translate(-50%, 0); opacity: 0; }
+        }
+        .scroll-wheel-anim {
+            animation: scrollWheelAnim 1.5s cubic-bezier(0.15, 0.41, 0.69, 0.94) infinite;
+        }
+
+        /* Mobile specific pulsing cues for interactive elements */
+        @keyframes pulseTapAnim {
+            0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.03); color: var(--red); }
+        }
+
+        @media (max-width: 768px) {
+            /* Keep hints visible on mobile since there is no hover */
+            .open-hint {
+                opacity: 0.8 !important;
+                animation: pulseTapAnim 2.5s ease-in-out infinite;
+                font-weight: 600;
+            }
+        }
     </style>
 </head>
 <body class="p-0 m-0">
     <div class="main-page">
         <div id="master-pin-wrap">
-            
             <header class="absolute top-0 left-0 right-0 p-4 md:px-16 md:py-8 flex justify-between items-center z-[100] pointer-events-auto">
                 <h1 class="text-base md:text-xl font-bold">Alt+Anamika</h1>
                 
@@ -461,9 +489,17 @@
                             </div>
                         </div>
 
-                        <div class="hero-cta-block pointer-events-auto">
+                        <div class="hero-cta-block pointer-events-auto mb-10">
                             <p class="hero-tagline">I design intuitive interfaces with thoughtful motion.</p>
                             <a href="#work" class="cta-primary scroll-nav">View My Work ↓</a>
+                        </div>
+                        
+                        <!-- Scroll Guide Indicator -->
+                        <div class="scroll-indicator absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20">
+                            <span class="text-[9px] md:text-xs uppercase tracking-[0.25em] text-gray-400 dark:text-gray-500 font-semibold opacity-80">Scroll to explore</span>
+                            <div class="w-4 h-7 md:w-5 md:h-8 border-2 border-gray-400 dark:border-gray-500 rounded-full relative opacity-70">
+                                <div class="w-1 h-1.5 md:w-1 md:h-2 bg-gray-400 dark:bg-gray-500 rounded-full absolute top-1 left-1/2 transform -translate-x-1/2 scroll-wheel-anim"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -580,7 +616,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="open-hint">Click to Open</span>
+                                        <!-- Interactive cue modified for mobile touch awareness -->
+                                        <span class="open-hint">
+                                            <span class="hidden md:inline">Click</span>
+                                            <span class="md:hidden">Tap</span> to Open
+                                        </span>
                                     </div>
 
                                     <div class="book-wrapper coming-soon" id="book-2">
@@ -661,7 +701,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="open-hint">Click to Open</span>
+                                        <span class="open-hint">
+                                            <span class="hidden md:inline">Click</span>
+                                            <span class="md:hidden">Tap</span> to Open
+                                        </span>
                                     </div>
 
                                     <div class="book-wrapper book-wrapper--sm" id="book-4" onclick="openVideoModal('0EIUm9HO_Dg')">
@@ -709,7 +752,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="open-hint">Click to Watch</span>
+                                        <span class="open-hint">
+                                            <span class="hidden md:inline">Click</span>
+                                            <span class="md:hidden">Tap</span> to Watch
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -832,7 +878,6 @@
             if (themeSwitch) {
                 themeSwitch.addEventListener('click', () => {
                     body.classList.toggle('dark-mode');
-                    // Toggling 'dark' here activates all the built-in Tailwind dark: classes!
                     document.documentElement.classList.toggle('dark'); 
                     if(switchThumb) switchThumb.parentElement.classList.toggle('active');
                 });
@@ -917,6 +962,7 @@
             const panels2 = document.querySelectorAll('.design-panel-2, .facts-panel-2');
             const subtitle1 = document.querySelector('.subtitle-1');
             const subtitle2 = document.querySelector('.subtitle-2');
+            const scrollIndicator = document.querySelector('.scroll-indicator'); // Target the new guide
 
             // Setup initial states
             gsap.set(portraitWrap, { y: "110vh" }); 
@@ -946,7 +992,8 @@
             });
 
             /* --- PHASE 1: Hero -> About --- */
-            tl.to(heroScreen, { y: "-45vh", scale: 0.9, opacity: 0, duration: 4, ease: "power2.inOut" }, 0)
+            // Include scrollIndicator in the initial fade out alongside heroScreen
+            tl.to([heroScreen, scrollIndicator], { y: "-45vh", scale: 0.9, opacity: 0, duration: 4, ease: "power2.inOut" }, 0)
               .to(portraitWrap, { y: "0vh", duration: 4, ease: "power2.inOut" }, 0)
               
               // Enter Panels 1
@@ -971,7 +1018,7 @@
               /* --- PHASE 2: About -> Work Showcase --- */
               .addLabel("about-exit", "+=1") 
               
-              // 1. CINEMATIC ABOUT EXIT: Move entire .about-section composition exactly like Hero transition
+              // 1. CINEMATIC ABOUT EXIT
               .to(".about-section", { 
                   y: "-45vh", 
                   scale: 0.9,
@@ -984,7 +1031,7 @@
               // 2. Synced entry to exactly overlap with the exit for zero speed interruption
               .addLabel("work-start", "about-exit")
               
-              // 3. CINEMATIC SHOWCASE ENTRY: Slide up to 0, scale 0.9 -> 1.0, pure opacity fade in
+              // 3. CINEMATIC SHOWCASE ENTRY
               .to(".work-showcase-container", { 
                   opacity: 1, 
                   y: "0px", 
@@ -996,7 +1043,7 @@
               /* --- PHASE 3: Work Showcase -> Contact --- */
               .addLabel("work-exit", "+=2") 
               
-              // 1. CINEMATIC WORK EXIT: Push the entire layout upwards identical to the hero and about
+              // 1. CINEMATIC WORK EXIT
               .to(".work-showcase-container", {
                   y: "-45vh",
                   scale: 0.9,
@@ -1009,7 +1056,7 @@
               // 2. Synced point for Contact
               .addLabel("contact-start", "work-exit")
               
-              // 3. CINEMATIC CONTACT ENTRY: Glide upwards and scale in gracefully
+              // 3. CINEMATIC CONTACT ENTRY
               .to("#contact", { 
                   autoAlpha: 1,
                   y: "0px", 
@@ -1018,7 +1065,7 @@
                   ease: "none" 
               }, "contact-start")
               
-              // Inner elements stagger dynamically arriving into their set scale point
+              // Inner elements stagger dynamically
               .to(".contact-el", 
                   { y: 0, autoAlpha: 1, duration: 2, stagger: 0.15, ease: "power2.out" }, "contact-start+=1.5")
 
